@@ -1,0 +1,6 @@
+[submodule "manual/themes/hugo-material-docs"]
+	path = manual/themes/hugo-material-docs
+	url = https://github.com/digitalcraftsman/hugo-material-docs.git
+[submodule "Assets/Libraries/brainvr-logger"]
+	path = Assets/Libraries/brainvr-logger
+	url = https://github.com/NUDZ/brainvr-unity-logger

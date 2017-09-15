@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 96b51c23e2d223e459e46b4071b9f889
+timeCreated: 1457798618
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - MarkPrefab: {fileID: 198690, guid: fff903de68ccbb7429c3c54f2b9a37a3, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
