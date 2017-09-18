@@ -41,7 +41,8 @@ namespace Assets.ExperimentAssets.Scripts.Experiments
         public delegate void ExperimentStateHandler(Experiment ex, ExperimentState fromState, ExperimentState toState);
 
         protected string _name = "SomeTask";
-        public string Name {
+        public string Name
+        {
             get { return _name; }
             set { _name = value; }
         }
@@ -107,6 +108,7 @@ namespace Assets.ExperimentAssets.Scripts.Experiments
         //collects all important variables, creates log
         protected virtual void ExperimentInitialise()
         {
+            TrialNumber = -1;
             OnExperimentInitialise();
             CanvasManager = ExperimentCanvasManager.Instance;
             SendExperimentStateChanged(ExperimentState.Initialised);
