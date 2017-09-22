@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Assets.ExperimentAssets.Scripts.DataHolders;
+using Assets.ExperimentAssets.VR;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -45,13 +45,11 @@ namespace Assets.ExperimentAssets.Scripts.UI
             DontDestroyOnLoad(GameObject.Find("Settings"));
             SceneManager.LoadScene(SettingsHolder.Instance.CurrentExperimentSettings().LevelName); //needs to ad one as dropdown starts at 0 and BVA is 1
         }
-
         private bool CanStart()
         {
             if (SettingsHolder.Instance.CurrentExperimentSettings() == null) return false;
             return true;
         }
-
         public void QuitExperiment()
         {
             Application.Quit();
@@ -86,17 +84,27 @@ namespace Assets.ExperimentAssets.Scripts.UI
         }
         private void PopulateExperimentInfo()
         {
-            var participantMenu = GameObject.Find("ParticipantSettings");
-            if (participantMenu != null)
-                PopulateId(participantMenu);
+            PopulateId();
+            PopulateVR();
         }
         #endregion
         #region settings helpers
-        private void PopulateId(GameObject participantMenu)
+        private void PopulateId()
         {
+            var participantMenu = GameObject.Find("ParticipantSettings");
+            if (participantMenu == null) return;
             var idGameObject = participantMenu.transform.Find("ID");
             InputField field = idGameObject.GetComponentInChildren<InputField>();
             _experimentInfo.Participant.Id = field.text;
+        }
+        private void PopulateVR()
+        {
+            var vr = GameObject.Find("VRSettings");
+            if (vr == null) return;
+            var selectionGO = vr.transform.Find("Selection");
+            Dropdown field = selectionGO.GetComponent<Dropdown>();
+            _experimentInfo.VRType = (VRType)field.value;
+            //_experimentInfo.VRType;
         }
         #endregion
     }
