@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
+﻿using System.Collections.Generic;
+using BrainVR.UnityLogger.Interfaces;
+using UnityEngine;
 
 namespace Assets.ExperimentAssets.Scripts.Player
 {
-    public abstract class PlayerController : Singleton<PlayerController>
+    public abstract class PlayerController : Singleton<PlayerController>, IPlayerController
     {
         #region Public API
         #region Moving
@@ -45,5 +46,10 @@ namespace Assets.ExperimentAssets.Scripts.Player
         #endregion
         #region PRIVATE FUCNTIONS
         #endregion
+        #region Interface implementation
+        public abstract string HeaderLine();
+        public abstract List<string> PlayerInformation();
+        #endregion
+
     }
 }

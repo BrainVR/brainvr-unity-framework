@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
 namespace Assets.ExperimentAssets.Scripts.Player
@@ -35,6 +36,23 @@ namespace Assets.ExperimentAssets.Scripts.Player
         public override void EnableRotation(bool bo = true)
         {
             _rigidbodyScript.BlockRotation = !bo;
+        }
+        #endregion
+        #region logging
+        public override string HeaderLine()
+        {
+            return "Time; Position; Rotation.X; Rotation.Y; FPS; Input;";
+        }
+        public override List<string> PlayerInformation()
+        {
+            List<string> strgs = new List<string>();
+            // position 
+            strgs.Add(transform.position.ToString("F4"));
+            // rotation Y
+            strgs.Add(transform.eulerAngles.y.ToString("F4"));
+            // rotation X
+            strgs.Add(Camera.main.transform.eulerAngles.x.ToString("F4"));
+            return strgs;
         }
         #endregion
     }
