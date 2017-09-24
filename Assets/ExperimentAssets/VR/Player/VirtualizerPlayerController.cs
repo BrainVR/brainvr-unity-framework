@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets.ExperimentAssets.Scripts.Player;
+using Assets.ExperimentAssets.Player;
 using UnityEngine;
 
 namespace Assets.ExperimentAssets.VR.Player
@@ -27,12 +27,12 @@ namespace Assets.ExperimentAssets.VR.Player
             throw new System.NotImplementedException();
         }
 
-        public override void SetPlayerHeight()
+        public override void SetHeight(float height)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void SetPlayerSpeed()
+        public override void SetSpeed(float speed)
         {
             throw new System.NotImplementedException();
         }

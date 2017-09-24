@@ -1,5 +1,5 @@
-﻿using Assets.ExperimentAssets.Scripts;
-using Assets.ExperimentAssets.Scripts.Player;
+﻿using Assets.ExperimentAssets.Player;
+using Assets.ExperimentAssets.Scripts;
 using DevConsole;
 using UnityEngine;
 

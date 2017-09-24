@@ -1,7 +1,6 @@
 ﻿using System;
+using Assets.ExperimentAssets.Player;
 using Assets.ExperimentAssets.Scripts;
-using BrainVR.UnityLogger;
-using Assets.ExperimentAssets.Scripts.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

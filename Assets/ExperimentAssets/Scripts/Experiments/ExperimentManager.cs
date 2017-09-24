@@ -1,6 +1,6 @@
-﻿using Assets.ExperimentAssets.Scripts.DataHolders;
+﻿using Assets.ExperimentAssets.Player;
+using Assets.ExperimentAssets.Scripts.DataHolders;
 using Assets.ExperimentAssets.Scripts.Experiments;
-using Assets.ExperimentAssets.Scripts.Player;
 using Assets.GeneralScripts;
 using UnityEngine;
 

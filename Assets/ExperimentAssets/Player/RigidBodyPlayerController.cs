@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
-namespace Assets.ExperimentAssets.Scripts.Player
+namespace Assets.ExperimentAssets.Player
 {
     public class RigidBodyPlayerController : PlayerController
     {
@@ -30,12 +30,12 @@ namespace Assets.ExperimentAssets.Scripts.Player
             gameObject.transform.LookAt(point);
         }
 
-        public override void SetPlayerHeight()
+        public override void SetHeight(float height)
         {
             throw new System.NotImplementedException();
         }
 
-        public override void SetPlayerSpeed()
+        public override void SetSpeed(float speed)
         {
             throw new System.NotImplementedException();
         }
