@@ -1,16 +1,13 @@
 ﻿using System;
-using Assets.ExperimentAssets.Menu;
-using Assets.ExperimentAssets.Player;
 using Assets.ExperimentAssets.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Assets.GeneralScripts
+namespace Assets.ExperimentAssets.Menu
 {
     public class MenuExperiment : Singleton<MenuExperiment>
     {
-
         public Toggle MenuToggle;
 
         public enum MenuState {ON, OFF};
@@ -18,7 +15,8 @@ namespace Assets.GeneralScripts
         public delegate void MenuStateHandler(MenuState toState);
         public static event MenuStateHandler MenuStateChanged;
 
-        void Update () {
+        void Update ()
+        {
             if (Input.GetKeyDown(KeyCode.Escape))
                 SwitchMenu();
         }
