@@ -29,6 +29,17 @@ namespace Assets.ExperimentAssets.Scripts.Player
         {
             gameObject.transform.LookAt(point);
         }
+
+        public override void SetPlayerHeight()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void SetPlayerSpeed()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void EnableMovement(bool bo = true)
         {
             _rigidbodyScript.BlockMovemennt = !bo;
