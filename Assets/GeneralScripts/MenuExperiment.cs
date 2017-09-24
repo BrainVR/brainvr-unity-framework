@@ -1,4 +1,5 @@
 ﻿using System;
+using Assets.ExperimentAssets.Menu;
 using Assets.ExperimentAssets.Player;
 using Assets.ExperimentAssets.Scripts;
 using UnityEngine;
@@ -7,7 +8,8 @@ using UnityEngine.UI;
 
 namespace Assets.GeneralScripts
 {
-    public class MenuExperiment : Singleton<MenuExperiment> {
+    public class MenuExperiment : Singleton<MenuExperiment>
+    {
 
         public Toggle MenuToggle;
 
@@ -36,21 +38,15 @@ namespace Assets.GeneralScripts
 
         public void TurnMenuOn()
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
-            PlayerController.Instance.EnableMovement(false);
-            PlayerController.Instance.EnableRotation(false);
+            MenuHelpers.MenuOn();
             MenuToggle.isOn = true;
             if (MenuStateChanged != null) MenuStateChanged(MenuState.ON);
         }
 
         public void TurnMenuOff()
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            MenuHelpers.MenuOff();
             MenuToggle.isOn = false;
-            PlayerController.Instance.EnableMovement();
-            PlayerController.Instance.EnableRotation();
             if (MenuStateChanged != null) MenuStateChanged(MenuState.OFF);
         }
 
