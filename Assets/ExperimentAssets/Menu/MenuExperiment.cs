@@ -17,8 +17,7 @@ namespace Assets.ExperimentAssets.Menu
 
         void Update ()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                SwitchMenu();
+            if (Input.GetKeyDown(KeyCode.Escape)) SwitchMenu();
         }
 
         public void SwitchMenu()

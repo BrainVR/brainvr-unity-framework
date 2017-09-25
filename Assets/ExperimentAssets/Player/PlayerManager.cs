@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Assets.ExperimentAssets.Menu;
+using UnityEngine;
 
 namespace Assets.ExperimentAssets.Player
 {
@@ -17,8 +19,11 @@ namespace Assets.ExperimentAssets.Player
 
         void Update()
         {
-            if (Input.GetButtonDown("PlayerSettings")) _settingsOn = !_settingsOn;
-            ShowSettings(_settingsOn);
+            if (Input.GetButtonDown("PlayerSettings"))
+            {
+                _settingsOn = !_settingsOn;
+                ShowSettings(_settingsOn);
+            }
         }
 
         #endregion
@@ -36,11 +41,10 @@ namespace Assets.ExperimentAssets.Player
         #endregion
 
         #region Private functions
-
-        void ShowSettings(bool bo)
+        private void ShowSettings(bool bo)
         {
+            (bo ? (Action) MenuHelpers.MenuOn : MenuHelpers.MenuOff)();
             SettingsCanvas.gameObject.SetActive(bo);
-            
         }
 
         #endregion
