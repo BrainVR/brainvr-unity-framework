@@ -1,10 +1,11 @@
 ﻿using System;
-using Assets.ExperimentAssets.Scripts.Canvas;
+using Assets.ExperimentAssets.Scripts.Experiments;
+using Assets.ExperimentAssets.UI;
 using BrainVR.UnityLogger;
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
 
-namespace Assets.ExperimentAssets.Scripts.Experiments
+namespace Assets.ExperimentAssets.Experiments
 {
     public enum ExperimentState
     {

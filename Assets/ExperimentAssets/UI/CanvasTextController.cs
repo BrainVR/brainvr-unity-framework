@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.ExperimentAssets.Scripts.Canvas
+namespace Assets.ExperimentAssets.UI
 {
     public class CanvasTextController : MonoBehaviour
     {

@@ -1,11 +1,11 @@
 ﻿using System;
-using Assets.ExperimentAssets.Scripts.Experiments;
+using Assets.ExperimentAssets.Experiments;
 using Assets.GeneralScripts;
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.ExperimentAssets.Scripts.UI
+namespace Assets.ExperimentAssets.UI
 {
     public class TestStarterButton : MonoBehaviour
     {

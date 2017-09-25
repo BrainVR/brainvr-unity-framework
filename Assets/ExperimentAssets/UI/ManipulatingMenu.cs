@@ -1,8 +1,7 @@
-﻿using Assets.ExperimentAssets.Scripts.Experiments;
+﻿using Assets.ExperimentAssets.Experiments;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Assets.ExperimentAssets.Scripts.UI
+namespace Assets.ExperimentAssets.UI
 {
     public class ManipulatingMenu : MonoBehaviour
     {

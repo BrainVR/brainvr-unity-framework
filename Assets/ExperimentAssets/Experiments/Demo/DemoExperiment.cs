@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Assets.ExperimentAssets.Scripts.Arduino;
+using Assets.ExperimentAssets.Arduino;
+using Assets.ExperimentAssets.Scripts.Experiments;
+using Assets.ExperimentAssets.Scripts.Experiments.DemoExperiment;
 using Assets.ExperimentAssets.Scripts.Objects.Beeper;
-using Assets.ExperimentAssets.Scripts.Objects.Goals;
-using Assets.ExperimentAssets.Scripts.Objects.Marks;
 using UnityEngine;
 
-namespace Assets.ExperimentAssets.Scripts.Experiments.DemoExperiment
+namespace Assets.ExperimentAssets.Experiments.Demo
 {
     public class DemoExperiment : Experiment
     {

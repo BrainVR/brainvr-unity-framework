@@ -2,7 +2,7 @@
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
 
-namespace Assets.ExperimentAssets.Scripts.Player
+namespace Assets.ExperimentAssets.Player
 {
     public abstract class PlayerController : Singleton<PlayerController>, IPlayerController
     {

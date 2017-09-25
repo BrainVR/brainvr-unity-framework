@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Assets.ExperimentAssets.DataHolders;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.ExperimentAssets.Scripts.DataHolders;
 
-namespace Assets.ExperimentAssets.Scripts.UI
+namespace Assets.ExperimentAssets.UI
 {
     public class LoadSettingsUI : MonoBehaviour
     {

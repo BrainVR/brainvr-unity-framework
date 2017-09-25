@@ -1,10 +1,11 @@
-﻿using Assets.ExperimentAssets.Scripts.DataHolders;
+﻿using Assets.ExperimentAssets.DataHolders;
+using Assets.ExperimentAssets.Player;
+using Assets.ExperimentAssets.Scripts.DataHolders;
 using Assets.ExperimentAssets.Scripts.Experiments;
-using Assets.ExperimentAssets.Scripts.Player;
 using Assets.GeneralScripts;
 using UnityEngine;
 
-namespace Assets.ExperimentAssets.Scripts
+namespace Assets.ExperimentAssets.Experiments
 {
     public class ExperimentManager : Singleton<ExperimentManager>
     {

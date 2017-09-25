@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using Assets.GeneralScripts;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Assets.ExperimentAssets.Scripts.Canvas
+namespace Assets.ExperimentAssets.UI
 {
     public class ExperimentCanvasManager : Singleton<ExperimentCanvasManager>
     {

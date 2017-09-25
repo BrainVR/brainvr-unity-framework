@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Assets.ExperimentAssets.DataHolders;
 using Assets.ExperimentAssets.Scripts.DataHolders;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Assets.ExperimentAssets.Scripts.UI
+namespace Assets.ExperimentAssets.UI
 {
     public class MainMenuController : Singleton<MainMenuController>
     {

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Assets.GeneralScripts;
-using UnityEngine;
 
-namespace Assets.ExperimentAssets.Scripts.Experiments
+namespace Assets.ExperimentAssets.Experiments
 {
-    public class TestManager : Singleton<TestManager> {
+    public class TestManager : Singleton<TestManager>
+    {
 
         public List<Experiment> Experiments = new List<Experiment>();
 

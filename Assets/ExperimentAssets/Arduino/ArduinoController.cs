@@ -1,6 +1,6 @@
 ﻿using ArduinoConnector;
 
-namespace Assets.ExperimentAssets.Scripts.Arduino
+namespace Assets.ExperimentAssets.Arduino
 {
     public enum ArduinoState {Uninitalised, Ready, Paused, Silent, NotFound}
     public class ArduinoController : Singleton<ArduinoController>

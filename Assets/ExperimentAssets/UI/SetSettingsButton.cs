@@ -1,9 +1,8 @@
-﻿using Assets.ExperimentAssets.Scripts.DataHolders;
-using Assets.GeneralScripts;
+﻿using Assets.ExperimentAssets.DataHolders;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.ExperimentAssets.Scripts.UI
+namespace Assets.ExperimentAssets.UI
 {
     public class SetSettingsButton : MonoBehaviour
     {

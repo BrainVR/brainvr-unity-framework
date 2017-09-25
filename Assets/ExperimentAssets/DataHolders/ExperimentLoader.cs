@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
+using Assets.ExperimentAssets.Experiments;
 using Assets.ExperimentAssets.Scripts.Experiments;
-using Assets.ExperimentAssets.Scripts.Experiments.DemoExperiment;
+using UnityEngine;
 
-namespace Assets.ExperimentAssets.Scripts.DataHolders
+namespace Assets.ExperimentAssets.DataHolders
 {
     public static class ExperimentLoader
     {

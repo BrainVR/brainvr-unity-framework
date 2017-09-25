@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
-namespace Assets.ExperimentAssets.Scripts.Player
+namespace Assets.ExperimentAssets.Player
 {
     public class RigidBodyPlayerController : PlayerController
     {

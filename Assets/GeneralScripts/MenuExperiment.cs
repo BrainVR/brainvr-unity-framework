@@ -1,14 +1,14 @@
 ﻿using System;
-using Assets.ExperimentAssets.Scripts;
-using BrainVR.UnityLogger;
-using Assets.ExperimentAssets.Scripts.Player;
+using Assets.ExperimentAssets.Experiments;
+using Assets.ExperimentAssets.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.GeneralScripts
 {
-    public class MenuExperiment : Singleton<MenuExperiment> {
+    public class MenuExperiment : Singleton<MenuExperiment>
+    {
 
         public Toggle MenuToggle;
 
