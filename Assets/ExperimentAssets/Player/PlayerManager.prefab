@@ -374,9 +374,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player Speed
-
-'
+  m_Text: "Player Speed: \n"
 --- !u!114 &114320978365293772
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -436,9 +434,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player Height
-
-'
+  m_Text: "Player Height: \n"
 --- !u!114 &114384229982508184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -479,8 +475,8 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224984074161535286}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 100
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -697,8 +693,8 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224187035341036950}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 100
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -727,6 +723,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e06773cb0a0ac469593ff679392438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SettingsCanvas: {fileID: 223438063040988742}
+  PlayerSpeedText: {fileID: 114107769795742412}
+  PlayerHeighText: {fileID: 114354523415128996}
 --- !u!114 &114925208102650398
 MonoBehaviour:
   m_ObjectHideFlags: 1

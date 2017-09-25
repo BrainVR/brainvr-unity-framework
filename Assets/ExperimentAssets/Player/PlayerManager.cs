@@ -1,22 +1,18 @@
 ﻿using System;
 using Assets.ExperimentAssets.Menu;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.ExperimentAssets.Player
 {
     public class PlayerManager : Singleton<PlayerManager>
     {
         public Canvas SettingsCanvas;
+        public Text PlayerSpeedText;
+        public Text PlayerHeighText;
         private bool _settingsOn;
 
         #region MonoBehaviour
-
-        void Start()
-        {
-            SettingsCanvas.gameObject.SetActive(false);
-            _settingsOn = false;
-        }
-
         void Update()
         {
             if (Input.GetButtonDown("PlayerSettings"))
@@ -25,18 +21,18 @@ namespace Assets.ExperimentAssets.Player
                 ShowSettings(_settingsOn);
             }
         }
-
         #endregion
-
         #region Public API
         public void SetHeight(float height)
         {
             PlayerController.Instance.SetHeight(height);
+            PlayerHeighText.text = "Player Height: " + height;
         }
-
         public void SetSpeed(float speed)
         {
             PlayerController.Instance.SetSpeed(speed);
+            PlayerSpeedText.text = "Player Speed: " + speed;
+
         }
         #endregion
 

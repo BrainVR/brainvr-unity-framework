@@ -57,7 +57,6 @@ namespace Assets.ExperimentAssets.Menu
             ExperimentManager.Instance.StartExperiment();
             TurnMenuOff();
         }
-
         public void RestartExperiment()
         {
             ExperimentManager.Instance.RestartExperiment();
