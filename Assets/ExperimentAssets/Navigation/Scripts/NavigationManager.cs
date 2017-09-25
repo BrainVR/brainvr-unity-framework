@@ -2,9 +2,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Assets.ExperimentAssets.Scripts.Navigation
+namespace Assets.ExperimentAssets.Navigation
 {
-
     public enum NavigationMode
     {
         Line,
