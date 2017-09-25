@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Assets.ExperimentAssets.DataHolders;
-using Assets.ExperimentAssets.VR;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,7 +27,6 @@ namespace Assets.ExperimentAssets.UI
                 ID.text = _experimentInfo.Participant.Id;
             }
         }
-
         public void UpdateSettings()
         {
             //sets the level
@@ -37,7 +35,6 @@ namespace Assets.ExperimentAssets.UI
             //sets the soud levels
             //sets keybindings?
         }
-
         public void StartExperiment()
         {
             if (!CanStart()) return;
@@ -85,7 +82,6 @@ namespace Assets.ExperimentAssets.UI
         private void PopulateExperimentInfo()
         {
             PopulateId();
-            PopulateVR();
         }
         #endregion
         #region settings helpers
@@ -96,15 +92,6 @@ namespace Assets.ExperimentAssets.UI
             var idGameObject = participantMenu.transform.Find("ID");
             InputField field = idGameObject.GetComponentInChildren<InputField>();
             _experimentInfo.Participant.Id = field.text;
-        }
-        private void PopulateVR()
-        {
-            var vr = GameObject.Find("VRSettings");
-            if (vr == null) return;
-            var selectionGO = vr.transform.Find("Selection");
-            Dropdown field = selectionGO.GetComponent<Dropdown>();
-            _experimentInfo.VRType = (VRType)field.value;
-            //_experimentInfo.VRType;
         }
         #endregion
     }
