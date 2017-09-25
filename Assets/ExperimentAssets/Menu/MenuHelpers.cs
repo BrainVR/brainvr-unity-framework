@@ -8,6 +8,8 @@ namespace Assets.ExperimentAssets.Menu
         public static void MenuOn()
         {
             Cursor.visible = true;
+            //hack from http://answers.unity3d.com/answers/1119750/view.html
+            Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Confined;
             PlayerController.Instance.EnableMovement(false);
             PlayerController.Instance.EnableRotation(false);
