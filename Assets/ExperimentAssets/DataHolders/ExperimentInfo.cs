@@ -1,7 +1,8 @@
 ﻿using System.Runtime.Serialization;
+using Assets.ExperimentAssets.VR;
 using UnityEngine;
 
-namespace Assets.ExperimentAssets.Scripts.DataHolders
+namespace Assets.ExperimentAssets.DataHolders
 {
     [System.Serializable]
     public class ParticipantInfo
@@ -34,6 +35,8 @@ namespace Assets.ExperimentAssets.Scripts.DataHolders
         public ScreenInfo ScreenInfo = new ScreenInfo();
         [DataMember]
         public string LevelName = "BVA";
+        [DataMember]
+        public VRType VRType = VRType.None;
 
         public void PopulateInfo()
         {
@@ -52,3 +55,4 @@ namespace Assets.ExperimentAssets.Scripts.DataHolders
         }
     }
 }
+    

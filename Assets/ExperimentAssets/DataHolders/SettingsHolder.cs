@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Assets.ExperimentAssets.Scripts.DataHolders;
 using Assets.ExperimentAssets.Scripts.Experiments;
 using Assets.GeneralScripts.Serialisation;
 

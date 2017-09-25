@@ -43,6 +43,11 @@ namespace Assets.ExperimentAssets.Player
             return new Vector2(transform.position.x, transform.position.z);
         }
         #endregion
+
+        #region Setting parameters
+        public abstract void SetHeight(float height);
+        public abstract void SetSpeed(float speed);
+        #endregion
         #endregion
         #region PRIVATE FUCNTIONS
         #endregion

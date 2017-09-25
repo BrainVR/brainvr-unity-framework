@@ -1,6 +1,4 @@
-﻿using Assets.ExperimentAssets.Scripts.DataHolders;
-using Assets.GeneralScripts;
-using UnityEditor;
+﻿using UnityEditor;
 
 public class YourClassAsset
 {

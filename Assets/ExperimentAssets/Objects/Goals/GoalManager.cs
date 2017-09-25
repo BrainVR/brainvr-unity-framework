@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.ExperimentAssets.DataHolders;
 using UnityEngine;
 
 namespace Assets.ExperimentAssets.Scripts.Objects.Goals

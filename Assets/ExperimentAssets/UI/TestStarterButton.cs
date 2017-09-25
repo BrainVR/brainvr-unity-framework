@@ -1,6 +1,6 @@
 ﻿using System;
 using Assets.ExperimentAssets.Experiments;
-using Assets.GeneralScripts;
+using Assets.ExperimentAssets.Menu;
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;

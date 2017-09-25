@@ -1,8 +1,7 @@
 ﻿using Assets.ExperimentAssets.DataHolders;
 using Assets.ExperimentAssets.Player;
-using Assets.ExperimentAssets.Scripts.DataHolders;
 using Assets.ExperimentAssets.Scripts.Experiments;
-using Assets.GeneralScripts;
+﻿using Assets.ExperimentAssets.Menu;
 using UnityEngine;
 
 namespace Assets.ExperimentAssets.Experiments

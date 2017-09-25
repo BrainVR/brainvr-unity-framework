@@ -7,10 +7,12 @@ namespace Assets.ExperimentAssets.Player
     public class RigidBodyPlayerController : PlayerController
     {
         private RigidbodyFirstPersonController _rigidbodyScript;
+        private CapsuleCollider _collider;
         #region Monobehaviour
 
-        void Start()
+        void Awake()
         {
+            _collider = gameObject.GetComponent<CapsuleCollider>();
             _rigidbodyScript = gameObject.GetComponent<RigidbodyFirstPersonController>();
             if (_rigidbodyScript == null)
             {
@@ -29,6 +31,17 @@ namespace Assets.ExperimentAssets.Player
         {
             gameObject.transform.LookAt(point);
         }
+
+        public override void SetHeight(float height)
+        {
+            _collider.height = height / 10;
+        }
+
+        public override void SetSpeed(float speed)
+        {
+            _rigidbodyScript.movementSettings.ForwardSpeed = speed;
+        }
+
         public override void EnableMovement(bool bo = true)
         {
             _rigidbodyScript.BlockMovemennt = !bo;

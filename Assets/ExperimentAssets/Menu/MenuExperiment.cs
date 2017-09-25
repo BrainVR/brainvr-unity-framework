@@ -1,15 +1,13 @@
 ﻿using System;
 using Assets.ExperimentAssets.Experiments;
-using Assets.ExperimentAssets.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Assets.GeneralScripts
+namespace Assets.ExperimentAssets.Menu
 {
     public class MenuExperiment : Singleton<MenuExperiment>
     {
-
         public Toggle MenuToggle;
 
         public enum MenuState {ON, OFF};
@@ -17,9 +15,9 @@ namespace Assets.GeneralScripts
         public delegate void MenuStateHandler(MenuState toState);
         public static event MenuStateHandler MenuStateChanged;
 
-        void Update () {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                SwitchMenu();
+        void Update ()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) SwitchMenu();
         }
 
         public void SwitchMenu()
@@ -37,21 +35,15 @@ namespace Assets.GeneralScripts
 
         public void TurnMenuOn()
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
-            PlayerController.Instance.EnableMovement(false);
-            PlayerController.Instance.EnableRotation(false);
+            MenuHelpers.MenuOn();
             MenuToggle.isOn = true;
             if (MenuStateChanged != null) MenuStateChanged(MenuState.ON);
         }
 
         public void TurnMenuOff()
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            MenuHelpers.MenuOff();
             MenuToggle.isOn = false;
-            PlayerController.Instance.EnableMovement();
-            PlayerController.Instance.EnableRotation();
             if (MenuStateChanged != null) MenuStateChanged(MenuState.OFF);
         }
 
@@ -65,7 +57,6 @@ namespace Assets.GeneralScripts
             ExperimentManager.Instance.StartExperiment();
             TurnMenuOff();
         }
-
         public void RestartExperiment()
         {
             ExperimentManager.Instance.RestartExperiment();
