@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.GeneralScripts.CrosshairRaycast
+namespace Assets.ExperimentAssets.Crosshair
 {
     public class CrosshairController : Singleton<CrosshairController>
     {

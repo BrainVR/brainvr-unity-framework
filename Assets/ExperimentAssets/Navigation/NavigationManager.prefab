@@ -52,7 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7e85447bdd04b47b487f9b7c3d0bf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsNavigating: 0
   Target: {fileID: 0}
+  NavigationMode: 0
 --- !u!120 &120379700754762888
 LineRenderer:
   m_ObjectHideFlags: 1
