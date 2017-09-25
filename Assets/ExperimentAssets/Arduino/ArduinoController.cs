@@ -1,6 +1,4 @@
 ﻿using ArduinoConnector;
-using Assets.GeneralScripts;
-using UnityEngine;
 
 namespace Assets.ExperimentAssets.Scripts.Arduino
 {
