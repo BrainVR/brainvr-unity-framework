@@ -5,7 +5,7 @@ using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BrainVR.UnityFramework.UI
+namespace BrainVR.UnityFramework.UI.InGame
 {
     public class TestStarterButton : MonoBehaviour
     {

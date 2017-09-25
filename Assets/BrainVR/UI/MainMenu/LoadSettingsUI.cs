@@ -5,7 +5,7 @@ using BrainVR.UnityFramework.DataHolders;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BrainVR.UnityFramework.UI
+namespace BrainVR.UnityFramework.UI.MainMenu
 {
     public class LoadSettingsUI : MonoBehaviour
     {

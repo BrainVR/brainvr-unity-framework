@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace BrainVR.UnityFramework.UI
+namespace BrainVR.UnityFramework.UI.MainMenu
 {
     public class MainMenuController : Singleton<MainMenuController>
     {

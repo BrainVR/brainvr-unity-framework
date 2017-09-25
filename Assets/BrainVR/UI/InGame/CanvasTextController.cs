@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace BrainVR.UnityFramework.UI
+namespace BrainVR.UnityFramework.UI.InGame
 {
     public class CanvasTextController : MonoBehaviour
     {

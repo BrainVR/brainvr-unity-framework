@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActiveObject: {fileID: 0}
   PossibleObjects:
-  - {fileID: 151456, guid: 90cf726dbf04941498ac7f5ad7280f92, type: 2}
+  - {fileID: 0}
   GoalName: 
 --- !u!114 &11441608
 MonoBehaviour:
@@ -144,10 +144,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActiveObject: {fileID: 0}
   PossibleObjects:
-  - {fileID: 144890, guid: 6e498a26606889a408f15f7da4059d07, type: 2}
-  - {fileID: 193278, guid: 5d28b993e2c57844bb36d36913848631, type: 2}
-  - {fileID: 197440, guid: e4f88c9c817b52c47a6f6db0a5b79010, type: 2}
-  - {fileID: 111794, guid: 0598f1f016184234480417da36f30226, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

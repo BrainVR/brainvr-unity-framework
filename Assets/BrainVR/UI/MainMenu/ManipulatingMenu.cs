@@ -1,7 +1,8 @@
 ﻿using BrainVR.UnityFramework.Experiments;
+using BrainVR.UnityFramework.UI.InGame;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.UI
+namespace BrainVR.UnityFramework.UI.MainMenu
 {
     public class ManipulatingMenu : MonoBehaviour
     {

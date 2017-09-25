@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.UI
+namespace BrainVR.UnityFramework.UI.InGame
 {
     public class ExperimentCanvasManager : Singleton<ExperimentCanvasManager>
     {

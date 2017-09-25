@@ -1,5 +1,5 @@
 ﻿using System;
-using BrainVR.UnityFramework.UI;
+using BrainVR.UnityFramework.UI.InGame;
 using BrainVR.UnityLogger;
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
