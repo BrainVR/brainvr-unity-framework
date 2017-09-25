@@ -1,4 +1,4 @@
-﻿using Assets.ExperimentAssets.Scripts.Player;
+﻿using Assets.ExperimentAssets.Player;
 using UnityEngine;
 
 namespace Assets.GeneralScripts

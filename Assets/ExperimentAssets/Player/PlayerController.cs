@@ -2,7 +2,7 @@
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
 
-namespace Assets.ExperimentAssets.Scripts.Player
+namespace Assets.ExperimentAssets.Player
 {
     public abstract class PlayerController : Singleton<PlayerController>, IPlayerController
     {
@@ -42,6 +42,11 @@ namespace Assets.ExperimentAssets.Scripts.Player
         {
             return new Vector2(transform.position.x, transform.position.z);
         }
+        #endregion
+
+        #region Setting parameters
+        public abstract void SetHeight(float height);
+        public abstract void SetSpeed(float speed);
         #endregion
         #endregion
         #region PRIVATE FUCNTIONS
