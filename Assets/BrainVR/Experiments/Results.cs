@@ -69,24 +69,42 @@ namespace BrainVR.UnityFramework.Experiments
         }
         public float Average(List<float> nums, int[] indices)
         {
-            var subList = nums.Where((x, i) => indices.Contains(i));
-            return nums.Count > 0 ? subList.Average() : 0f;
+            var subList = nums.Where((x, i) => indices.Contains(i)).ToList();
+            return Average(subList);
         }
+        public float Average(List<float> nums, List<int[]> indices)
+        {
+            var finishedIndices = indices[0];
+            for (var i = 1; i < indices.Count; i++)
+            {
+                finishedIndices = finishedIndices.Intersect(indices[i]).ToArray();
+            }
+            return Average(nums, finishedIndices);
+        }
+        //Counting of booleans
         public int SumBool(List<bool> bools)
         {
             return bools.Count(s => s);
         }
         public int SumBool(List<bool> bools, int[] indices)
         {
-            var subList = bools.Where((x, i) => indices.Contains(i));
-            return subList.Count(s => s);
+            var subList = bools.Where((x, i) => indices.Contains(i)).ToList();
+            return SumBool(subList);
         }
-        #endregion
-    }
+        public int SumBool(List<bool> bools, List<int[]> indices)
+        {
+            var finishedIndices = indices[0];
+            for (var i = 1; i < indices.Count; i++)
+            {
+                finishedIndices = finishedIndices.Intersect(indices[i]).ToArray();
+            }
+            return SumBool(bools, finishedIndices);
+        }
+        #endregion    }
 
-}
-// Allows list interation and searching for inidces of a certain value
-public static class EM
+    }
+    // Allows list interation and searching for inidces of a certain value
+    public static class EM
 {
     public static int[] FindAllIndexof<T>(this IEnumerable<T> values, T val)
     {
