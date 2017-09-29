@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BrainVR.UnityFramework.Helpers;
+using BrainVR.UnityFramework.Objects;
+using BrainVR.UnityFramework.Objects.Goals;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace BrainVR.UnityFramework.Objects
 {
@@ -28,6 +33,10 @@ namespace BrainVR.UnityFramework.Objects
             foreach (var obj in Objects)
                 obj.Show(bo);
         }
+        public void HideAll()
+        {
+            ShowAll(false);
+        }
         public void MoveObjectsCircumference(int number, int[] positions, float radius = 15, Vector3 center = default(Vector3))
         {
             //validations
@@ -48,3 +57,31 @@ namespace BrainVR.UnityFramework.Objects
         }
     }
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(AreaObjectManager<>), true)]
+public class ArenaObjectManagerInspector : Editor
+{
+    private SerializedProperty _objects;
+    void OnEnable()
+    {
+        // Setup the SerializedProperties
+        _objects = serializedObject.FindProperty("Objects");
+    }
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
+        if (_objects.arraySize > 100)
+        {
+            string[] excludes = {"Objects"};
+            DrawPropertiesExcluding(serializedObject, excludes);
+            GUILayout.Label("There is too many objects. You need to delete and reinstantiate object.");
+        }
+        else
+        {
+            GUILayout.Label("If you enter more than 100 objects, following edits in Unity eitor will be disabled. Many objects in lists slow the Editor.");
+            DrawDefaultInspector();
+        }
+    }
+}
+#endif
