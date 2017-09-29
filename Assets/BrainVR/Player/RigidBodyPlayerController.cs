@@ -64,13 +64,12 @@ namespace BrainVR.UnityFramework.Player
         }
         public override List<string> PlayerInformation()
         {
-            List<string> strgs = new List<string>();
-            // position 
-            strgs.Add(transform.position.ToString("F4"));
-            // rotation x is actually players Y
-            strgs.Add(Rotation.x.ToString("F4"));
-            // rotation Y - this is actually camerax X
-            strgs.Add(Rotation.y.ToString("F4"));
+            var strgs = new List<string>
+            {
+                Position.ToString("F4"),
+                Rotation.x.ToString("F4"),
+                Rotation.y.ToString("F4")
+            };
             return strgs;
         }
         #endregion
