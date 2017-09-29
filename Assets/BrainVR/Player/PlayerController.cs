@@ -8,6 +8,8 @@ namespace BrainVR.UnityFramework.Player
     {
         #region Public API
         #region Moving
+        public abstract void EnableMovement(bool bo = true);
+        public abstract Vector3 Position { get; set; }
         public void MoveToCenter()
         {
             MoveToPosition(new Vector2(0, 0));
@@ -15,13 +17,8 @@ namespace BrainVR.UnityFramework.Player
         public void MoveToPosition(Vector2 position)
         {
             Vector3 movePosition = new Vector3(0, gameObject.transform.position.y, 0);
-            MoveToPosition(movePosition);
+            Position = movePosition;
         }
-        public void MoveToPosition(Vector3 position)
-        {
-            gameObject.transform.position = position;
-        }
-        public abstract void EnableMovement(bool bo = true);
         public void Unstuck()
         {
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, transform.position.y, 0), 1);
@@ -29,21 +26,11 @@ namespace BrainVR.UnityFramework.Player
         }
         #endregion
         #region Rotating
+        public abstract Vector2 Rotation { get; }
         public abstract void EnableRotation(bool bo = true);
         public abstract void LookAtPosition(Vector2 point);
         public abstract void LookAtPosition(Vector3 point);
         #endregion
-        #region Information
-        /// <summary>
-        /// returns positon in world coordinates ignoring Y axis
-        /// </summary>
-        /// <returns>Vector2 coordinates (X, Z)</returns>
-        public Vector2 GetVector2Position()
-        {
-            return new Vector2(transform.position.x, transform.position.z);
-        }
-        #endregion
-
         #region Setting parameters
         public abstract void SetHeight(float height);
         public abstract void SetSpeed(float speed);
@@ -55,6 +42,5 @@ namespace BrainVR.UnityFramework.Player
         public abstract string HeaderLine();
         public abstract List<string> PlayerInformation();
         #endregion
-
     }
 }

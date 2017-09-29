@@ -9,7 +9,6 @@ namespace BrainVR.UnityFramework.Player
         private RigidbodyFirstPersonController _rigidbodyScript;
         private CapsuleCollider _collider;
         #region Monobehaviour
-
         void Awake()
         {
             _collider = gameObject.GetComponent<CapsuleCollider>();
@@ -22,6 +21,16 @@ namespace BrainVR.UnityFramework.Player
         }
         #endregion
         #region Public API
+        public override Vector3 Position
+        {
+            get { return transform.position; }
+            set { gameObject.transform.position = value; }
+        }
+        public override Vector2 Rotation
+        {
+            //in common practice player rotates in Y and camera on X, but this should be reimplemented in VR
+            get { return new Vector2(transform.eulerAngles.y, Camera.main.transform.eulerAngles.x); }
+        }
         public override void LookAtPosition(Vector2 point)
         {
             Vector3 lookingPoint = new Vector3(point.x, Camera.main.transform.position.y, point.y);
@@ -31,17 +40,14 @@ namespace BrainVR.UnityFramework.Player
         {
             gameObject.transform.LookAt(point);
         }
-
         public override void SetHeight(float height)
         {
             _collider.height = height / 10;
         }
-
         public override void SetSpeed(float speed)
         {
             _rigidbodyScript.movementSettings.ForwardSpeed = speed;
         }
-
         public override void EnableMovement(bool bo = true)
         {
             _rigidbodyScript.BlockMovemennt = !bo;
@@ -58,13 +64,12 @@ namespace BrainVR.UnityFramework.Player
         }
         public override List<string> PlayerInformation()
         {
-            List<string> strgs = new List<string>();
-            // position 
-            strgs.Add(transform.position.ToString("F4"));
-            // rotation Y
-            strgs.Add(transform.eulerAngles.y.ToString("F4"));
-            // rotation X
-            strgs.Add(Camera.main.transform.eulerAngles.x.ToString("F4"));
+            var strgs = new List<string>
+            {
+                Position.ToString("F4"),
+                Rotation.x.ToString("F4"),
+                Rotation.y.ToString("F4")
+            };
             return strgs;
         }
         #endregion
