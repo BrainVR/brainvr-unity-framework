@@ -24,13 +24,8 @@ namespace BrainVR.UnityFramework.Objects
             if (ActiveObject.GetComponent<Renderer>() != null) _originalColor = ActiveObject.GetComponent<Renderer>().material.GetColor("_Color");
             else Debug.Log("Object does not have direct colour attached");
         }
-            
         #endregion
         #region Information
-        /// <summary>
-        /// returns positon in world coordinates ignoring Y axis
-        /// </summary>
-        /// <returns>Vector2 coordinates (X, Z)</returns>
         public Vector2 GetVector2Position()
         {
             return new Vector2(transform.position.x, transform.position.z);
@@ -53,7 +48,7 @@ namespace BrainVR.UnityFramework.Objects
         }
         public void StopRotation()
         {
-            if(rotation != null) StopCoroutine(rotation);
+            if (rotation != null) StopCoroutine(rotation);
         }
         public void SetSize(Vector3 scale)
         {
@@ -67,7 +62,7 @@ namespace BrainVR.UnityFramework.Objects
             mat.SetColor("_Color", color);
         }
         public void ResetColor()
-        {   
+        {
             if (!HasColour()) return;
             var mat = ActiveObject.GetComponent<Renderer>().material;
             mat.SetColor("_Color", _originalColor);
@@ -80,7 +75,8 @@ namespace BrainVR.UnityFramework.Objects
             }
             catch (KeyNotFoundException ex)
             {
-                Debug.Log("Exception" + ex + "raised. Object of name " + s + " does not exist in " + name + ", instantiating default");
+                Debug.Log("Exception" + ex + "raised. Object of name " + s + " does not exist in " + name +
+                          ", instantiating default");
                 //instantiates defualt
             }
         }
@@ -110,7 +106,7 @@ namespace BrainVR.UnityFramework.Objects
         private void SetObject(string s, bool force = false)
         {
             //this doesnt work as intended
-            GameObject go = PossibleObjects.SingleOrDefault(obj => obj.name == s);
+            var go = PossibleObjects.SingleOrDefault(obj => obj.name == s);
             if (go == null) throw new KeyNotFoundException();
             InstantiateActiveGameObject(go, force);
         }
@@ -129,29 +125,23 @@ namespace BrainVR.UnityFramework.Objects
         }
         private void SetActiveObjectTransforms()
         {
-            Quaternion originalQuaternion = ActiveObject.transform.rotation;
-            Vector3 originalPosition = ActiveObject.transform.position;
+            var originalQuaternion = ActiveObject.transform.rotation;
+            var originalPosition = ActiveObject.transform.position;
             ActiveObject.transform.SetParent(transform);
             ActiveObject.transform.localPosition = originalPosition;
             ActiveObject.transform.localRotation = originalQuaternion;
         }
         private bool CheckExistence()
         {
-            if (ActiveObject != null)
-            {
-                Destroy(ActiveObject);
-                return true;
-            } return false;
-
+            if (ActiveObject == null) return false;
+            Destroy(ActiveObject);
+            return true;
         }
         private bool HasColour()
         {
-            if (ActiveObject.GetComponent<Renderer>() == null)
-            {
-                Debug.Log("Object does not have direct colour attached");
-                return false;
-            }
-            return true;
+            if (ActiveObject.GetComponent<Renderer>() != null) return true;
+            Debug.Log("Object does not have direct colour attached");
+            return false;
         }
         private IEnumerator Rotate(Vector3 dir, float speed)
         {
@@ -161,6 +151,6 @@ namespace BrainVR.UnityFramework.Objects
                 yield return null;
             }
         }
-        #endregion 
+        #endregion
     }
 }

@@ -33,6 +33,10 @@ namespace BrainVR.UnityFramework.Objects
             foreach (var obj in Objects)
                 obj.Show(bo);
         }
+        public void HideAll()
+        {
+            ShowAll(false);
+        }
         public void MoveObjectsCircumference(int number, int[] positions, float radius = 15, Vector3 center = default(Vector3))
         {
             //validations
