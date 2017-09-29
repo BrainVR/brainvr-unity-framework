@@ -21,6 +21,16 @@ namespace BrainVR.UnityFramework.Player
         }
         #endregion
         #region Public API
+        public override Vector3 Position
+        {
+            get { return transform.position; }
+            set { gameObject.transform.position = value; }
+        }
+        public override Vector2 Rotation
+        {
+            //in common practice player rotates in Y and camera on X, but this should be reimplemented in VR
+            get { return new Vector2(transform.eulerAngles.y, Camera.main.transform.eulerAngles.x); }
+        }
         public override void LookAtPosition(Vector2 point)
         {
             Vector3 lookingPoint = new Vector3(point.x, Camera.main.transform.position.y, point.y);
@@ -57,10 +67,10 @@ namespace BrainVR.UnityFramework.Player
             List<string> strgs = new List<string>();
             // position 
             strgs.Add(transform.position.ToString("F4"));
-            // rotation Y
-            strgs.Add(transform.eulerAngles.y.ToString("F4"));
-            // rotation X
-            strgs.Add(Camera.main.transform.eulerAngles.x.ToString("F4"));
+            // rotation x is actually players Y
+            strgs.Add(Rotation.x.ToString("F4"));
+            // rotation Y - this is actually camerax X
+            strgs.Add(Rotation.y.ToString("F4"));
             return strgs;
         }
         #endregion

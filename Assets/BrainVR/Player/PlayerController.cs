@@ -9,11 +9,7 @@ namespace BrainVR.UnityFramework.Player
         #region Public API
         #region Moving
         public abstract void EnableMovement(bool bo = true);
-        public virtual Vector3 Position
-        {
-            get { return transform.position; }
-            set { gameObject.transform.position = value; }
-        }
+        public abstract Vector3 Position { get; set; }
         public void MoveToCenter()
         {
             MoveToPosition(new Vector2(0, 0));
@@ -30,10 +26,7 @@ namespace BrainVR.UnityFramework.Player
         }
         #endregion
         #region Rotating
-        public virtual Vector2 Rotation
-        {
-            get { return new Vector2(transform.eulerAngles.y, Camera.main.transform.eulerAngles.x); }
-        }
+        public abstract Vector2 Rotation { get; }
         public abstract void EnableRotation(bool bo = true);
         public abstract void LookAtPosition(Vector2 point);
         public abstract void LookAtPosition(Vector3 point);
@@ -49,6 +42,5 @@ namespace BrainVR.UnityFramework.Player
         public abstract string HeaderLine();
         public abstract List<string> PlayerInformation();
         #endregion
-
     }
 }
