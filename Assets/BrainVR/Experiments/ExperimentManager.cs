@@ -1,34 +1,31 @@
 ﻿using BrainVR.UnityFramework.DataHolders;
-using BrainVR.UnityFramework.Menu;
-using BrainVR.UnityFramework.Player;
+using BrainVR.UnityFramework.UI.InGame;
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.Experiments
 {
     public class ExperimentManager : Singleton<ExperimentManager>
     {
-        public MenuExperiment Menu;
-        public PlayerController PlayerController;
-        public GameObject UI;
-
         public Experiment Experiment;
 
         #region MonoBehaviour
         void Start ()
         {
-            Menu = MenuExperiment.Instance;
-            PlayerController = PlayerController.Instance;
-            ExperimentSettings settings = SettingsHolder.Instance.CurrentExperimentSettings();
+            var settings = SettingsHolder.Instance.CurrentExperimentSettings();
             if (settings != null) LoadExperiment(settings.ExperimentName, settings);
         }
         void Update()
         {
-            if(Input.GetButtonDown("HideUI")) UI.SetActive(!UI.activeInHierarchy);
+            if (Input.GetButtonDown("HideUI"))
+            {
+                var ui = ExperimentCanvasManager.Instance.gameObject;
+                ui.SetActive(!ui.activeInHierarchy);
+            }
         }
         #endregion
         public void LoadExperiment(string experimentName, ExperimentSettings settings = null)
         {
-            Experiment experiment = ExperimentLoader.CreateExperimentGO(experimentName, settings);
+            var experiment = ExperimentLoader.CreateExperimentGO(experimentName, settings);
             if (Experiment) Destroy(Experiment.gameObject);
             Experiment = experiment;
         }

@@ -8,9 +8,7 @@ namespace BrainVR.UnityFramework.DataHolders
     public class SettingsHolder : Singleton<SettingsHolder>
     {
         public ExperimentInfo ExperimentInfo = new ExperimentInfo();
-
         public List<ExperimentSettings> ExperimentSettings = new List<ExperimentSettings>();
-
         public string LevelName;
 
         private int _currentExperiment;
