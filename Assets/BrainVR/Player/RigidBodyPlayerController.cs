@@ -9,7 +9,6 @@ namespace BrainVR.UnityFramework.Player
         private RigidbodyFirstPersonController _rigidbodyScript;
         private CapsuleCollider _collider;
         #region Monobehaviour
-
         void Awake()
         {
             _collider = gameObject.GetComponent<CapsuleCollider>();
@@ -31,17 +30,14 @@ namespace BrainVR.UnityFramework.Player
         {
             gameObject.transform.LookAt(point);
         }
-
         public override void SetHeight(float height)
         {
             _collider.height = height / 10;
         }
-
         public override void SetSpeed(float speed)
         {
             _rigidbodyScript.movementSettings.ForwardSpeed = speed;
         }
-
         public override void EnableMovement(bool bo = true)
         {
             _rigidbodyScript.BlockMovemennt = !bo;
