@@ -13,6 +13,12 @@ namespace BrainVR.UnityFramework.Objects
 
         private IEnumerator rotation;
 
+        public Vector3 Position
+        {
+            get { return transform.position; }
+            set { transform.position = value; }
+        }
+
         #region Monobehaviour
         void OnEnable()
         {
@@ -26,9 +32,9 @@ namespace BrainVR.UnityFramework.Objects
         }
         #endregion
         #region Information
-        public Vector2 GetVector2Position()
+        public Vector2 PositionV2()
         {
-            return new Vector2(transform.position.x, transform.position.z);
+            return new Vector2(Position.x, Position.z);
         }
         #endregion
         #region Manipulation
@@ -83,19 +89,27 @@ namespace BrainVR.UnityFramework.Objects
         public bool Switch()
         {
             bool toState = !ActiveObject.GetComponent<Renderer>().enabled;
-            ActiveObject.GetComponent<Renderer>().enabled = toState;
+            Show(toState);
             return toState;
         }
         public void Show(bool bo = true)
         {
-            foreach (var renderer in ActiveObject.GetComponentsInChildren<Renderer>())
-                renderer.enabled = bo;
-            foreach (var collider in ActiveObject.GetComponentsInChildren<Collider>())
-                if (!collider.isTrigger) collider.enabled = bo;
+            foreach (var rend in ActiveObject.GetComponentsInChildren<Renderer>())
+                rend.enabled = bo;
+            EnableColliders(bo);
         }
         public void Hide()
         {
             Show(false);
+        }
+        public void EnableColliders(bool bo = true, bool trigger = false)
+        {
+            foreach (var col in ActiveObject.GetComponentsInChildren<Collider>())
+                if (!col.isTrigger) col.enabled = true;
+        }
+        public void DisableColliders(bool trigger = false)
+        {
+            EnableColliders(true, trigger);
         }
         #endregion
         #region private helpers

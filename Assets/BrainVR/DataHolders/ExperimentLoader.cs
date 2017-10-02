@@ -22,13 +22,15 @@ namespace BrainVR.UnityFramework.DataHolders
                 return null;
             }
             var exp = expGO.AddComponent(experimentClass) as Experiment;
-            var settingsType = ExperimentSettingsType(expName);
             //exp.Settings
-            exp.AddSettings(settings);
-            //this is here so that logs are created properly
-            exp.Name = expName;
-            return exp;
-
+            if (exp != null)
+            {
+                exp.AddSettings(settings);
+                //this is here so that logs are created properly
+                exp.Name = expName;
+                return exp;
+            }
+            return null;
         }
         public static ExperimentSettings PopulateExperimentSettings(string expName, string path)
         {
