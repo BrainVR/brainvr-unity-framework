@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
@@ -38,7 +39,14 @@ namespace BrainVR.UnityFramework.Player
         }
         public override void LookAtPosition(Vector3 point)
         {
-            gameObject.transform.LookAt(point);
+            //calculating actually from the center of the player object, because it shoudl better correspond
+            //to the central aiming dot - games are werid
+            var relativePos = point - gameObject.transform.position;
+            var targetAngle = Quaternion.LookRotation(relativePos).eulerAngles;
+            gameObject.transform.eulerAngles = new Vector3(0, targetAngle.y, 0);
+            Camera.main.transform.localEulerAngles = new Vector3(targetAngle.x, 0, 0);
+            //rests mouse look
+            _rigidbodyScript.mouseLook.Init(transform, Camera.main.transform);
         }
         public override void SetHeight(float height)
         {
@@ -55,6 +63,15 @@ namespace BrainVR.UnityFramework.Player
         public override void EnableRotation(bool bo = true)
         {
             _rigidbodyScript.BlockRotation = !bo;
+        }
+        #endregion
+        #region Helpers
+        IEnumerator TimeLooker(Vector3 point, float time)
+        {
+            EnableRotation(false);
+            LookAtPosition(point);
+            yield return new WaitForSeconds(time);
+            EnableRotation();
         }
         #endregion
         #region logging
