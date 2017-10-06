@@ -16,7 +16,7 @@ namespace BrainVR.UnityFramework.Player
         }
         public void MoveToPosition(Vector2 position)
         {
-            Vector3 movePosition = new Vector3(0, gameObject.transform.position.y, 0);
+            Vector3 movePosition = new Vector3(position.x, gameObject.transform.position.y, position.y);
             Position = movePosition;
         }
         public void Unstuck()
