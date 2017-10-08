@@ -1,0 +1,24 @@
+site_name: BrainVR unity framework overview
+theme: material
+
+pages: 
+  - Framework overview : 'index.md'
+  - Getting started : 'getting-started.md'
+  - New experiment : 'new-experiment.md'
+  - Experiment flow : 'experiment-flow.md'
+  - Controller objects :
+    - 'Overview' : 'objects.md' 
+    - 'Arena object manager' : 'objects/arena-object-manager.md'    
+    - 'Arena object' : 'objects/arena-object.md'
+    - 'Beeper manager' : 'objects/beeper-manager.md'
+    - 'Beeper controller' : 'objects/beeper-controller.md'
+    - 'Experiment manager' : 'objects/experiment-manager.md'
+    - 'Player controller' : 'objects/player-controller.md'
+  - Logging : 'logging.md'
+
+repo_name: 'brainvr/brainvr-unity-framework'
+repo_url: 'https://github.com/brainvr/brainvr-unity-framework'
+
+markdown_extensions:
+  - codehilite
+  - admonition
