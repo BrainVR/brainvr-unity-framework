@@ -8,12 +8,15 @@ namespace BrainVR.UnityFramework.Player
     public class RigidBodyPlayerController : PlayerController
     {
         private RigidbodyFirstPersonController _rigidbodyScript;
+        private Rigidbody _rigidbody;
         private CapsuleCollider _collider;
         #region Monobehaviour
         void Awake()
         {
             _collider = gameObject.GetComponent<CapsuleCollider>();
             _rigidbodyScript = gameObject.GetComponent<RigidbodyFirstPersonController>();
+            _rigidbody = gameObject.GetComponent<Rigidbody>();
+
             if (_rigidbodyScript == null)
             {
                 Debug.LogError("Player log doesn't have a rigid body attached");
@@ -63,6 +66,23 @@ namespace BrainVR.UnityFramework.Player
         public override void EnableRotation(bool bo = true)
         {
             _rigidbodyScript.BlockRotation = !bo;
+        }
+        //this is suboptimal solution, but it works
+        public void Stop()
+        {
+            StartCoroutine(Sttoper());
+        }
+        //The problem without yield is that i couldn't figure out how to stop player completely
+        //for some reason one fixed update deletes the values in velocity, but reinstantiates them during a next fixed update.
+        //There is some "leftover" force being still applied, so I just blck the movemembt for 0.2 s
+        private IEnumerator Sttoper()
+        {
+            EnableMovement(false);
+            _rigidbodyScript.movementSettings.CurrentTargetSpeed = 0f;
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+            yield return new WaitForSeconds(0.2f);
+            EnableMovement();
         }
         #endregion
         #region Helpers
