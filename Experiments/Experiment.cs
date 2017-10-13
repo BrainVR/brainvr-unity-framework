@@ -113,6 +113,7 @@ namespace BrainVR.UnityFramework.Experiments
             CanvasManager = ExperimentCanvasManager.Instance;
             SendExperimentStateChanged(ExperimentState.Initialised);
             ExperimentState = ExperimentState.Initialised;
+            AfterExperimentInitialise();
         }
         //sets up the pieces 
         // - initializes the log, 
@@ -129,6 +130,7 @@ namespace BrainVR.UnityFramework.Experiments
             OnExperimentStart();
             SendExperimentStateChanged(ExperimentState.Started);
             ExperimentState = ExperimentState.Running;
+            TrialNumber = -1;
             TrialSetNext(true);
             AfterExperimentStart();
         }
@@ -239,6 +241,7 @@ namespace BrainVR.UnityFramework.Experiments
         public abstract string ExperimentHeaderLog();
         //happends when the experiment is started - non monobehaviour logic
         protected abstract void OnExperimentInitialise();
+        protected abstract void AfterExperimentInitialise();
         //sets up the pieces
         protected abstract void OnExperimentSetup();
         protected abstract void AfterExperimentSetup();

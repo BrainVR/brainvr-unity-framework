@@ -17,8 +17,7 @@ namespace BrainVR.UnityFramework.Experiments.Demo
         protected float TrialStartTime;
         protected float TrialEndTime;
         protected List<float> TrialTimes = new List<float>();
-        public new DemoExperimentSettings Settings;
-        
+        public new DemoExperimentSettings Settings;    
         #region Forced API
         public override void AddSettings(ExperimentSettings settings)
         {
@@ -27,6 +26,7 @@ namespace BrainVR.UnityFramework.Experiments.Demo
         #endregion
         #region Experiment Logic
         protected override void OnExperimentInitialise() { }
+        protected override void AfterExperimentInitialise() { }
         protected override void ExperimentUpdate() { }
         protected override void OnExperimentSetup()
         {
@@ -36,10 +36,7 @@ namespace BrainVR.UnityFramework.Experiments.Demo
             Arduino.Connect();
         }
         protected override void AfterExperimentSetup() { }
-        protected override void OnExperimentStart()
-        {
-            TrialNumber = -1;
-        }
+        protected override void OnExperimentStart() { }
         protected override void AfterExperimentStart() { }
         protected override void OnTrialSetup() { }
         protected override void OnTrialStart()
