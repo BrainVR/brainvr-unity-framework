@@ -245,38 +245,24 @@ namespace BrainVR.UnityFramework.Experiments
         #region Forced Experiment API - needs to be impemented
         //Necessary to instantiate the experiment
         public abstract void AddSettings(ExperimentSettings settings);
-        //Doesnt need to be called from outside the experiment - its just to make things clearer in the code
         public abstract string ExperimentHeaderLog();
-        //happends when the experiment is started - non monobehaviour logic
         protected abstract void OnExperimentInitialise();
         protected abstract void AfterExperimentInitialise();
-        //sets up the pieces
         protected abstract void OnExperimentSetup();
         protected abstract void AfterExperimentSetup();
         protected abstract void OnExperimentStart();
         protected abstract void AfterExperimentStart();
-        //called when new trial is prepaired
         protected abstract void OnTrialSetup();
-        //called after the new trial is prepaired
         protected abstract void AfterTrialSetup();
-        //called when the trial is actually started
         protected abstract void OnTrialStart();
-        //called after everything been instantiated
         protected abstract void AfterTrialStart();
-        //when the task has been successfully finished
         protected abstract void OnTrialFinished();
-        //called after the task has been successfully finished
         protected abstract void AfterTrialFinished();
-        //called after Trial has been finished and close - cleanup
         protected abstract void OnTrialClosed();
-        //called after Trial has been finished and close - cleanup
         protected abstract void AfterTrialClosed();
-        //called automatically after trialCleanup
         protected abstract bool CheckForEnd();
-        //when trials end
         protected abstract void OnExperimentFinished();
         protected abstract void AfterExperimentFinished();
-        //after OnExperiemntFinished is called
         protected abstract void OnExperimentClosed();
         protected abstract void AfterExperimentClosed();
         #endregion
