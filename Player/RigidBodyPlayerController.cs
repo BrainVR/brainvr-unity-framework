@@ -10,6 +10,7 @@ namespace BrainVR.UnityFramework.Player
         private RigidbodyFirstPersonController _rigidbodyScript;
         private Rigidbody _rigidbody;
         private CapsuleCollider _collider;
+
         #region Monobehaviour
         void Awake()
         {
@@ -35,6 +36,7 @@ namespace BrainVR.UnityFramework.Player
             //in common practice player rotates in Y and camera on X, but this should be reimplemented in VR
             get { return new Vector2(transform.eulerAngles.y, Camera.main.transform.eulerAngles.x); }
         }
+        public override Vector2 PointingDirection { get { return Rotation; } }
         public override void LookAtPosition(Vector2 point)
         {
             Vector3 lookingPoint = new Vector3(point.x, Camera.main.transform.position.y, point.y);
@@ -59,6 +61,7 @@ namespace BrainVR.UnityFramework.Player
         {
             _rigidbodyScript.movementSettings.ForwardSpeed = speed;
         }
+
         public override void EnableMovement(bool bo = true)
         {
             _rigidbodyScript.BlockMovemennt = !bo;

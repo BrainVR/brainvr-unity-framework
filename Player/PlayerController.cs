@@ -35,6 +35,18 @@ namespace BrainVR.UnityFramework.Player
         public abstract void SetHeight(float height);
         public abstract void SetSpeed(float speed);
         #endregion
+        #region Information
+        /// <summary>
+        /// returns positon in world coordinates ignoring Y axis
+        /// </summary>
+        /// <returns>Vector2 coordinates (X, Z)</returns>
+        public abstract Vector2 PointingDirection { get; }
+        /// 
+        public Vector2 GetVector2Position()
+        {
+            return new Vector2(transform.position.x, transform.position.z);
+        }
+        #endregion
         #endregion
         #region PRIVATE FUCNTIONS
         #endregion
