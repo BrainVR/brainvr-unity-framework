@@ -22,42 +22,24 @@ namespace BrainVR.UnityFramework.Objects.Goals
         /// <summary>
         /// Returns a Goal controller script given by index
         /// </summary>
-        /// <param BeeperName="i">index</param>
+        /// <param name="i">index</param>
         /// <returns>GoalController</returns>
         public GoalController GetGoal(int i)
         {
-            if (i > Objects.Count)
-            {
-                Debug.Log("There isnt that many items");
-                return null;
-            }
-            var goalController = Objects[i];
-            return (GoalController)goalController;
+            var obj = GetObject(i);
+            return obj == null ? null : (GoalController)obj;
         }
         /// <summary>
         /// Resizes all the goals based on the multiplier characteristic
         /// </summary>
-        /// <param BeeperName="multiplier"></param>
+        /// <param name="multiplier"></param>
         public void ResizeGoals(float multiplier = 1f)
         {
             foreach (var goalController in Objects)
             {
-                Vector3 currentScale = goalController.gameObject.transform.localScale;
+                var currentScale = goalController.gameObject.transform.localScale;
                 goalController.gameObject.transform.localScale = new Vector3(currentScale.x*multiplier, currentScale.y, currentScale.z*multiplier);
             }
-        }
-        public void HideAll()
-        {
-            ShowAll(false);
-        }
-        public void ShowGoal(int i, bool bo = true)
-        {
-            var goal = GetGoal(i);
-            if (goal != null) goal.Show(bo);
-        }
-        public void HideGoal(int i)
-        {
-            ShowGoal(i);
         }
         #endregion
         /// <summary>

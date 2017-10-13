@@ -2,7 +2,6 @@
 using System.Linq;
 using BrainVR.UnityFramework.Helpers;
 using BrainVR.UnityFramework.Objects;
-using BrainVR.UnityFramework.Objects.Goals;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -13,6 +12,14 @@ namespace BrainVR.UnityFramework.Objects
     public class AreaObjectManager<T> : Singleton<T> where T : MonoBehaviour
     {
         public List<ArenaObject> Objects = new List<ArenaObject>();
+
+        #region Public API
+        public ArenaObject GetObject(int i)
+        {
+            if (i < Objects.Count) return Objects[i];
+            Debug.Log("There isn't that many items");
+            return null;
+        }
         public void SetColor(Color color)
         {
             foreach (var controller in Objects)
@@ -27,6 +34,16 @@ namespace BrainVR.UnityFramework.Objects
         {
             foreach (var controller in Objects)
                 controller.SetType(s);
+        }
+        public void Show(int i, bool bo = true)
+        {
+            var obj = GetObject(i);
+            if(obj != null) Objects[i].Show(bo);
+        }
+        public void Hide(int i)
+        {
+            var obj = GetObject(i);
+            if (obj != null) Objects[i].Show(false);
         }
         public void ShowAll(bool bo = true)
         {
@@ -55,6 +72,7 @@ namespace BrainVR.UnityFramework.Objects
                 obj.SetRotation(Quaternion.LookRotation(new Vector3(0, obj.transform.position.y, 0) - obj.transform.position));
             }
         }
+        #endregion
     }
 }
 
