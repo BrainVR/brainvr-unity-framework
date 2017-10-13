@@ -1,4 +1,6 @@
-﻿using BrainVR.UnityFramework.Player;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BrainVR.UnityFramework.Player;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,6 +17,8 @@ namespace BrainVR.UnityFramework.Navigation
         NavMeshAgent _agent;
         LineNavigation _lineNavigation;
 
+        List<NavigationController> _controllers = new List<NavigationController>();
+
         public bool IsNavigating;
         public Transform Target;
         public NavigationMode NavigationMode;
@@ -24,11 +28,12 @@ namespace BrainVR.UnityFramework.Navigation
             get { return (_agent != null) && (Target != null); }
         }
         #region MonoBehaviour
-
         void Start()
         {
             _lineNavigation = _lineNavigation ?? GetComponentInChildren<LineNavigation>();
             _agent = _agent ?? PlayerController.Instance.gameObject.GetComponentInChildren<NavMeshAgent>();
+
+            _controllers = GetComponentsInChildren<NavigationController>().ToList();
         }
         void Update()
         {
@@ -38,6 +43,10 @@ namespace BrainVR.UnityFramework.Navigation
         }
         #endregion
         #region PublicAPI
+        public NavigationController GetController(int i)
+        {
+            return _controllers[i];
+        }
         public void SetAgent(NavMeshAgent agent)
         {
             _agent = agent;
@@ -64,7 +73,6 @@ namespace BrainVR.UnityFramework.Navigation
             //update all the crap
         }
         #endregion
-
         #region Navigation functions
         private void Navigate()
         {

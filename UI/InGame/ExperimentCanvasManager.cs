@@ -6,8 +6,12 @@ namespace BrainVR.UnityFramework.UI.InGame
     public class ExperimentCanvasManager : Singleton<ExperimentCanvasManager>
     {
         private Dictionary<string, CanvasTextController> fieldDictionary = new Dictionary<string, CanvasTextController>();
+        private Canvas _canvas;
+
         #region Monobehaviour
-        void Awake () {
+        void Awake ()
+        {
+            _canvas = GetComponentInChildren<Canvas>();
             //check if GOs are not null
             UpdateCanvasControllers();
             Show(false);
@@ -36,7 +40,7 @@ namespace BrainVR.UnityFramework.UI.InGame
         }
         public void Show(bool bo = true)
         {
-            GetComponent<UnityEngine.Canvas>().enabled = bo;
+            _canvas.enabled = bo;
         }
         #endregion
         #region private helpers

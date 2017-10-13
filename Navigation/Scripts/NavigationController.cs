@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.ExperimentAssets.Navigation
+namespace BrainVR.UnityFramework.Navigation
 {
     public enum NavigatingState
     {
@@ -43,7 +43,6 @@ namespace Assets.ExperimentAssets.Navigation
             OnStop();
         }
         #endregion
-
         #endregion
 
     }

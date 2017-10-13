@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.ExperimentAssets.Navigation
+namespace BrainVR.UnityFramework.Navigation
 {
     public class ArrowNavigation : NavigationController
     {
