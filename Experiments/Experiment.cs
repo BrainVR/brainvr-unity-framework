@@ -9,8 +9,8 @@ namespace BrainVR.UnityFramework.Experiments
     public enum ExperimentState
     {
         Inactive,
-        Finished,
         Closed,
+        Finished,
         Initialised,
         WaitingToStart,
         Started,
@@ -79,19 +79,29 @@ namespace BrainVR.UnityFramework.Experiments
         }
         #endregion
         #region Experiment lifetime
-        public virtual void StartExperiment()
+        public void StartExperiment()
         {
+            if (ExperimentState >= ExperimentState.Finished)
+            {
+                Debug.Log("Expeirment is not fully closed. Cannot initialise again. Stop the experiment first.");
+                return;
+            }
             StartingSequence();
         }
         //default - is Initialise, Setup, Start, can be overriden in child class for some reason
-        protected virtual void StartingSequence()
+        private void StartingSequence()
         {
             ExperimentInitialise();
             ExperimentSetup();
             ExperimentStart();
         }
-        public void StopExperiment()
+        public void FinishExperiment()
         {
+            if (ExperimentState < ExperimentState.Finished)
+            {
+                Debug.Log("Expeirment is not running. Cannot finish.");
+                return;
+            }
             SendExperimentEvent(ExperimentEvent.ForceFinished);
             StopingSequence();
         }
@@ -106,9 +116,9 @@ namespace BrainVR.UnityFramework.Experiments
         protected virtual void ExperimentUpdate() { }      
         //happends when the experiment is started - non monobehaviour logic
         //collects all important variables, creates log
-        protected virtual void ExperimentInitialise()
+        private void ExperimentInitialise()
         {
-            TrialNumber = -1;
+            TrialNumber = 0;
             OnExperimentInitialise();
             CanvasManager = ExperimentCanvasManager.Instance;
             SendExperimentStateChanged(ExperimentState.Initialised);
@@ -117,7 +127,7 @@ namespace BrainVR.UnityFramework.Experiments
         }
         //sets up the pieces 
         // - initializes the log, 
-        protected virtual void ExperimentSetup()
+        private void ExperimentSetup()
         {
             OnExperimentSetup();
             if (ShouldLog) StartLogging();
@@ -125,23 +135,22 @@ namespace BrainVR.UnityFramework.Experiments
             ExperimentState = ExperimentState.WaitingToStart;
             AfterExperimentSetup();
         }
-        protected virtual void ExperimentStart()
+        private void ExperimentStart()
         {
             OnExperimentStart();
             SendExperimentStateChanged(ExperimentState.Started);
             ExperimentState = ExperimentState.Running;
-            TrialNumber = -1;
-            TrialSetNext(true);
             AfterExperimentStart();
+            TrialSetup();
         }
-        protected virtual void ExperimentFinish()
+        private void ExperimentFinish()
         {
             OnExperimentFinished();
             SendExperimentStateChanged(ExperimentState.Finished);
             ExperimentState = ExperimentState.Finished;
             AfterExperimentFinished();
         }
-        protected virtual void ExperimentClose()
+        private void ExperimentClose()
         {
             OnExperimentClosed();
             SendExperimentStateChanged(ExperimentState.Closed);
@@ -152,25 +161,26 @@ namespace BrainVR.UnityFramework.Experiments
         }
         #endregion
         #region Each trial lifetime - can be overriden in child class to each ones liking
-        public virtual void TrialSetNext(bool first = false)
+        public virtual void TrialSetNext()
         {
             if (TrialState == TrialState.Finished) TrialClose();
             //Necessary for quitting - close usually ends the experiment, but the trail of setting new trial continues
-            if (ExperimentState <= ExperimentState.Closed) return;
-            //normal passing of trial - first or last
-            if (first || TrialState == TrialState.Closed)
+            if (ExperimentState <= ExperimentState.Finished)
             {
-                TrialNumber++;
-                TrialSetup();
+                Debug.Log("Experiment is finished.");
+                return;
             }
-            else Debug.Log("Cannot setup next, trial not closed");
+            //normal passing of trial - first or last
+            if (TrialState != TrialState.Closed) Debug.Log("Cannot setup next, trial not closed");
+            TrialNumber++;
+            TrialSetup();
         }
-        public virtual void ForceNextTrial()
+        public void ForceNextTrial()
         {
             ForceFinishTrial();
             TrialSetNext();
         }
-        public virtual void ForceSetTrial(int i)
+        public void ForceSetTrial(int i)
         {
             var currentTrial = TrialNumber;
             if (i < 0)
@@ -191,17 +201,15 @@ namespace BrainVR.UnityFramework.Experiments
             TrialNumber = i;
             TrialSetup();
         }
-        public virtual void ForceFinishTrial()
+        public void ForceFinishTrial()
         {
-            if (TrialState <= TrialState.Finished)
-            {
-                SendTrialEvent("ForceFinished");
-                TrialFinish();
-                TrialClose();
-            } 
+            if (TrialState > TrialState.Finished) return;
+            SendTrialEvent("ForceFinished");
+            TrialFinish();
+            TrialClose();
         }
         //called when new trial is prepaired
-        protected virtual void TrialSetup()
+        protected void TrialSetup()
         {
             OnTrialSetup();
             SendTrialStateChanged(TrialState.WaitingToStart);
@@ -209,7 +217,7 @@ namespace BrainVR.UnityFramework.Experiments
             AfterTrialSetup();
         }
         //called when the trial is actually started
-        protected virtual void TrialStart()
+        protected void TrialStart()
         {
             OnTrialStart();
             SendTrialStateChanged(TrialState.Running);
@@ -217,21 +225,21 @@ namespace BrainVR.UnityFramework.Experiments
             AfterTrialStart();
         }
         //when the task has been successfully finished
-        protected virtual void TrialFinish()
+        protected void TrialFinish()
         {
             OnTrialFinished();
             SendTrialStateChanged(TrialState.Finished);
             TrialState = TrialState.Finished;
             AfterTrialFinished();
+            if (CheckForEnd()) StopingSequence();
         }
         //called before new trial is set up
-        protected virtual void TrialClose()
+        protected void TrialClose()
         {
             OnTrialClosed();
             SendTrialStateChanged(TrialState.Closed);
             TrialState = TrialState.Closed;
             AfterTrialClosed();
-            if (CheckForEnd()) StopingSequence();
         }
         #endregion
         #region Forced Experiment API - needs to be impemented

@@ -36,7 +36,7 @@ namespace BrainVR.UnityFramework.Experiments
         }
         public void StopExperiment()
         {
-            if (Experiment && Experiment.ExperimentState > ExperimentState.Closed) Experiment.StopExperiment();
+            if (Experiment && Experiment.ExperimentState > ExperimentState.Closed) Experiment.FinishExperiment();
         }
         public void RestartExperiment()
         {

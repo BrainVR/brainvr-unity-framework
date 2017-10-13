@@ -56,7 +56,7 @@ namespace BrainVR.UnityFramework.UI.InGame
             var myButton = GetComponent<Button>();
             myButton.onClick.RemoveAllListeners();
             myButton.onClick.AddListener(() => MenuExperiment.Instance.TurnMenuOff());
-            myButton.onClick.AddListener(() => _experiment.StopExperiment());
+            myButton.onClick.AddListener(() => _experiment.FinishExperiment());
         }
         private void SetText(string s)
         {
