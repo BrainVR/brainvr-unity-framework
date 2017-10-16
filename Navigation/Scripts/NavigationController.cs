@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace BrainVR.UnityFramework.Navigation
 {
@@ -13,7 +14,7 @@ namespace BrainVR.UnityFramework.Navigation
         public NavigatingState State;
         public Transform Target { get; set; }
         public const string Name = "Default";
-
+        public NavMeshAgent Agent; //usually set by navigation manager
         #region MonoBehaviour
         void Update()
         {
@@ -21,29 +22,26 @@ namespace BrainVR.UnityFramework.Navigation
         }
         #endregion
         #region Public API
-        #region Abstracts
-        public abstract void OnNavigate();
-        public abstract void OnStop();
-        public abstract void OnUpdate();
-        #endregion
-        #region Implemented
-        public void NavigateTo(GameObject obj)
-        {
-            Target = obj.transform;
-            Navigate();
-        }
-        public void Navigate()
+        public void StartNavigation()
         {
             State = NavigatingState.Navigating;
-            OnNavigate();
         }
         public void StopNavigation()
         {
             State = NavigatingState.Stopped;
-            OnStop();
+            OnNavigationStop();
         }
+        #region Abstracts
+        public abstract void OnNavigationStart();
+        public abstract void OnNavigationStop();
+        public abstract void OnUpdate();
         #endregion
         #endregion
+        protected void UpdatePath()
+        {
+            var path = new NavMeshPath();
+            Agent.CalculatePath(Target.position, path);
+        }
 
     }
 }

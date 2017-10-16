@@ -6,26 +6,28 @@ using UnityEngine.AI;
 
 namespace BrainVR.UnityFramework.Navigation
 {
-    public enum NavigationMode
-    {
-        Line,
-        Arrow
-    }
-
     public class NavigationManager : Singleton<NavigationManager>
     {
-        NavMeshAgent _agent;
+        private NavMeshAgent _agent;
         LineNavigation _lineNavigation;
 
         List<NavigationController> _controllers = new List<NavigationController>();
 
         public bool IsNavigating;
         public Transform Target;
-        public NavigationMode NavigationMode;
 
+        private int _selectedNav;
+        public string SelectedNavigation
+        {
+            get { return _controllers[_selectedNav].name; }
+        }
+        private NavigationController CurrentNavigationController
+        {
+            get { return _controllers[_selectedNav]; }
+        }
         private bool CanNavigate
         {
-            get { return (_agent != null) && (Target != null); }
+            get { return _agent != null && Target != null; }
         }
         #region MonoBehaviour
         void Start()
@@ -34,57 +36,57 @@ namespace BrainVR.UnityFramework.Navigation
             _agent = _agent ?? PlayerController.Instance.gameObject.GetComponentInChildren<NavMeshAgent>();
 
             _controllers = GetComponentsInChildren<NavigationController>().ToList();
-        }
-        void Update()
-        {
-            if (!IsNavigating) return;
-            if (!CanNavigate) return;
-            Navigate();
+            SetControllersAgent();
         }
         #endregion
         #region PublicAPI
-        public NavigationController GetController(int i)
-        {
-            return _controllers[i];
-        }
         public void SetAgent(NavMeshAgent agent)
         {
             _agent = agent;
+            SetControllersAgent();
+        }
+        public void StartNavigation()
+        {
+            if (!CanNavigate) return;
+            IsNavigating = true;
+            CurrentNavigationController.Target = Target;
+            CurrentNavigationController.StartNavigation();
         }
         public void StopNavigation()
         {
-            Target = null;
             IsNavigating = false;
-            switch (NavigationMode)
-            {
-                case NavigationMode.Line:
-                    _lineNavigation.Hide();
-                    break;
-            }
+            CurrentNavigationController.StopNavigation();
         }
-        public void NavigateTo(GameObject go)
+        public void SetTarget(GameObject go)
         {
             Target = go.transform;
-            IsNavigating = true;
         }
-        public void SetNavigationMode(NavigationMode mode)
+        public void SetNavigationMode(string controllerName)
         {
-            NavigationMode = mode;
-            //update all the crap
-        }
-        #endregion
-        #region Navigation functions
-        private void Navigate()
-        {
-            var path = new NavMeshPath();
-            _agent.CalculatePath(Target.position, path);
-            switch (NavigationMode)
+            var index = _controllers.FindIndex(c => c.name == name);
+            if (index > -1)
             {
-                case NavigationMode.Line:
-                    _lineNavigation.UpdatePath(path);
-                    break;
+                SetNavigationMode(index);
+                return;
             }
+            Debug.Log("There is no controller of such name.");
+        }
+        public void SetNavigationMode(int iController)
+        {
+            if (iController < _controllers.Count)
+            {
+                //need to restart the navigation process
+                if(IsNavigating) CurrentNavigationController.StopNavigation();
+                _selectedNav = iController;
+                if (IsNavigating) CurrentNavigationController.StartNavigation();
+            }
+            else Debug.Log("There aren¨t that many controllers in the manager");
         }
         #endregion
-    }
+        private void SetControllersAgent()
+        {
+            foreach (var controler in _controllers)
+                controler.Agent = _agent;
+        }
+}
 }
