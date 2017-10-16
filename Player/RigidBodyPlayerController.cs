@@ -100,7 +100,7 @@ namespace BrainVR.UnityFramework.Player
         #region logging
         public override string HeaderLine()
         {
-            return "Time; Position; Rotation.X; Rotation.Y; FPS; Input;";
+            return "Time; Position; Rotation.X; Rotation.Y;";
         }
         public override List<string> PlayerInformation()
         {

@@ -23,7 +23,6 @@ namespace BrainVR.UnityLogger
         // create empty single column
         private const int NEmpty = 1;
 
-
         public override void Instantiate(string timeStamp)
         {
             Log = new Log("NEO", "player", timeStamp);
@@ -66,7 +65,7 @@ namespace BrainVR.UnityLogger
                 Log.WriteLine("There is no valid player Game object in the game. Can't log");
                 return;
             }
-            Log.WriteLine(_playerController.HeaderLine());
+            Log.WriteLine(HeaderLine());
         }
         public void StartLogging()
         {
@@ -99,13 +98,17 @@ namespace BrainVR.UnityLogger
             strgs.AddRange(WriteBlank(NEmpty));
             WriteLine(strgs);
         }
-        /// <summary>
-        /// Collects data and writes it to the appropriate log
-        /// </summary>
+
+        protected string HeaderLine()
+        {
+            var line = _playerController.HeaderLine();
+            line += "FPS; Input;";
+            return line;
+        }
         protected List<string> CollectData()
         {
             //TestData to Write is a parent method that adds some information to the beginning of the player info
-            List<string> strgs = _playerController.PlayerInformation();
+            var strgs = _playerController.PlayerInformation();
             AddTimestamp(ref strgs);
             //adds FPS
             AddValue(ref strgs, (1.0f / _deltaTime).ToString("F4"));
