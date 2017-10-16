@@ -9,8 +9,6 @@ namespace BrainVR.UnityFramework.Navigation
     public class NavigationManager : Singleton<NavigationManager>
     {
         private NavMeshAgent _agent;
-        LineNavigation _lineNavigation;
-
         List<NavigationController> _controllers = new List<NavigationController>();
 
         public bool IsNavigating;
@@ -32,7 +30,6 @@ namespace BrainVR.UnityFramework.Navigation
         #region MonoBehaviour
         void Start()
         {
-            _lineNavigation = _lineNavigation ?? GetComponentInChildren<LineNavigation>();
             _agent = _agent ?? PlayerController.Instance.gameObject.GetComponentInChildren<NavMeshAgent>();
 
             _controllers = GetComponentsInChildren<NavigationController>().ToList();

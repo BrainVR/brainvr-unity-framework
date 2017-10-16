@@ -4,10 +4,10 @@ using UnityEngine.AI;
 
 namespace BrainVR.UnityFramework.Navigation
 {
-    public class LineNavigation : MonoBehaviour
+    public class LineNavigation : NavigationController
     {
         LineRenderer _lineRenderer;
-
+        public new string Name = "Line";
         #region MonoBehaviour
         void Start()
         {
@@ -15,11 +15,6 @@ namespace BrainVR.UnityFramework.Navigation
         }
         #endregion
         #region Public API
-        public void UpdatePath(NavMeshPath path)
-        {
-            Show();
-            DrawLine(path);
-        }
         public void Show()
         {
             _lineRenderer.enabled = true;
@@ -28,11 +23,25 @@ namespace BrainVR.UnityFramework.Navigation
         {
             _lineRenderer.enabled = false;
         }
-
         public void Clear()
         {
             _lineRenderer.positionCount = 0;
         }
+        #region Implementations of Controller
+        public override void OnNavigationStart()
+        {
+            Show();
+        }
+        public override void OnNavigationStop()
+        {
+            Hide();
+        }
+        public override void OnUpdate()
+        {
+            var path = UpdatePath();
+            DrawLine(path);
+        }   
+        #endregion
         #endregion
         private void DrawLine(NavMeshPath path)
         {
@@ -43,6 +52,5 @@ namespace BrainVR.UnityFramework.Navigation
                 _lineRenderer.SetPosition(i, path.corners[i]); //go through each corner and set that to the line renderer's position
             }
         }
-
     }
 }

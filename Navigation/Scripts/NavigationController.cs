@@ -37,10 +37,11 @@ namespace BrainVR.UnityFramework.Navigation
         public abstract void OnUpdate();
         #endregion
         #endregion
-        protected void UpdatePath()
+        protected NavMeshPath UpdatePath()
         {
             var path = new NavMeshPath();
             Agent.CalculatePath(Target.position, path);
+            return path;
         }
 
     }
