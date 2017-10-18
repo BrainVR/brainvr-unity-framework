@@ -60,7 +60,7 @@ namespace BrainVR.UnityFramework.Navigation
         }
         public void SetNavigationMode(string controllerName)
         {
-            var index = _controllers.FindIndex(c => c.Name == name);
+            var index = _controllers.FindIndex(c => c.Name == controllerName);
             if (index > -1)
             {
                 SetNavigationMode(index);
@@ -73,9 +73,10 @@ namespace BrainVR.UnityFramework.Navigation
             if (iController < _controllers.Count)
             {
                 //need to restart the navigation process
+                //cant call stop navigation because that would set IsNavigating to false
                 if(IsNavigating) CurrentNavigationController.StopNavigation();
                 _selectedNav = iController;
-                if (IsNavigating) CurrentNavigationController.StartNavigation();
+                if (IsNavigating) StartNavigation();
             }
             else Debug.Log("There aren't that many controllers in the manager");
         }
