@@ -101,7 +101,8 @@ namespace BrainVR.UnityLogger
 
         protected string HeaderLine()
         {
-            var line = _playerController.HeaderLine();
+            var line = "Time;";
+            line += _playerController.HeaderLine();
             line += "FPS; Input;";
             return line;
         }
