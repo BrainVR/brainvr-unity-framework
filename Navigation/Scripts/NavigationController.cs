@@ -13,8 +13,9 @@ namespace BrainVR.UnityFramework.Navigation
     {
         public NavigatingState State;
         public Transform Target { get; set; }
-        public const string Name = "Default";
-        public NavMeshAgent Agent; //usually set by navigation manager
+        //You can change it to allow multiple different instances of the same navigation to be created
+        public string Name = "DefaultNavigation"; 
+        private NavMeshAgent _agent; //usually set by navigation manager
         #region MonoBehaviour
         void Update()
         {
@@ -25,24 +26,28 @@ namespace BrainVR.UnityFramework.Navigation
         public void StartNavigation()
         {
             State = NavigatingState.Navigating;
+            OnNavigationStart();
         }
         public void StopNavigation()
         {
             State = NavigatingState.Stopped;
             OnNavigationStop();
         }
+        public void SetAgent(NavMeshAgent agent)
+        {
+            _agent = agent;
+        }
         #region Abstracts
-        public abstract void OnNavigationStart();
-        public abstract void OnNavigationStop();
-        public abstract void OnUpdate();
+        protected abstract void OnNavigationStart();
+        protected abstract void OnNavigationStop();
+        protected abstract void OnUpdate();
         #endregion
         #endregion
         protected NavMeshPath UpdatePath()
         {
             var path = new NavMeshPath();
-            Agent.CalculatePath(Target.position, path);
+            _agent.CalculatePath(Target.position, path);
             return path;
         }
-
     }
 }

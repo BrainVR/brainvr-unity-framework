@@ -60,7 +60,7 @@ namespace BrainVR.UnityFramework.Navigation
         }
         public void SetNavigationMode(string controllerName)
         {
-            var index = _controllers.FindIndex(c => c.name == name);
+            var index = _controllers.FindIndex(c => c.Name == name);
             if (index > -1)
             {
                 SetNavigationMode(index);
@@ -77,13 +77,13 @@ namespace BrainVR.UnityFramework.Navigation
                 _selectedNav = iController;
                 if (IsNavigating) CurrentNavigationController.StartNavigation();
             }
-            else Debug.Log("There aren¨t that many controllers in the manager");
+            else Debug.Log("There aren't that many controllers in the manager");
         }
         #endregion
         private void SetControllersAgent()
         {
             foreach (var controler in _controllers)
-                controler.Agent = _agent;
+                controler.SetAgent(_agent);
         }
 }
 }

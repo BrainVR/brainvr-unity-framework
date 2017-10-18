@@ -10,35 +10,36 @@ namespace BrainVR.UnityFramework.Navigation
     public class ArrowNavigation : NavigationController
     {
         public GameObject Arrow;
-        public new const string Name = "Arrow";
         public float Speed = 5f;
-        public Vector3 PlayerOffset = new Vector3(0, -0.1f, 0.1f);
+        public Vector3 PlayerOffset = new Vector3(0, -0.2f, 0.5f);
 
         private ArrowMode ArrowMode;
-
-        public ArrowNavigation(ArrowMode arrowMode)
-        {
-            ArrowMode = arrowMode;
-        }
 
         void OnEnable()
         {
             if (!Arrow) Arrow = transform.GetChild(0).gameObject;
         }
-        public override void OnNavigationStart()
+        public void SetMode(ArrowMode arrowMode)
+        {
+            ArrowMode = arrowMode;
+        }
+        #region IMplementation of the controller
+        protected override void OnNavigationStart()
         {
             PlayerHook();
             Arrow.SetActive(true);
         }
-        public override void OnNavigationStop()
+        protected override void OnNavigationStop()
         {
             Arrow.SetActive(false);
             PlayerUnhook();
         }
-        public override void OnUpdate()
+        protected override void OnUpdate()
         {
             RotateArrow();
         }
+        #endregion
+        #region Private functions
         private void PlayerHook()
         {
             Arrow.transform.SetParent(Camera.main.transform, false);
@@ -61,9 +62,13 @@ namespace BrainVR.UnityFramework.Navigation
                     //need the updated path from the navmesh and point towards the closes point on the navmesh path
                     difference = Vector3.back;
                     break;
+                default:
+                    break;
             }
             difference.y = 0F;     // Flatten the vector, assuming you're not concerned with indicating height difference
             Arrow.transform.rotation = Quaternion.Slerp(Arrow.transform.rotation, Quaternion.LookRotation(difference.normalized), Time.deltaTime * Speed);
         }
+        #endregion
+
     }
 }

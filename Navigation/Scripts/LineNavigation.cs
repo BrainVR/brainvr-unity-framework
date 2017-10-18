@@ -7,7 +7,6 @@ namespace BrainVR.UnityFramework.Navigation
     public class LineNavigation : NavigationController
     {
         LineRenderer _lineRenderer;
-        public new string Name = "Line";
         #region MonoBehaviour
         void Start()
         {
@@ -28,15 +27,15 @@ namespace BrainVR.UnityFramework.Navigation
             _lineRenderer.positionCount = 0;
         }
         #region Implementations of Controller
-        public override void OnNavigationStart()
+        protected override void OnNavigationStart()
         {
             Show();
         }
-        public override void OnNavigationStop()
+        protected override void OnNavigationStop()
         {
             Hide();
         }
-        public override void OnUpdate()
+        protected override void OnUpdate()
         {
             var path = UpdatePath();
             DrawLine(path);

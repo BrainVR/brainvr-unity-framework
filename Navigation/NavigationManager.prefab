@@ -215,7 +215,7 @@ MonoBehaviour:
   Agent: {fileID: 0}
   Arrow: {fileID: 1913111645263436}
   Speed: 0
-  PlayerOffset: {x: 0, y: 0.5, z: -0.2}
+  PlayerOffset: {x: 0, y: -0.2, z: 0.5}
 --- !u!114 &114598282876871818
 MonoBehaviour:
   m_ObjectHideFlags: 1
