@@ -10,6 +10,10 @@ namespace BrainVR.UnityFramework.Player
         #region Moving
         public abstract void EnableMovement(bool bo = true);
         public abstract Vector3 Position { get; set; }
+        public Vector2 Vector2Position
+        {
+            get { return new Vector2(Position.x, Position.z); }
+        }
         public void MoveToCenter()
         {
             MoveToPosition(new Vector2(0, 0));
@@ -36,16 +40,7 @@ namespace BrainVR.UnityFramework.Player
         public abstract void SetSpeed(float speed);
         #endregion
         #region Information
-        /// <summary>
-        /// returns positon in world coordinates ignoring Y axis
-        /// </summary>
-        /// <returns>Vector2 coordinates (X, Z)</returns>
         public abstract Vector2 PointingDirection { get; }
-        /// 
-        public Vector2 GetVector2Position()
-        {
-            return new Vector2(transform.position.x, transform.position.z);
-        }
         #endregion
         #endregion
         #region PRIVATE FUCNTIONS
