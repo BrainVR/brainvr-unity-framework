@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114787781184866476}
   - component: {fileID: 82455561292534020}
   m_Layer: 0
-  m_Name: Beeper
+  m_Name: BeeperManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

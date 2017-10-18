@@ -44,6 +44,7 @@ namespace BrainVR.UnityFramework.Navigation
         #endregion
         private void DrawLine(NavMeshPath path)
         {
+            if (path.corners.Length <= 0) return;
             _lineRenderer.positionCount = path.corners.Length; //set the array of positions to the amount of corners
             _lineRenderer.SetPosition(0, PlayerController.Instance.transform.position);
             for (var i = 1; i < path.corners.Length; i++)
