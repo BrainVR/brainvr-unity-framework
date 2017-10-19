@@ -1,33 +1,32 @@
 ﻿using System;
-using UnityEngine;
 
 namespace BrainVR.UnityFramework.Helpers
 {
-    public class SystemTimer : MonoBehaviour
+    public static class SystemTimer
     {
 
-        private static DateTime m_StartTime;
-        private static DateTime midnight = DateTime.Now.Date;
+        private static readonly DateTime MStartTime;
+        private static readonly DateTime Midnight = DateTime.Now.Date;
 
         static SystemTimer()
         {
-            m_StartTime = DateTime.Now;
+            MStartTime = DateTime.Now;
         }
 
-        public static float realtimeSinceStartup
+        public static float RealtimeSinceStartup
         {
             get
             {
-                var timeSpan = DateTime.Now.Subtract(m_StartTime);
+                var timeSpan = DateTime.Now.Subtract(MStartTime);
                 return (float)timeSpan.TotalSeconds;
             }
         }
 
-        public static double timeSinceMidnight
+        public static double TimeSinceMidnight
         {
             get
             {
-                var timeSpan = DateTime.Now.Subtract(midnight);
+                var timeSpan = DateTime.Now.Subtract(Midnight);
                 return timeSpan.TotalSeconds;
             }
         }
