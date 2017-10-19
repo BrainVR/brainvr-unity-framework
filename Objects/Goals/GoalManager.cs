@@ -78,13 +78,6 @@ namespace BrainVR.UnityFramework.Objects.Goals
             MoveObjectsCircumference(number, positions, radius, center);
             return Objects.Cast<GoalController>().ToList();
         }
-        public static GoalManager InstantiateGoalManager(string name = "Goal manager")
-        {
-            var go = new GameObject();
-            go.transform.name = name;
-            var goalManager = go.AddComponent<GoalManager>();
-            return goalManager;
-        }
         #endregion
     }
 }
