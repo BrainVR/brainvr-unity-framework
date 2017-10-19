@@ -5,7 +5,7 @@ using BrainVR.UnityFramework.Scripts.Experiments.DemoExperiment;
 using BrainVR.UnityFramework.Scripts.Objects.Beeper;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.Experiments.Demo
+namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
 {
     public class DemoExperiment : Experiment
     {

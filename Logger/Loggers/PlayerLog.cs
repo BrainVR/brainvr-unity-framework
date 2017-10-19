@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BrainVR.UnityFramework.Helpers;
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
 
@@ -42,10 +43,10 @@ namespace BrainVR.UnityLogger
         void FixedUpdate()
         {
             if (!Logging) return;
-            if (_lastTimeWrite + LoggingFrequency < SystemTimer.timeSinceMidnight)
+            if (_lastTimeWrite + LoggingFrequency < SystemTimer.TimeSinceMidnight)
             {
                 LogPlayerUpdate();
-                _lastTimeWrite = SystemTimer.timeSinceMidnight;
+                _lastTimeWrite = SystemTimer.TimeSinceMidnight;
             }
         }
         #endregion
@@ -77,7 +78,7 @@ namespace BrainVR.UnityLogger
             }
             //this is the header line for analysiss software
             InputManagerBase.ButtonPressed += LogPlayerInput;
-            _lastTimeWrite = SystemTimer.timeSinceMidnight;
+            _lastTimeWrite = SystemTimer.TimeSinceMidnight;
             Logging = true;
         }
         public void StopLogging()

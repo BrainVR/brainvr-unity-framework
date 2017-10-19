@@ -4,7 +4,7 @@ using BrainVR.UnityLogger;
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.Experiments
+namespace BrainVR.UnityFramework.Experiments.Helpers
 {
     public enum ExperimentState
     {

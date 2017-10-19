@@ -3,7 +3,7 @@ using Assets.GeneralScripts.Serialisation;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.Experiments
+namespace BrainVR.UnityFramework.Experiments.Helpers
 {
     public class ExperimentSettings : ScriptableObject
     {

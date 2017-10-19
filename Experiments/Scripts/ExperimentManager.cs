@@ -2,7 +2,7 @@
 using BrainVR.UnityFramework.UI.InGame;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.Experiments
+namespace BrainVR.UnityFramework.Experiments.Helpers
 {
     public class ExperimentManager : Singleton<ExperimentManager>
     {

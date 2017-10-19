@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BrainVR.UnityFramework.Experiments;
+using BrainVR.UnityFramework.Experiments.Helpers;
 using BrainVR.UnityFramework.Helpers;
 using UnityEngine;
 

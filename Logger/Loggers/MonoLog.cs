@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BrainVR.UnityFramework.Helpers;
 using UnityEngine;
 //important namespaces
 
@@ -46,7 +47,7 @@ namespace BrainVR.UnityLogger
         // basically it adds time and frameCount
         protected void AddTimestamp(ref List<string> strgs)
         {
-            strgs.Insert(0, SystemTimer.timeSinceMidnight.ToString("F4"));
+            strgs.Insert(0, SystemTimer.TimeSinceMidnight.ToString("F4"));
         }
         protected void AddValue(ref List<string> strgs, string value)
         {
