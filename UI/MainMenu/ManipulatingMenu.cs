@@ -1,4 +1,4 @@
-﻿using BrainVR.UnityFramework.Experiments;
+﻿using BrainVR.UnityFramework.Experiments.Helpers;
 using BrainVR.UnityFramework.UI.InGame;
 using UnityEngine;
 
@@ -11,14 +11,9 @@ namespace BrainVR.UnityFramework.UI.MainMenu
 
         void Start()
         {
-            TestManager testManager = TestManager.Instance;
-            if (testManager)
-            {
-                foreach (var experiment in testManager.Experiments)
-                {
-                    AddButton(experiment);
-                }
-            }
+            ExperimentManager manager = ExperimentManager.Instance;
+            if (!manager) return;
+            AddButton(manager.Experiment);
         }
 
         private void AddButton(Experiment experiment)
