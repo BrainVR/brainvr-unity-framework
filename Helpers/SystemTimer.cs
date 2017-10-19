@@ -4,7 +4,6 @@ namespace BrainVR.UnityFramework.Helpers
 {
     public static class SystemTimer
     {
-
         private static readonly DateTime MStartTime;
         private static readonly DateTime Midnight = DateTime.Now.Date;
 
