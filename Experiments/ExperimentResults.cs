@@ -9,14 +9,14 @@ namespace BrainVR.UnityFramework.Experiments
 {
     public class ResultData : Attribute{}
     public class TestData : Attribute { }
-    public class Results : ScriptableObject
+    public class ExperimentResults : ScriptableObject
     {
         [JsonIgnore]
         public string ParticipantId;
         public string ExperimentName = "TEST";
         [JsonIgnore]
         public string CustomData;
-        public Results(string participantId)
+        public ExperimentResults(string participantId)
         {
             ParticipantId = participantId;
         }
