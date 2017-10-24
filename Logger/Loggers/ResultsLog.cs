@@ -45,7 +45,7 @@ namespace BrainVR.UnityLogger
         #region Saving
         public void Save()
         {
-            var log = new Log(ParticipantId, "results_" + ExperimentName);
+            var log = new Log(ParticipantId, "results_" + ExperimentName, MasterLog.Instance.CreationTimestamp);
             log.WriteLine("***RESULTS***");
             log.WriteLine(SerialiseResults());
             log.WriteLine("---RESULTS---");
