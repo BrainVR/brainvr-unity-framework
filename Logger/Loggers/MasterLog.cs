@@ -9,7 +9,7 @@ namespace BrainVR.UnityLogger
         private ExperimentInfoLog _experimentInfoLog;
         private PlayerLog _playerLog;
 
-        string _creationTimestamp;
+        public string CreationTimestamp { get; private set; }
 
         //should work as a master log script
         //should be only one running at all times
@@ -23,7 +23,7 @@ namespace BrainVR.UnityLogger
         {
             if (_playerLog && _experimentInfoLog) return;
             //to get one timestapm in order to synchronize loading of log files
-            _creationTimestamp = DateTime.Now.ToString("HH-mm-ss-dd-MM-yyy");
+            CreationTimestamp = DateTime.Now.ToString("HH-mm-ss-dd-MM-yyy");
             
             //instantiates the log
             _playerLog = gameObject.AddComponent<PlayerLog>();
@@ -31,13 +31,13 @@ namespace BrainVR.UnityLogger
             //var experimentInfo = SettingsHolder.Instance.ExperimentInfo;
             if (participantId != null)    //if we have an ParticipantId
             {
-                _playerLog.Instantiate(_creationTimestamp, participantId);
-                _experimentInfoLog.Instantiate(_creationTimestamp, participantId);
+                _playerLog.Instantiate(CreationTimestamp, participantId);
+                _experimentInfoLog.Instantiate(CreationTimestamp, participantId);
             }
             else //the defaults
             {
-                _playerLog.Instantiate(_creationTimestamp);
-                _experimentInfoLog.Instantiate(_creationTimestamp);
+                _playerLog.Instantiate(CreationTimestamp);
+                _experimentInfoLog.Instantiate(CreationTimestamp);
             }
         }
         public void StartLogging()
