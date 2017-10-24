@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using BrainVR.UnityFramework.Experiments.Helpers;
 using Newtonsoft.Json;
-using BrainVR.UnityLogger;
 
-namespace BrainVR.UnityFramework.Experiments.Helpers
+namespace BrainVR.UnityLogger
 {
-    public class ResultData : Attribute{}
+    public class ResultData : Attribute { }
     public class TestData : Attribute { }
-    public class ExperimentResults : ScriptableObject
+    public class ResultsLog : ScriptableObject
     {
         [JsonIgnore]
         public string ParticipantId;
         public string ExperimentName = "TEST";
         [JsonIgnore]
         public string CustomData;
-        public ExperimentResults(string participantId)
+        public ResultsLog(string participantId)
         {
             ParticipantId = participantId;
         }
