@@ -27,13 +27,14 @@ namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
         #region Experiment Logic
         protected override void OnExperimentInitialise() { }
         protected override void AfterExperimentInitialise() { }
-        protected override void ExperimentUpdate() { }
+        protected override void ExperimentUpdate()
+        {
+            if(Input.GetButtonDown("Confirm")) TrialFinish();            
+        }
         protected override void OnExperimentSetup()
         {
             BeepManager = BeeperManager.Instance;
             CanvasManager.Show();
-            Arduino = ArduinoController.Instance;
-            Arduino.Connect();
         }
         protected override void AfterExperimentSetup() { }
         protected override void OnExperimentStart() { }
@@ -56,35 +57,20 @@ namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
             CanvasManager.Show(false);
         }
         protected override void AfterExperimentClosed() { }
-
         public override string ExperimentHeaderLog()
         {
-            throw new NotImplementedException();
+            return "";
         }
-
-        protected override void AfterTrialSetup()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void AfterTrialStart()
-        {
-            throw new NotImplementedException();
-        }
-
+        protected override void AfterTrialSetup() { }
+        protected override void AfterTrialStart() { }
         protected override void AfterTrialFinished()
         {
-            throw new NotImplementedException();
+            TrialSetNext();
         }
-
-        protected override void AfterTrialClosed()
-        {
-            throw new NotImplementedException();
-        }
-
+        protected override void AfterTrialClosed() { }
         protected override bool CheckForEnd()
         {
-            throw new NotImplementedException();
+            return TrialNumber > 3;
         }
         #endregion
         #region Helpers
