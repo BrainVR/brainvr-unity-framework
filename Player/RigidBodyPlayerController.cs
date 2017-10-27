@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
+using BrainVR.UnityFramework.StandardAssets;
 
 namespace BrainVR.UnityFramework.Player
 {
