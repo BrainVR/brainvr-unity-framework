@@ -168,15 +168,15 @@ namespace BrainVR.UnityFramework.Experiments.Helpers
         #region Each trial lifetime - can be overriden in child class to each ones liking
         public virtual void TrialSetNext()
         {
+            if (ExperimentState <= ExperimentState.Finished) return;
             if (TrialState == TrialState.Finished) TrialClose();
             //Necessary for quitting - close usually ends the experiment, but the trail of setting new trial continues
-            if (ExperimentState <= ExperimentState.Finished)
+            //normal passing of trial - first or last
+            if (TrialState != TrialState.Closed)
             {
-                Debug.Log("Experiment is finished.");
+                Debug.Log("Cannot setup next, trial not closed");
                 return;
             }
-            //normal passing of trial - first or last
-            if (TrialState != TrialState.Closed) Debug.Log("Cannot setup next, trial not closed");
             TrialNumber++;
             TrialSetup();
         }
@@ -235,8 +235,8 @@ namespace BrainVR.UnityFramework.Experiments.Helpers
             OnTrialFinished();
             SendTrialStateChanged(TrialState.Finished);
             TrialState = TrialState.Finished;
-            AfterTrialFinished();
             if (CheckForEnd()) StopingSequence();
+            AfterTrialFinished();
         }
         //called before new trial is set up
         protected void TrialClose()
