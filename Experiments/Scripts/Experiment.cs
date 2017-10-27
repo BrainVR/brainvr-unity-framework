@@ -62,7 +62,6 @@ namespace BrainVR.UnityFramework.Experiments.Helpers
 
         //managing variables
         protected ExperimentManager ExperimentManager;
-        protected ExperimentCanvasManager CanvasManager;
         protected bool ShouldLog = true;
         protected TestLog TestLog;
         protected ExperimentSettings Settings;
@@ -125,7 +124,6 @@ namespace BrainVR.UnityFramework.Experiments.Helpers
         {
             TrialNumber = 0;
             OnExperimentInitialise();
-            CanvasManager = ExperimentCanvasManager.Instance;
             SendExperimentStateChanged(ExperimentState.Initialised);
             ExperimentState = ExperimentState.Initialised;
             AfterExperimentInitialise();

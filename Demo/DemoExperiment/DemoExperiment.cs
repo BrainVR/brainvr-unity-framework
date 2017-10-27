@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BrainVR.UnityFramework.Arduino;
 using BrainVR.UnityFramework.Scripts.Experiments.DemoExperiment;
 using BrainVR.UnityFramework.Scripts.Objects.Beeper;
+using BrainVR.UnityFramework.UI.InGame;
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
@@ -12,7 +13,7 @@ namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
         //maybe more to some other abstract class
         protected BeeperManager BeepManager;
 
-        protected ArduinoController Arduino;
+        private ExperimentCanvasManager _canvas;
 
         protected float TrialStartTime;
         protected float TrialEndTime;
@@ -25,7 +26,11 @@ namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
         }
         #endregion
         #region Experiment Logic
-        protected override void OnExperimentInitialise() { }
+
+        protected override void OnExperimentInitialise()
+        {
+            _canvas = ExperimentCanvasManager.Instance;
+        }
         protected override void AfterExperimentInitialise() { }
         protected override void ExperimentUpdate()
         {
@@ -34,7 +39,7 @@ namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
         protected override void OnExperimentSetup()
         {
             BeepManager = BeeperManager.Instance;
-            CanvasManager.Show();
+            _canvas.Show();
         }
         protected override void AfterExperimentSetup() { }
         protected override void OnExperimentStart() { }
@@ -54,7 +59,7 @@ namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
         protected override void AfterExperimentFinished() { }
         protected override void OnExperimentClosed()
         {
-            CanvasManager.Show(false);
+            _canvas.Show(false);
         }
         protected override void AfterExperimentClosed() { }
         public override string ExperimentHeaderLog()
