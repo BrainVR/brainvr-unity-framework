@@ -32,7 +32,7 @@ namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
             _canvas = ExperimentCanvasManager.Instance;
         }
         protected override void AfterExperimentInitialise() { }
-        protected override void ExperimentUpdate()
+        protected override void OnExperimentUpdate()
         {
             if(Input.GetButtonDown("Confirm")) TrialFinish();            
         }

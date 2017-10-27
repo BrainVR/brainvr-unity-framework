@@ -74,7 +74,7 @@ namespace BrainVR.UnityFramework.Experiments.Helpers
         }
         void Update()
         {
-            if (ExperimentState == ExperimentState.Running) ExperimentUpdate();
+            if (ExperimentState == ExperimentState.Running) OnExperimentUpdate();
         }
         void FixedUpdate()
         {
@@ -116,7 +116,7 @@ namespace BrainVR.UnityFramework.Experiments.Helpers
             ExperimentClose();
         }
         //called every frame if expeirment is active
-        protected virtual void ExperimentUpdate() { }
+        protected virtual void OnExperimentUpdate() { }
         protected virtual void OnExperimentFixedUpdate() { }
         //happends when the experiment is started - non monobehaviour logic
         //collects all important variables, creates log
