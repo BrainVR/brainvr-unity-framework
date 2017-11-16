@@ -13,13 +13,15 @@ namespace BrainVR.UnityFramework.UI.InGame
         public Text NameField;
         public Text ValueField;
 
-        void Start()
+        #region MonoBehaviour
+        void Awake()
         {
             gameObject.name = FieldName;
             _name = "";
             _value = "";
             canvas = GetComponent<CanvasGroup>();
         }
+        #endregion
         #region Public API
         public void Show()
         {
