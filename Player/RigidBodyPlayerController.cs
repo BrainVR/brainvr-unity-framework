@@ -20,7 +20,7 @@ namespace BrainVR.UnityFramework.Player
 
             if (_rigidbodyScript == null)
             {
-                Debug.LogError("Player log doesn't have a rigid body attached");
+                Debug.LogError("Rigidbody Player doesn't have a rigid body script attached");
                 Debug.Break();
             }
         }

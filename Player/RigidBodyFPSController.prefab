@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4948545106186372}
   - component: {fileID: 54268031025764878}
   - component: {fileID: 136289237851424576}
-  - component: {fileID: 114885166921338376}
+  - component: {fileID: 114159567615037750}
   - component: {fileID: 114039260968825190}
   m_Layer: 0
   m_Name: RigidBodyFPSController
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c6c88b25b754df49870a8e933a38d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114885166921338376
+--- !u!114 &114159567615037750
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -181,17 +181,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1361133942671838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c9795a96c094f4cbde4d65546aa9b2, type: 3}
+  m_Script: {fileID: 11500000, guid: a50f6c55791264e4887260ab3dfb2e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 20546846435485212}
   movementSettings:
-    ForwardSpeed: 15
+    ForwardSpeed: 8
     BackwardSpeed: 4
     StrafeSpeed: 4
     RunMultiplier: 2
     RunKey: 304
-    JumpForce: 50
+    JumpForce: 30
     SlopeCurveModifier:
       serializedVersion: 2
       m_Curve:
@@ -221,13 +221,13 @@ MonoBehaviour:
     XSensitivity: 2
     YSensitivity: 2
     clampVerticalRotation: 1
-    MinimumX: -45
+    MinimumX: -90
     MaximumX: 90
-    smooth: 1
-    smoothTime: 18
+    smooth: 0
+    smoothTime: 5
   advancedSettings:
-    groundCheckDistance: 0.1
-    stickToGroundHelperDistance: 0.6
+    groundCheckDistance: 0.01
+    stickToGroundHelperDistance: 0.5
     slowDownRate: 20
     airControl: 0
   controllSettings:
@@ -239,7 +239,7 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1361133942671838}
-  m_Material: {fileID: 13400000, guid: c2815a7ab32e42c4bb42f59caacb8ec1, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.74
