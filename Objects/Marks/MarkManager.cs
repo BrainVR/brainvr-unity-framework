@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BrainVR.UnityFramework.DataHolders;
-using BrainVR.UnityFramework.Scripts.Objects;
 using BrainVR.UnityFramework.Scripts.Objects.Marks;
 using UnityEngine;
 
@@ -13,7 +12,7 @@ namespace BrainVR.UnityFramework.Objects.Marks
         Mark
     };
 
-    public class MarkManager : AreaObjectManager<MarkManager>
+    public class MarkManager : ArenaObjectManager<MarkManager>
     {
         public GameObject MarkPrefab;
         public float DefaultMarkRadius;

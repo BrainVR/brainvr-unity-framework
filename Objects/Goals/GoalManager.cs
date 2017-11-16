@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BrainVR.UnityFramework.Objects.Goals
 {
-    public class GoalManager : AreaObjectManager<GoalManager>
+    public class GoalManager : ArenaObjectManager<GoalManager>
     {
         public GameObject GoalPrefab;
         public List<GoalController> Goals { get { return Objects.Cast<GoalController>().ToList(); } }

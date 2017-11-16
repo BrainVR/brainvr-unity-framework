@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BrainVR.UnityFramework.Helpers;
-using BrainVR.UnityFramework.Objects;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,7 +8,7 @@ using UnityEditor;
 
 namespace BrainVR.UnityFramework.Objects
 {
-    public class AreaObjectManager<T> : Singleton<T> where T : MonoBehaviour
+    public class ArenaObjectManager<T> : Singleton<T> where T : MonoBehaviour
     {
         public List<ArenaObject> Objects = new List<ArenaObject>();
 
@@ -74,32 +73,32 @@ namespace BrainVR.UnityFramework.Objects
         }
         #endregion
     }
-}
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(AreaObjectManager<>), true)]
-public class ArenaObjectManagerInspector : Editor
-{
-    private SerializedProperty _objects;
-    void OnEnable()
+    [CustomEditor(typeof(ArenaObjectManager<>), true)]
+    public class ArenaObjectManagerInspector : Editor
     {
-        // Setup the SerializedProperties
-        _objects = serializedObject.FindProperty("Objects");
-    }
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-        if (_objects.arraySize > 100)
+        private SerializedProperty _objects;
+        void OnEnable()
         {
-            string[] excludes = {"Objects"};
-            DrawPropertiesExcluding(serializedObject, excludes);
-            GUILayout.Label("There is too many objects. You need to delete and reinstantiate object.");
+            // Setup the SerializedProperties
+            _objects = serializedObject.FindProperty("Objects");
         }
-        else
+        public override void OnInspectorGUI()
         {
-            GUILayout.Label("If you enter more than 100 objects, following edits in Unity eitor will be disabled. Many objects in lists slow the Editor.");
-            DrawDefaultInspector();
+            serializedObject.Update();
+            if (_objects.arraySize > 100)
+            {
+                string[] excludes = { "Objects" };
+                DrawPropertiesExcluding(serializedObject, excludes);
+                GUILayout.Label("There is too many objects. You need to delete and reinstantiate object.");
+            }
+            else
+            {
+                GUILayout.Label("If you enter more than 100 objects, following edits in Unity eitor will be disabled. Many objects in lists slow the Editor.");
+                DrawDefaultInspector();
+            }
         }
     }
-}
 #endif
+}
