@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.DataHolders
+namespace BrainVR.UnityLogger
 {
     [System.Serializable]
     public class ParticipantInfo
@@ -24,17 +24,21 @@ namespace BrainVR.UnityFramework.DataHolders
     }
 
     [DataContract]
-    public class ExperimentInfo
+    public class ExperimentInfo : Singleton<ExperimentInfo>
     {
-        [DataMember]
-        public ParticipantInfo Participant = new ParticipantInfo();
-        [DataMember]
-        public CameraInfo CameraInfo = new CameraInfo();
-        [DataMember]
-        public ScreenInfo ScreenInfo = new ScreenInfo();
-        [DataMember]
-        public string LevelName = "BVA";
+        [DataMember] public ParticipantInfo Participant;
+        [DataMember] public CameraInfo CameraInfo;
+        [DataMember] public ScreenInfo ScreenInfo;
+        [DataMember] public string LevelName;
 
+        public void OnEnable()
+        {
+            Participant = new ParticipantInfo();
+            CameraInfo = new CameraInfo();
+            ScreenInfo = new ScreenInfo();
+            LevelName = "BVA";
+            PopulateInfo();
+        }
         public void PopulateInfo()
         {
             InvestigateCamera();
@@ -52,4 +56,3 @@ namespace BrainVR.UnityFramework.DataHolders
         }
     }
 }
-    

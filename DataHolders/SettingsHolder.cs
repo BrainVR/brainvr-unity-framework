@@ -2,12 +2,13 @@
 using System.IO;
 using Assets.GeneralScripts.Serialisation;
 using BrainVR.UnityFramework.Experiments.Helpers;
+using BrainVR.UnityLogger;
 
 namespace BrainVR.UnityFramework.DataHolders
 {
     public class SettingsHolder : Singleton<SettingsHolder>
     {
-        public ExperimentInfo ExperimentInfo = new ExperimentInfo();
+        public ExperimentInfo ExperimentInfo;
         public List<ExperimentSettings> ExperimentSettings = new List<ExperimentSettings>();
         public string LevelName;
 

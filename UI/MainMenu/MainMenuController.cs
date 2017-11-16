@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BrainVR.UnityFramework.DataHolders;
+using BrainVR.UnityLogger;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,7 +20,7 @@ namespace BrainVR.UnityFramework.UI.MainMenu
         {
             Cursor.visible = true;
             //Checks for instantiated stuff
-            _experimentInfo = SettingsHolder.Instance.ExperimentInfo;
+            _experimentInfo = ExperimentInfo.Instance;
             UpdateSettings();
             if (_experimentInfo != null)
             {
