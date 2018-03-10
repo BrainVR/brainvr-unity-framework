@@ -1,4 +1,6 @@
-﻿#if UNITY_EDITOR
+﻿
+using System;
+#if UNITY_EDITOR
 using UnityEditor;
 #endif
 using BrainVR.UnityFramework.Navigation;
@@ -75,33 +77,6 @@ namespace BrainVR.UnityFramework.Navigation
                     break;
 
             }
-            if (Input.GetKeyUp(KeyCode.L))
-            {
-                _forceVisible += 1;
-                if (_forceVisible >= ForceShow.AlwaysShow) _forceVisible = ForceShow.QuestHandles;
-                Appear();
-            }
-            if (Input.GetKeyUp(KeyCode.O))
-            {
-                switch (_followingState)
-                {
-                    case FollowPlayer.FollowRotate:
-                        _followingState = FollowPlayer.FollowRotateArrow;
-                        break;
-                    case FollowPlayer.FollowRotateArrow:
-                        _followingState = FollowPlayer.FollowDontRotate;
-                        break;
-                    case FollowPlayer.FollowDontRotate:
-                        _followingState = FollowPlayer.DontFollowDontRotate;
-                        break;
-                    case FollowPlayer.DontFollowDontRotate:
-                        _followingState = FollowPlayer.FollowRotate;
-                        break;
-                }
-                Hook();
-            }
-            if (Input.GetKeyDown(KeyCode.KeypadPlus)) Zoom();
-            if (Input.GetKeyDown(KeyCode.KeypadMinus)) Unzoom();
         }
         internal Texture GetStaticMap()
         {
@@ -146,21 +121,6 @@ namespace BrainVR.UnityFramework.Navigation
             _followingState = state;
             Hook();
         }
-        public void Appear(bool bo = true)
-        {
-            switch (_forceVisible)
-            {
-                case ForceShow.NeverShow:
-                    Hide();
-                    break;
-                case ForceShow.AlwaysShow:
-                    Show();
-                    break;
-                case ForceShow.QuestHandles:
-                    Map.SetActive(bo);
-                    break;
-            }
-        }
         public void Show()
         {
             Map.SetActive(true);
@@ -192,29 +152,27 @@ namespace BrainVR.UnityFramework.Navigation
         {
             //GameObject go = transform.Find("Map-Arrow").gameObject;
             GameObject go = GameObject.Find("Map-Arrow");
-            if (go == null)
-            {
-                Debug.LogError("Map-Arrow game object is not part of the prefab.");
-                Debug.Break();
-                return null;
-            }
-            return go;
+            if (go != null) return go;
+            Debug.LogError("Map-Arrow game object is not part of the prefab.");
+            Debug.Break();
+            return null;
         }
-
         private void ShowArrow(bool bo)
         {
             _mapArrow.GetComponent<Image>().sprite = bo ? DirrectionalArrow : LocationMark;
         }
-
         public void SetMinimapType(MinimapType type)
         {
-            if (type.Equals(MinimapType.Static))
+            switch (type)
             {
-                MapCamera.GetComponent<Camera>().cullingMask = LayerMask.GetMask("StaticMap");
-            }
-            else if (type.Equals(MinimapType.Schematic))
-            {
-                MapCamera.GetComponent<Camera>().cullingMask = LayerMask.GetMask("SchematicMap");
+                case MinimapType.Static:
+                    MapCamera.GetComponent<Camera>().cullingMask = LayerMask.GetMask("StaticMap");
+                    break;
+                case MinimapType.Schematic:
+                    MapCamera.GetComponent<Camera>().cullingMask = LayerMask.GetMask("SchematicMap");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("type", type, null);
             }
         }
     }
@@ -224,15 +182,14 @@ namespace BrainVR.UnityFramework.Navigation
 [CustomEditor(typeof(GuiMap))]
 public class GuiMapEditor : Editor
 {
+    private GuiMap.FollowPlayer _followState;
+
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-
-        GuiMap map = (GuiMap)target;
+        var map = (GuiMap)target;
+        var cam = map.MapCamera.gameObject.GetComponent<Camera>();
         map.Type = (GuiMap.MinimapType)EditorGUILayout.EnumPopup(map.Type);
-
-        Camera cam = map.MapCamera.gameObject.GetComponent<Camera>();
-
         switch (map.Type)
         {
             case GuiMap.MinimapType.Schematic:
@@ -242,6 +199,9 @@ public class GuiMapEditor : Editor
                 cam.cullingMask = LayerMask.GetMask("SchematicMap");
                 break;
         }
+        _followState = (GuiMap.FollowPlayer) EditorGUILayout.EnumPopup(_followState);
+        map.ChangeFollowState(_followState);
+
         cam.orthographicSize = EditorGUILayout.FloatField("Camera size:", cam.orthographicSize);
         if (GUILayout.Button("+")) cam.orthographicSize -= 5;
         if (GUILayout.Button("-")) cam.orthographicSize += 5;
