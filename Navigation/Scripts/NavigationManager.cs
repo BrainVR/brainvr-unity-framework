@@ -15,8 +15,6 @@ namespace BrainVR.UnityFramework.Navigation
         public GameObject TargetGameObject;
         public Transform Target;
 
-        public GuiMap Map;
-
         private int _selectedNav;
         public string SelectedNavigation
         {
@@ -83,11 +81,6 @@ namespace BrainVR.UnityFramework.Navigation
                 if (IsNavigating) StartNavigation();
             }
             else Debug.Log("There aren't that many controllers in the manager");
-        }
-
-        public void ShowMap()
-        {
-            Map.Show();
         }
         #endregion
         private void SetControllersAgent()
