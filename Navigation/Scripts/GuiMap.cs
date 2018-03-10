@@ -1,6 +1,8 @@
-﻿using BrainVR.UnityFramework.Navigation;
-using BrainVR.UnityFramework.Player;
+﻿#if UNITY_EDITOR
 using UnityEditor;
+#endif
+using BrainVR.UnityFramework.Navigation;
+using BrainVR.UnityFramework.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
