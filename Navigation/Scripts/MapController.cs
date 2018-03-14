@@ -32,7 +32,7 @@ namespace BrainVR.UnityFramework.Navigation
         private GameObject _player;
 
         private RectTransform _mapArrowTransform;
-        private FollowPlayer _followingState = FollowPlayer.FollowRotate;
+        public FollowPlayer _followingState = FollowPlayer.FollowRotate;
 
         #region MonoBehaviour
         void OnEnable()
@@ -162,25 +162,10 @@ namespace BrainVR.UnityFramework.Navigation
     [CustomEditor(typeof(MapController))]
     public class GuiMapEditor : Editor
     {
-        private MapController.FollowPlayer _followState;
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
             var map = (MapController) target;
-            map.Type = (MapController.MinimapType) EditorGUILayout.EnumPopup(map.Type);
-            switch (map.Type)
-            {
-                case MapController.MinimapType.Schematic:
-                    map.MapCamera.cullingMask = LayerMask.GetMask("StaticMap");
-                    break;
-                case MapController.MinimapType.Static:
-                    map.MapCamera.cullingMask = LayerMask.GetMask("SchematicMap");
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            _followState = (MapController.FollowPlayer) EditorGUILayout.EnumPopup(_followState);
-            map.ChangeFollowState(_followState);
             map.MapCamera.orthographicSize = EditorGUILayout.FloatField("Camera size:", map.MapCamera.orthographicSize);
             if (GUILayout.Button("+")) map.MapCamera.orthographicSize -= 5;
             if (GUILayout.Button("-")) map.MapCamera.orthographicSize += 5;
