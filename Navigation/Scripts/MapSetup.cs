@@ -49,39 +49,34 @@ namespace BrainVR.UnityFramework.Navigation
                 return;
             }
 
-            foreach (BoxCollider coll in b.GetComponents<BoxCollider>()) {
+            foreach (var col in b.GetComponents<BoxCollider>()) {
 
-                var go = Instantiate(CubeMesh, coll.bounds.center, b.rotation) as GameObject;
+                var go = Instantiate(CubeMesh, col.bounds.center, b.rotation);
 
-                go.transform.localScale = Vector3.Scale(coll.size, b.localScale);
+                go.transform.localScale = Vector3.Scale(col.size, b.localScale);
                 go.transform.SetParent(transform.Find("SCHEMATIC_MAP/BUILDINGS"));
                 go.name = b.name+"__cube";		 
             }
         }
-        public void Clear(string placeholder) {
-            foreach (Transform item in transform.Find(placeholder)) {
+        public void Clear(string placeholder)
+        {
+            foreach (Transform item in transform.Find(placeholder))
                 DestroyImmediate(item.gameObject);
-            }
         }
-        public void GenerateSchematicCustomObjects() {
+        public void GenerateSchematicCustomObjects() 
+        {
             var mat = new Material(Shader.Find("Unlit/Color"));
-            foreach (SpecificMapObjects smo in SpecificObjects)
-                if (smo.Obj)
-                    ProcessCustomObject(smo.Obj, smo.Color, mat);
+            foreach (var smo in SpecificObjects)
+                if (smo.Obj) ProcessCustomObject(smo.Obj, smo.Color, mat);
         }
-        public void GenerateSchematicBuildings() {
-
-            GameObject[] buildings = GameObject.FindGameObjectsWithTag("Building");
-
-            foreach (GameObject item in buildings) {
-                //print("iname:"+item.name);
-                ProcessCustomObject(item.transform, MapGeneratorEditor.buldingsColor, BuildingMaterial);
-            }       
+        public void GenerateSchematicBuildings()
+        {
+            var buildings = GameObject.FindGameObjectsWithTag("Building");
+            foreach (var item in buildings)
+                ProcessCustomObject(item.transform, MapGeneratorEditor.BuldingsColor, BuildingMaterial);
         }
-        Camera lastActiveCam;
         public void GenerateMap_old()
         {
-            lastActiveCam=Camera.main;
             transform.GetChild(0).gameObject.SetActive(true);
             ScreenCapture.CaptureScreenshot("Screenshot.png",1);
             /*
@@ -94,26 +89,25 @@ namespace BrainVR.UnityFramework.Navigation
     public class MapGeneratorEditor : Editor
     {
 
-        public static Color buldingsColor;
-
-        MapSetup myScript;
+        public static Color BuldingsColor;
+        MapSetup _myScript;
 
         public void OnEnable()
         {
-            myScript = (MapSetup)target;
-            buldingsColor = myScript.CubeMesh.GetComponent<Renderer>().sharedMaterial.color;
+            _myScript = (MapSetup)target;
+            BuldingsColor = _myScript.CubeMesh.GetComponent<Renderer>().sharedMaterial.color;
         }
 
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
-            buldingsColor = EditorGUILayout.ColorField("Buldings Color", buldingsColor);
-            myScript.CubeMesh.GetComponent<Renderer>().sharedMaterial.color = buldingsColor;
+            BuldingsColor = EditorGUILayout.ColorField("Buldings Color", BuldingsColor);
+            _myScript.CubeMesh.GetComponent<Renderer>().sharedMaterial.color = BuldingsColor;
             if (!GUILayout.Button("Update")) return;
-            myScript.Clear("SCHEMATIC_MAP/BUILDINGS");
-            myScript.Clear("SCHEMATIC_MAP/OTHER");
-            myScript.GenerateSchematicBuildings();
-            myScript.GenerateSchematicCustomObjects();
+            _myScript.Clear("SCHEMATIC_MAP/BUILDINGS");
+            _myScript.Clear("SCHEMATIC_MAP/OTHER");
+            _myScript.GenerateSchematicBuildings();
+            _myScript.GenerateSchematicCustomObjects();
         }
     }
 }
