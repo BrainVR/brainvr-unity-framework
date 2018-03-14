@@ -17,32 +17,29 @@ namespace BrainVR.UnityFramework.Navigation
             FollowDontRotate,
             DontFollowDontRotate
         }
-
         public enum MinimapType
         {
             Static,
             Schematic
         }
-
         public Camera MapCamera;
+        public GameObject MapArrow;
         public MinimapType Type;
         public GameObject Map;
         public Sprite DirrectionalArrow;
         public Sprite LocationMark;
 
         private GameObject _player;
-        private GameObject _mapArrow;
-        private RectTransform _mapArrowTransform;
 
+        private RectTransform _mapArrowTransform;
         private FollowPlayer _followingState = FollowPlayer.FollowRotate;
 
         #region MonoBehaviour
         void OnEnable()
         {
             if (_player == null) _player = PlayerController.Instance.gameObject;
-            if (_mapArrow == null) _mapArrow = GetArrow();
             //TODO - problematic
-            _mapArrowTransform = _mapArrow.GetComponent<RectTransform>();
+            _mapArrowTransform = MapArrow.GetComponent<RectTransform>();
         }
         void Update()
         {
@@ -127,18 +124,9 @@ namespace BrainVR.UnityFramework.Navigation
                 return null;
             }
         }
-        private GameObject GetArrow()
-        {
-            //GameObject go = transform.Find("Map-Arrow").gameObject;
-            var go = GameObject.Find("Map-Arrow");
-            if (go != null) return go;
-            Debug.LogError("Map-Arrow game object is not part of the prefab.");
-            Debug.Break();
-            return null;
-        }
         private void ShowArrow(bool bo)
         {
-            _mapArrow.GetComponent<Image>().sprite = bo ? DirrectionalArrow : LocationMark;
+            MapArrow.GetComponent<Image>().sprite = bo ? DirrectionalArrow : LocationMark;
         }
         //This method takes care of the necessary changes that follow changing of states
         //For example, whn we dont Follow and don't rotate, we want to set the Camera position once and for all
@@ -161,7 +149,7 @@ namespace BrainVR.UnityFramework.Navigation
                 case FollowPlayer.DontFollowDontRotate:
                     MapCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
                     MapCamera.transform.position = new Vector3(0, 0, 0);
-                    _mapArrow.GetComponent<Image>().enabled = false;
+                    MapArrow.GetComponent<Image>().enabled = false;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -175,7 +163,6 @@ namespace BrainVR.UnityFramework.Navigation
     public class GuiMapEditor : Editor
     {
         private MapController.FollowPlayer _followState;
-
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
@@ -194,7 +181,6 @@ namespace BrainVR.UnityFramework.Navigation
             }
             _followState = (MapController.FollowPlayer) EditorGUILayout.EnumPopup(_followState);
             map.ChangeFollowState(_followState);
-
             map.MapCamera.orthographicSize = EditorGUILayout.FloatField("Camera size:", map.MapCamera.orthographicSize);
             if (GUILayout.Button("+")) map.MapCamera.orthographicSize -= 5;
             if (GUILayout.Button("-")) map.MapCamera.orthographicSize += 5;
