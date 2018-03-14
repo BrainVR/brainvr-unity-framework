@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using BrainVR.UnityFramework.Arduino;
+﻿using System.Collections.Generic;
 using BrainVR.UnityFramework.Scripts.Experiments.DemoExperiment;
 using BrainVR.UnityFramework.Scripts.Objects.Beeper;
 using BrainVR.UnityFramework.UI.InGame;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.Experiments.Helpers.Helpers.Demo
+namespace BrainVR.UnityFramework.Experiment.Demo
 {
     public class DemoExperiment : Experiment
     {

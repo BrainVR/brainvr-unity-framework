@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using BrainVR.UnityFramework.Experiments.Helpers;
+using BrainVR.UnityFramework.Experiment.Helpers;
 using Newtonsoft.Json;
 
 namespace BrainVR.UnityLogger

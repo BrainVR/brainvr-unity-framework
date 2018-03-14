@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.Experiments.Helpers
+namespace BrainVR.UnityFramework.Experiment.Helpers
 {
 
     public static class ExperimentSerialisationHelper {

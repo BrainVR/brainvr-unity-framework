@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using Assets.GeneralScripts.Serialisation;
+using BrainVR.UnityFramework.Experiment.Helpers;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace BrainVR.UnityFramework.Experiments.Helpers
+namespace BrainVR.UnityFramework.Experiment
 {
     public class ExperimentSettings : ScriptableObject
     {

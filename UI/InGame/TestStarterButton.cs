@@ -1,5 +1,5 @@
 ﻿using System;
-using BrainVR.UnityFramework.Experiments.Helpers;
+using BrainVR.UnityFramework.Experiment;
 using BrainVR.UnityFramework.Menu;
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
@@ -10,9 +10,9 @@ namespace BrainVR.UnityFramework.UI.InGame
     public class TestStarterButton : MonoBehaviour
     {
         public Text Text;
-        private Experiment _experiment;
+        private Experiment.Experiment _experiment;
 
-        public void AddExperiment(Experiment experiment)
+        public void AddExperiment(Experiment.Experiment experiment)
         {
             _experiment = experiment;
             _experiment.ExperimentStateChanged += ButtonStateChanged;

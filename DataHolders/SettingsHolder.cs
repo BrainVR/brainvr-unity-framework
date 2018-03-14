@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using Assets.GeneralScripts.Serialisation;
-using BrainVR.UnityFramework.Experiments.Helpers;
+using BrainVR.UnityFramework.Experiment;
 using BrainVR.UnityLogger;
 
 namespace BrainVR.UnityFramework.DataHolders

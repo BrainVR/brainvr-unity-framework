@@ -1,4 +1,4 @@
-﻿using BrainVR.UnityFramework.Experiments.Helpers;
+﻿using BrainVR.UnityFramework.Experiment;
 using BrainVR.UnityFramework.Helpers;
 #if UNITY_EDITOR
 using UnityEditor;

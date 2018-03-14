@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BrainVR.UnityFramework.Experiments.Helpers;
+using BrainVR.UnityFramework.Experiment;
 using BrainVR.UnityFramework.Helpers;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace BrainVR.UnityFramework.DataHolders
 {
     public static class ExperimentLoader
     {
-        public static Experiment CreateExperimentGO(string expName, ExperimentSettings settings = null)
+        public static Experiment.Experiment CreateExperimentGO(string expName, ExperimentSettings settings = null)
         {
             var expGO = new GameObject();
             expGO.transform.name = expName;
@@ -21,7 +21,7 @@ namespace BrainVR.UnityFramework.DataHolders
                 Debug.Log("Experiment of name " + expName + "does not exist");
                 return null;
             }
-            var exp = expGO.AddComponent(experimentClass) as Experiment;
+            var exp = expGO.AddComponent(experimentClass) as Experiment.Experiment;
             //exp.Settings
             if (exp != null)
             {

@@ -4,7 +4,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace BrainVR.UnityFramework.Experiments.Helpers
+namespace BrainVR.UnityFramework.Experiment.Helpers
 {
     public class SerialisationConstants
     {
