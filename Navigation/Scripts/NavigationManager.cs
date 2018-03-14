@@ -12,6 +12,7 @@ namespace BrainVR.UnityFramework.Navigation
         List<NavigationController> _controllers = new List<NavigationController>();
 
         public bool IsNavigating;
+        public GameObject TargetGameObject;
         public Transform Target;
 
         private int _selectedNav;
@@ -54,9 +55,10 @@ namespace BrainVR.UnityFramework.Navigation
             IsNavigating = false;
             CurrentNavigationController.StopNavigation();
         }
-        public void SetTarget(GameObject go)
+        public void SetTarget(GameObject target)
         {
-            Target = go.transform;
+            TargetGameObject = target;
+            Target = target.transform;
         }
         public void SetNavigationMode(string controllerName)
         {
@@ -86,5 +88,5 @@ namespace BrainVR.UnityFramework.Navigation
             foreach (var controler in _controllers)
                 controler.SetAgent(_agent);
         }
-}
+    }
 }
