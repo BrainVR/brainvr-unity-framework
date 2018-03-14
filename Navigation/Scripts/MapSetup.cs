@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace BrainVR.UnityFramework.Navigation
 {
-    public class MapGenerator : MonoBehaviour
+    public class MapSetup : MonoBehaviour
     {
-      
         public GameObject CubeMesh;
         public Material BuildingMaterial;
         //public Transform customObject1, customObject2, customObject3;
@@ -15,34 +14,34 @@ namespace BrainVR.UnityFramework.Navigation
         [System.Serializable]
         public class SpecificMapObjects
         {
-            public Transform obj;
-            public Color color;
-        
+            public Transform Obj;
+            public Color Color;
         }
-        public SpecificMapObjects[] specificObjects;
+        public SpecificMapObjects[] SpecificObjects;
     
-        public void ProcessCustomObject(Transform o, Color c, Material mat) {
-
-            GameObject go = Instantiate(o.gameObject, o.transform.position, o.transform.rotation) as GameObject;
+        public void ProcessCustomObject(Transform o, Color c, Material mat)
+        {
+            var go = Instantiate(o.gameObject, o.transform.position, o.transform.rotation);
             //removes all colliders
-            Component[] colliders = go.GetComponentsInChildren<Collider>(true);
-            foreach (Component collider in colliders)
+            var colliders = go.GetComponentsInChildren<Collider>(true);
+            foreach (var col in colliders)
             {
-                DestroyImmediate(collider);
+                DestroyImmediate(col);
             }
             go.transform.SetParent(transform.Find("SCHEMATIC_MAP/OTHER"));
-            int layer = transform.Find("SCHEMATIC_MAP/OTHER").gameObject.layer;
+            var layer = transform.Find("SCHEMATIC_MAP/OTHER").gameObject.layer;
             go.transform.SetLayerRecursively(layer);
             go.name = o.name+"__schematic";
             mat.color = c;
-            foreach (Renderer r in go.GetComponentsInChildren<Renderer>()) {
-                for (int i=0; i < r.materials.Length; i++) {
-                    r.materials[i].shader=mat.shader;
-                    r.materials[i].CopyPropertiesFromMaterial(mat);
+            foreach (var r in go.GetComponentsInChildren<Renderer>())
+            {
+                foreach (var material in r.materials)
+                {
+                    material.shader=mat.shader;
+                    material.CopyPropertiesFromMaterial(mat);
                 }
             }
         }
-
         public void ProcessBuilding(Transform b) {
        
             if (!b.GetComponent<BoxCollider>()) {
@@ -52,27 +51,24 @@ namespace BrainVR.UnityFramework.Navigation
 
             foreach (BoxCollider coll in b.GetComponents<BoxCollider>()) {
 
-                GameObject go = Instantiate(CubeMesh, coll.bounds.center, b.rotation) as GameObject;
+                var go = Instantiate(CubeMesh, coll.bounds.center, b.rotation) as GameObject;
 
                 go.transform.localScale = Vector3.Scale(coll.size, b.localScale);
                 go.transform.SetParent(transform.Find("SCHEMATIC_MAP/BUILDINGS"));
                 go.name = b.name+"__cube";		 
-            } 
+            }
         }
-
         public void Clear(string placeholder) {
             foreach (Transform item in transform.Find(placeholder)) {
                 DestroyImmediate(item.gameObject);
             }
         }
-
         public void GenerateSchematicCustomObjects() {
-            Material mat = new Material(Shader.Find("Unlit/Color"));
-            foreach (SpecificMapObjects smo in specificObjects)
-                if (smo.obj)
-                    ProcessCustomObject(smo.obj, smo.color, mat);
+            var mat = new Material(Shader.Find("Unlit/Color"));
+            foreach (SpecificMapObjects smo in SpecificObjects)
+                if (smo.Obj)
+                    ProcessCustomObject(smo.Obj, smo.Color, mat);
         }
-
         public void GenerateSchematicBuildings() {
 
             GameObject[] buildings = GameObject.FindGameObjectsWithTag("Building");
@@ -83,30 +79,28 @@ namespace BrainVR.UnityFramework.Navigation
             }       
         }
         Camera lastActiveCam;
-        public void GenerateMap_old() {
-
+        public void GenerateMap_old()
+        {
             lastActiveCam=Camera.main;
             transform.GetChild(0).gameObject.SetActive(true);
-
-            print("button pressed");
-
             ScreenCapture.CaptureScreenshot("Screenshot.png",1);
             /*
-        transform.GetChild(0).gameObject.SetActive(false);
-        lastActiveCam.gameObject.SetActive(true);*/
+            transform.GetChild(0).gameObject.SetActive(false);
+            lastActiveCam.gameObject.SetActive(true);
+            */
         }
     }
-    [CustomEditor(typeof(MapGenerator))]
+    [CustomEditor(typeof(MapSetup))]
     public class MapGeneratorEditor : Editor
     {
 
         public static Color buldingsColor;
 
-        MapGenerator myScript;
+        MapSetup myScript;
 
         public void OnEnable()
         {
-            myScript = (MapGenerator)target;
+            myScript = (MapSetup)target;
             buldingsColor = myScript.CubeMesh.GetComponent<Renderer>().sharedMaterial.color;
         }
 
