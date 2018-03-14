@@ -62,7 +62,7 @@ namespace BrainVR.UnityFramework.Navigation
             var go = transform.Find(StaticMap);
             var terrainSize = Terrain.activeTerrain.terrainData.size;
             terrainSize.y = -100;
-            go.transform.localScale = terrainSize/10;
+            go.transform.localScale = new Vector3(terrainSize.x/10, 1, terrainSize.z/10);
             go.position = terrainSize / 2;
             var rend = go.GetComponent<Renderer>();
             var mat = new Material(Shader.Find("Unlit/Texture")) {mainTexture = StaticImage};
