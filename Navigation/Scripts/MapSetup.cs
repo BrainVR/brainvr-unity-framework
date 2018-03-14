@@ -17,12 +17,12 @@ namespace BrainVR.UnityFramework.Navigation
         [System.Serializable]
         public class SpecificMapObject
         {
-            public Transform Obj;
+            public GameObject go;
             public Color Color;
         }
 
         public TaggedObject[] TaggedObjects;
-        public SpecificMapObject[] SpecificObject;
+        public SpecificMapObject[] SpecificObjects;
 
         public Texture StaticImage;
 
@@ -43,7 +43,20 @@ namespace BrainVR.UnityFramework.Navigation
             }
             SetSchematicLayer();
         }
-
+        public void ProcessSpecificObjects()
+        {
+            const string goName = "Specific";
+            var go = new GameObject { name = goName };
+            go.transform.SetParent(transform.Find(SchematicPath));
+            foreach (var obj in SpecificObjects)
+            {
+                var material = CreateSchematicMaterial(obj.Color);
+                go.transform.SetParent(transform.Find(SchematicPath));
+                go.transform.localPosition = default(Vector3);
+                ProcessObject(obj.go, material, goName);
+            }
+            SetSchematicLayer();
+        }
         public void SetStaticTexture()
         {
             var go = transform.Find(StaticMap);
@@ -55,9 +68,11 @@ namespace BrainVR.UnityFramework.Navigation
             var mat = new Material(Shader.Find("Unlit/Texture")) {mainTexture = StaticImage};
             rend.material = mat;
         }
-        public void Clear(string placeholder)
+        //TODO - deosn't delete all. Probly editor specific :(
+        public void ClearSchematicMap()
         {
-            foreach (Transform item in transform.Find(placeholder))
+            var parent = transform.Find(SchematicPath);
+            foreach (Transform item in parent)
                 DestroyImmediate(item.gameObject);
         }
         #endregion
@@ -111,12 +126,13 @@ namespace BrainVR.UnityFramework.Navigation
             DrawDefaultInspector();
             if (GUILayout.Button("Update"))
             {
-                _myScript.Clear("SCHEMATIC_MAP");
+                _myScript.ClearSchematicMap();
                 _myScript.ProcessTaggedObjects();
+                _myScript.ProcessSpecificObjects();
             }
             if (GUILayout.Button("Clear"))
             {
-                _myScript.Clear("SCHEMATIC_MAP");
+                _myScript.ClearSchematicMap();
             }
             if (GUILayout.Button("Set Static Image"))
             {
