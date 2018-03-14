@@ -6,75 +6,82 @@ namespace BrainVR.UnityFramework.Navigation
 {
     public class MapSetup : MonoBehaviour
     {
-        public GameObject CubeMesh;
-        public Material BuildingMaterial;
-        //public Transform customObject1, customObject2, customObject3;
-        //public Material customMat1, customMat2, customMat3;
-
+        private const string SchematicPath = "SCHEMATIC_MAP";
         [System.Serializable]
-        public class SpecificMapObjects
+        public class TaggedObject
+        {
+            public string Tag;
+            public Color Color;
+        }
+        [System.Serializable]
+        public class SpecificMapObject
         {
             public Transform Obj;
             public Color Color;
         }
-        public SpecificMapObjects[] SpecificObjects;
-    
-        public void ProcessCustomObject(Transform o, Color c, Material mat)
+
+        public TaggedObject[] TaggedObjects;
+        public SpecificMapObject[] SpecificObject;
+
+        #region Public API
+        public void ProcessTaggedObjects()
         {
-            var go = Instantiate(o.gameObject, o.transform.position, o.transform.rotation);
-            //removes all colliders
-            var colliders = go.GetComponentsInChildren<Collider>(true);
-            foreach (var col in colliders)
+            foreach (var tagName in TaggedObjects)
             {
-                DestroyImmediate(col);
+                //find all the objects
+                var material = CreateSchematicMaterial(tagName.Color);
+                var objects = GameObject.FindGameObjectsWithTag(tagName.Tag);
+                //creates parent game objects
+                var go = new GameObject{name = tagName.Tag};
+                go.transform.SetParent(transform.Find(SchematicPath));
+                foreach (var obj in objects)
+                    ProcessObject(obj, material, tagName.Tag);
             }
-            go.transform.SetParent(transform.Find("SCHEMATIC_MAP/OTHER"));
-            var layer = transform.Find("SCHEMATIC_MAP/OTHER").gameObject.layer;
-            go.transform.SetLayerRecursively(layer);
-            go.name = o.name+"__schematic";
-            mat.color = c;
-            foreach (var r in go.GetComponentsInChildren<Renderer>())
-            {
-                foreach (var material in r.materials)
-                {
-                    material.shader=mat.shader;
-                    material.CopyPropertiesFromMaterial(mat);
-                }
-            }
-        }
-        public void ProcessBuilding(Transform b) {
-       
-            if (!b.GetComponent<BoxCollider>()) {
-                Debug.LogWarning("Building" + b.name+ " has no collider");
-                return;
-            }
-
-            foreach (var col in b.GetComponents<BoxCollider>()) {
-
-                var go = Instantiate(CubeMesh, col.bounds.center, b.rotation);
-
-                go.transform.localScale = Vector3.Scale(col.size, b.localScale);
-                go.transform.SetParent(transform.Find("SCHEMATIC_MAP/BUILDINGS"));
-                go.name = b.name+"__cube";		 
-            }
+            SetSchematicLayer();
         }
         public void Clear(string placeholder)
         {
             foreach (Transform item in transform.Find(placeholder))
                 DestroyImmediate(item.gameObject);
         }
-        public void GenerateSchematicCustomObjects() 
+        #endregion
+        #region Private functions
+
+        private void ProcessObject(GameObject obj, Material material, string type)
         {
-            var mat = new Material(Shader.Find("Unlit/Color"));
-            foreach (var smo in SpecificObjects)
-                if (smo.Obj) ProcessCustomObject(smo.Obj, smo.Color, mat);
+            var go = Instantiate(obj, obj.transform.position, obj.transform.rotation);
+            RemoveColliders(go);
+            var objectPath = SchematicPath + "/" + type;
+            go.transform.SetParent(transform.Find(objectPath));
+            go.name = "schematic_" + obj.name;
+            foreach (var r in go.GetComponentsInChildren<Renderer>())
+                r.material = material;
         }
-        public void GenerateSchematicBuildings()
+
+        private LayerMask GetObjectLayer(string goName)
         {
-            var buildings = GameObject.FindGameObjectsWithTag("Building");
-            foreach (var item in buildings)
-                ProcessCustomObject(item.transform, MapGeneratorEditor.BuldingsColor, BuildingMaterial);
+            var layer = transform.Find(goName).gameObject.layer;
+            return layer;
         }
+        private void SetSchematicLayer()
+        {
+            var go = transform.Find(SchematicPath);
+            go.transform.SetLayerRecursively(GetObjectLayer(SchematicPath));
+        }
+        public GameObject RemoveColliders(GameObject go)
+        {
+            var colliders = go.GetComponentsInChildren<Collider>(true);
+            foreach (var col in colliders)
+            {
+                DestroyImmediate(col);
+            }
+            return go;
+        }
+        private static Material CreateSchematicMaterial(Color color)
+        {
+            return new Material(Shader.Find("Unlit/Color")) { color = color };
+        }
+        #endregion
         public void GenerateMap_old()
         {
             transform.GetChild(0).gameObject.SetActive(true);
@@ -88,26 +95,25 @@ namespace BrainVR.UnityFramework.Navigation
     [CustomEditor(typeof(MapSetup))]
     public class MapGeneratorEditor : Editor
     {
-
         public static Color BuldingsColor;
         MapSetup _myScript;
-
         public void OnEnable()
         {
             _myScript = (MapSetup)target;
-            BuldingsColor = _myScript.CubeMesh.GetComponent<Renderer>().sharedMaterial.color;
         }
-
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
-            BuldingsColor = EditorGUILayout.ColorField("Buldings Color", BuldingsColor);
-            _myScript.CubeMesh.GetComponent<Renderer>().sharedMaterial.color = BuldingsColor;
-            if (!GUILayout.Button("Update")) return;
-            _myScript.Clear("SCHEMATIC_MAP/BUILDINGS");
-            _myScript.Clear("SCHEMATIC_MAP/OTHER");
-            _myScript.GenerateSchematicBuildings();
-            _myScript.GenerateSchematicCustomObjects();
+            if (GUILayout.Button("Update"))
+            {
+                _myScript.Clear("SCHEMATIC_MAP");
+                _myScript.ProcessTaggedObjects();
+            }
+            if (GUILayout.Button("Clear"))
+            {
+                _myScript.Clear("SCHEMATIC_MAP");
+            }
+
         }
     }
 }
