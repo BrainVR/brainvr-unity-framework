@@ -21,11 +21,9 @@ namespace BrainVR.UnityFramework.Objects.Goals
         {
             GoalPrefab = GoalPrefab ?? ExperimentAssetHolder.Instance.FindPrefab("Goal");
         }
-
         #endregion
         #region Public API
         #region Manipulation
-
         /// <summary>
         /// Returns a Goal controller script given by index
         /// </summary>
@@ -36,7 +34,6 @@ namespace BrainVR.UnityFramework.Objects.Goals
             var obj = GetObject(i);
             return obj == null ? null : (GoalController) obj;
         }
-
         /// <summary>
         /// Resizes all the goals based on the multiplier characteristic
         /// </summary>
@@ -114,6 +111,7 @@ namespace BrainVR.UnityFramework.Objects.Goals
                     {
                         _myScript.Objects.Add(goalController);
                     }
+                    EditorUtility.SetDirty(_myScript);
                 }
             }
             if (GUILayout.Button("Clear goals"))
