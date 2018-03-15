@@ -248,25 +248,25 @@ namespace BrainVR.UnityFramework.Experiment
         //Necessary to instantiate the experiment
         public abstract void AddSettings(ExperimentSettings settings);
         public abstract string ExperimentHeaderLog();
-        protected abstract void OnExperimentInitialise();
-        protected abstract void AfterExperimentInitialise();
-        protected abstract void OnExperimentSetup();
-        protected abstract void AfterExperimentSetup();
-        protected abstract void OnExperimentStart();
-        protected abstract void AfterExperimentStart();
-        protected abstract void OnTrialSetup();
-        protected abstract void AfterTrialSetup();
-        protected abstract void OnTrialStart();
-        protected abstract void AfterTrialStart();
-        protected abstract void OnTrialFinished();
-        protected abstract void AfterTrialFinished();
-        protected abstract void OnTrialClosed();
-        protected abstract void AfterTrialClosed();
+        protected virtual void OnExperimentInitialise(){ }
+        protected virtual void AfterExperimentInitialise() { }
+        protected virtual void OnExperimentSetup() { }
+        protected virtual void AfterExperimentSetup() { }
+        protected virtual void OnExperimentStart() { }
+        protected virtual void AfterExperimentStart() { }
+        protected virtual void OnTrialSetup() { }
+        protected virtual void AfterTrialSetup() { }
+        protected virtual void OnTrialStart() { }
+        protected virtual void AfterTrialStart() { }
+        protected virtual void OnTrialFinished() { }
+        protected virtual void AfterTrialFinished() { }
+        protected virtual void OnTrialClosed() { }
+        protected virtual void AfterTrialClosed() { }
         protected abstract bool CheckForEnd();
-        protected abstract void OnExperimentFinished();
-        protected abstract void AfterExperimentFinished();
-        protected abstract void OnExperimentClosed();
-        protected abstract void AfterExperimentClosed();
+        protected virtual void OnExperimentFinished() { }
+        protected virtual void AfterExperimentFinished() { }
+        protected virtual void OnExperimentClosed() { }
+        protected virtual void AfterExperimentClosed() { }
         #endregion
         #region Some logging helpers
         /// <summary>
