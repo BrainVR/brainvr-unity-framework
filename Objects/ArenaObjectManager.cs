@@ -53,6 +53,11 @@ namespace BrainVR.UnityFramework.Objects
         {
             ShowAll(false);
         }
+
+        public void Clear()
+        {
+            Objects = new List<ArenaObject>();
+        }
         public void MoveObjectsCircumference(int number, int[] positions, float radius = 15, Vector3 center = default(Vector3))
         {
             //validations

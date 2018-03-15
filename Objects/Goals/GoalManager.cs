@@ -2,6 +2,7 @@
 using System.Linq;
 using BrainVR.UnityFramework.DataHolders;
 using BrainVR.UnityFramework.Scripts.Objects.Goals;
+using UnityEditor;
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.Objects.Goals
@@ -9,16 +10,22 @@ namespace BrainVR.UnityFramework.Objects.Goals
     public class GoalManager : ArenaObjectManager<GoalManager>
     {
         public GameObject GoalPrefab;
-        public List<GoalController> Goals { get { return Objects.Cast<GoalController>().ToList(); } }
 
+        public List<GoalController> Goals
+        {
+            get { return Objects.Cast<GoalController>().ToList(); }
+        }
         #region Monobehaviour stuff
+
         void OnEnable()
         {
             GoalPrefab = GoalPrefab ?? ExperimentAssetHolder.Instance.FindPrefab("Goal");
         }
+
         #endregion
         #region Public API
         #region Manipulation
+
         /// <summary>
         /// Returns a Goal controller script given by index
         /// </summary>
@@ -27,8 +34,9 @@ namespace BrainVR.UnityFramework.Objects.Goals
         public GoalController GetGoal(int i)
         {
             var obj = GetObject(i);
-            return obj == null ? null : (GoalController)obj;
+            return obj == null ? null : (GoalController) obj;
         }
+
         /// <summary>
         /// Resizes all the goals based on the multiplier characteristic
         /// </summary>
@@ -38,9 +46,11 @@ namespace BrainVR.UnityFramework.Objects.Goals
             foreach (var goalController in Objects)
             {
                 var currentScale = goalController.gameObject.transform.localScale;
-                goalController.gameObject.transform.localScale = new Vector3(currentScale.x*multiplier, currentScale.y, currentScale.z*multiplier);
+                goalController.gameObject.transform.localScale = new Vector3(currentScale.x * multiplier,
+                    currentScale.y, currentScale.z * multiplier);
             }
         }
+
         #endregion
         /// <summary>
         /// Instantiates goals around the base of the arena
@@ -50,7 +60,8 @@ namespace BrainVR.UnityFramework.Objects.Goals
         /// <param name="radius">Radius of the arena</param>
         /// <param name="center">XYZ coordinates of the perfect center of the area</param>
         /// <returns></returns>
-        public List<GoalController> InstantiateGoalsCircumference(int number, int[] positions = null, float radius = 15, Vector3 center = default(Vector3))
+        public List<GoalController> InstantiateGoalsCircumference(int number, int[] positions = null, float radius = 15,
+            Vector3 center = default(Vector3))
         {
             //validations
             if (positions != null)
@@ -78,6 +89,38 @@ namespace BrainVR.UnityFramework.Objects.Goals
             MoveObjectsCircumference(number, positions, radius, center);
             return Objects.Cast<GoalController>().ToList();
         }
+
         #endregion
     }
-}
+#if UNITY_EDITOR
+    [CustomEditor(typeof(GoalManager))]
+    public class GoalManagerEditor : Editor
+    {
+        private GoalManager _myScript;
+        public void OnEnable()
+        {
+            _myScript = (GoalManager)target;
+        }
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+            if (GUILayout.Button("Assign Children"))
+            {
+                _myScript.Clear();
+                foreach (Transform child in _myScript.transform)
+                {
+                    var goalController = child.GetComponent<GoalController>();
+                    if (goalController != null)
+                    {
+                        _myScript.Objects.Add(goalController);
+                    }
+                }
+            }
+            if (GUILayout.Button("Clear goals"))
+            {
+                _myScript.Clear();
+            }
+        }
+    }
+#endif
+ }
