@@ -10,9 +10,9 @@ namespace BrainVR.UnityFramework.UI.InGame
     public class TestStarterButton : MonoBehaviour
     {
         public Text Text;
-        private Experiment.Experiment _experiment;
+        private Experiment.BaseExperiment _experiment;
 
-        public void AddExperiment(Experiment.Experiment experiment)
+        public void AddExperiment(Experiment.BaseExperiment experiment)
         {
             _experiment = experiment;
             _experiment.ExperimentStateChanged += ButtonStateChanged;

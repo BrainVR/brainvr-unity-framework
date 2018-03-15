@@ -1,5 +1,4 @@
 ﻿#if UNITY_EDITOR
-using BrainVR.UnityFramework.Helpers;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,7 +20,6 @@ namespace BrainVR.UnityFramework.Navigation
             public GameObject go;
             public Color Color;
         }
-
         public TaggedObject[] TaggedObjects;
         public SpecificMapObject[] SpecificObjects;
 

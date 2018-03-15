@@ -13,7 +13,7 @@ namespace BrainVR.UnityLogger
 
         private IPlayerController _playerController;
         //HOW OFTEN DO YOU WANNA LOG
-        //applies only to children that can log continuously (Plyer Log), not to those that log based on certain events (Quest log, Experiment log)
+        //applies only to children that can log continuously (Plyer Log), not to those that log based on certain events (Quest log, BaseExperiment log)
         public float LoggingFrequency = 0.005F;
 
         float _deltaTime;

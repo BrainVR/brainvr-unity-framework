@@ -10,7 +10,7 @@ namespace BrainVR.UnityFramework.DataHolders
 {
     public static class ExperimentLoader
     {
-        public static Experiment.Experiment CreateExperimentGO(string expName, ExperimentSettings settings = null)
+        public static Experiment.BaseExperiment CreateExperimentGO(string expName, ExperimentSettings settings = null)
         {
             var expGO = new GameObject();
             expGO.transform.name = expName;
@@ -18,10 +18,10 @@ namespace BrainVR.UnityFramework.DataHolders
             var experimentClass = TypeHelper.GetTypeByName(expName);
             if (experimentClass == null)
             {
-                Debug.Log("Experiment of name " + expName + "does not exist");
+                Debug.Log("BaseExperiment of name " + expName + "does not exist");
                 return null;
             }
-            var exp = expGO.AddComponent(experimentClass) as Experiment.Experiment;
+            var exp = expGO.AddComponent(experimentClass) as Experiment.BaseExperiment;
             //exp.Settings
             if (exp != null)
             {

@@ -16,7 +16,7 @@ namespace BrainVR.UnityFramework.UI.MainMenu
             AddButton(manager.Experiment);
         }
 
-        private void AddButton(Experiment.Experiment experiment)
+        private void AddButton(Experiment.BaseExperiment experiment)
         {
             var go = Instantiate(NewButtonPrefab, default(Vector3), default(Quaternion)) as GameObject;
             go.transform.SetParent(DynamicGroupQuests.transform);

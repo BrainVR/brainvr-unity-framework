@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BrainVR.UnityFramework.Experiment.Demo
 {
-    public class DemoExperiment : Experiment
+    public class DemoExperiment : BaseExperiment
     {
         //maybe more to some other abstract class
         protected BeeperManager BeepManager;
@@ -23,7 +23,7 @@ namespace BrainVR.UnityFramework.Experiment.Demo
             Settings = (DemoExperimentSettings)settings;
         }
         #endregion
-        #region Experiment Logic
+        #region BaseExperiment Logic
 
         protected override void OnExperimentInitialise()
         {

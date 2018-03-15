@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BrainVR.UnityFramework.Experiment.GoExperiment
 {
-    public class GoExperiment : Experiment
+    public class GoExperiment : BaseExperiment
     {
         private List<GoStep> _tasks = new List<GoStep>();
 

@@ -85,12 +85,12 @@ namespace BrainVR.UnityLogger
         }
         private void LogExperimentStateChanged(object obj, ExperimentStateArgs args)
         {
-            List<string> toWrite = new List<string> {"Experiment", args.Experiment.ExperimentNumber.ToString(), args.ToState};
+            List<string> toWrite = new List<string> {"BaseExperiment", args.Experiment.ExperimentNumber.ToString(), args.ToState};
             WriteEvent(toWrite);
         }
         private void LogExperimentEvent(object obj, ExperimentEventArgs args)
         {
-            List<string> toWrite = new List<string> { "Experiment", args.Experiment.ExperimentNumber.ToString(), args.Event };
+            List<string> toWrite = new List<string> { "BaseExperiment", args.Experiment.ExperimentNumber.ToString(), args.Event };
             WriteEvent(toWrite);
         }
         public void StopLogging(IExperiment experiment)

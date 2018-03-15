@@ -6,7 +6,7 @@ namespace BrainVR.UnityFramework.Experiment
 {
     public class ExperimentManager : Singleton<ExperimentManager>
     {
-        public Experiment Experiment;
+        public BaseExperiment Experiment;
 
         #region MonoBehaviour
         void Start ()
@@ -29,7 +29,7 @@ namespace BrainVR.UnityFramework.Experiment
             if (Experiment) Destroy(Experiment.gameObject);
             Experiment = experiment;
         }
-        #region Experiment control
+        #region BaseExperiment control
         public void StartExperiment()
         {
             if (Experiment != null && Experiment.ExperimentState <= ExperimentState.Closed) Experiment.StartExperiment();

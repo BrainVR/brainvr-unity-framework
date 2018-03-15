@@ -12,7 +12,7 @@ namespace BrainVR.UnityFramework.Scripts.Experiments.DemoExperiment
         int WhichBlock = 0;
 
 #if UNITY_EDITOR
-        [MenuItem("Assets/Experiment/DemoExperimentSettings")]
+        [MenuItem("Assets/BaseExperiment/DemoExperimentSettings")]
         public static void CreateDialogueLine()
         {
             ScriptableObjectUtility.CreateAsset<DemoExperimentSettings>();

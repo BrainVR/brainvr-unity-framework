@@ -34,10 +34,10 @@ namespace BrainVR.UnityFramework.Experiment
     {
         ForceFinished
     }
-    public abstract class Experiment : MonoBehaviour, IExperiment
+    public abstract class BaseExperiment : MonoBehaviour, IExperiment
     {
         #region interface implementation delegates
-        public delegate void ExperimentStateHandler(Experiment ex, ExperimentState fromState, ExperimentState toState);
+        public delegate void ExperimentStateHandler(BaseExperiment ex, ExperimentState fromState, ExperimentState toState);
 
         protected string _name = "SomeTask";
         public string Name
@@ -80,7 +80,7 @@ namespace BrainVR.UnityFramework.Experiment
             if (ExperimentState == ExperimentState.Running) OnExperimentFixedUpdate();
         }
         #endregion
-        #region Experiment lifetime
+        #region BaseExperiment lifetime
         public void StartExperiment()
         {
             if (ExperimentState >= ExperimentState.Finished)
@@ -244,7 +244,7 @@ namespace BrainVR.UnityFramework.Experiment
             AfterTrialClosed();
         }
         #endregion
-        #region Forced Experiment API - needs to be impemented
+        #region Forced BaseExperiment API - needs to be impemented
         //Necessary to instantiate the experiment
         public abstract void AddSettings(ExperimentSettings settings);
         public abstract string ExperimentHeaderLog();
