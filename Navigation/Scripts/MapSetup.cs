@@ -26,7 +26,6 @@ namespace BrainVR.UnityFramework.Navigation
         public SpecificMapObject[] SpecificObjects;
 
         public Texture StaticImage;
-
         #region Public API
         public void ProcessTaggedObjects()
         {
