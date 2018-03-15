@@ -171,10 +171,10 @@ namespace BrainVR.UnityFramework.Navigation
             switch (map.Type)
             {
                 case MapController.MinimapType.Schematic:
-                    map.MapCamera.cullingMask = LayerMask.GetMask("StaticMap");
+                    map.MapCamera.cullingMask = LayerMask.GetMask("SchematicMap");
                     break;
                 case MapController.MinimapType.Static:
-                    map.MapCamera.cullingMask = LayerMask.GetMask("SchematicMap");
+                    map.MapCamera.cullingMask = LayerMask.GetMask("StaticMap");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
