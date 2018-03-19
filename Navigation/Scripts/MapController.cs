@@ -33,6 +33,7 @@ namespace BrainVR.UnityFramework.Navigation
 
         private RectTransform _mapArrowTransform;
         public FollowPlayer _followingState = FollowPlayer.FollowRotate;
+        private LineRenderer _lineRenderer;
 
         #region MonoBehaviour
         void OnEnable()
@@ -40,6 +41,8 @@ namespace BrainVR.UnityFramework.Navigation
             if (_player == null) _player = PlayerController.Instance.gameObject;
             //TODO - problematic
             _mapArrowTransform = MapArrow.GetComponent<RectTransform>();
+            _lineRenderer = gameObject.GetComponent<LineRenderer>();
+            _lineRenderer.positionCount = 1;
         }
         void Update()
         {
@@ -108,6 +111,19 @@ namespace BrainVR.UnityFramework.Navigation
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("type", type, null);
+            }
+        }
+
+        public void DrawPath(Vector3[] path)
+        {
+            var positionCount = path.Length + 1; //set the array of positions to the amount of corners
+            _lineRenderer.SetPosition(0, PlayerController.Instance.transform.position);
+            //we don't redraw this until its needed. - until position count doesn't change we are still looking only for the line to the first "node"
+            if (_lineRenderer.positionCount == positionCount) return;
+            _lineRenderer.positionCount = positionCount;
+            for (var i = 1; i < positionCount; i++)
+            {
+                _lineRenderer.SetPosition(i, path[i-1]); //go through each corner and set that to the line renderer's position
             }
         }
         #endregion
