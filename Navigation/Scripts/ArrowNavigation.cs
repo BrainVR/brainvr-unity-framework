@@ -38,6 +38,10 @@ namespace BrainVR.UnityFramework.Navigation
         {
             RotateArrow();
         }
+        protected override void OnTargetChange()
+        {
+
+        }
         #endregion
         #region Private functions
         private void PlayerHook()

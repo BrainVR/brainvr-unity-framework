@@ -37,10 +37,17 @@ namespace BrainVR.UnityFramework.Navigation
         {
             _agent = agent;
         }
+
+        public void TargetChange(Transform target)
+        {
+            Target = target;
+            OnTargetChange();
+        }
         #region Abstracts
         protected abstract void OnNavigationStart();
         protected abstract void OnNavigationStop();
         protected abstract void OnUpdate();
+        protected abstract void OnTargetChange();
         #endregion
         #endregion
         protected NavMeshPath UpdatePath()

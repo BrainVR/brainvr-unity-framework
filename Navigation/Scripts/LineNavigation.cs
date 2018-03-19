@@ -25,7 +25,7 @@ namespace BrainVR.UnityFramework.Navigation
         }
         public void Clear()
         {
-            _lineRenderer.positionCount = 0;
+            _lineRenderer.positionCount = 1;
         }
         #region Implementations of Controller
         protected override void OnNavigationStart()
@@ -40,12 +40,16 @@ namespace BrainVR.UnityFramework.Navigation
         {
             var path = UpdatePath();
             DrawLine(path);
-        }   
+        }
+        protected override void OnTargetChange()
+        {
+            Clear();
+        }
         #endregion
         #endregion
         private void DrawLine(NavMeshPath path)
         {
-            if (path.corners.Length <= 0) return;
+            if (path.corners.Length <= 1) return;
             _lineRenderer.SetPosition(0, PlayerController.Instance.transform.position);
             //we don't redraw this until its needed. - until position count doesn't change we are still looking only for the line to the first "node"
             if (_lineRenderer.positionCount == path.corners.Length) return;

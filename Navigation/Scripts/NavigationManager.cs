@@ -59,6 +59,8 @@ namespace BrainVR.UnityFramework.Navigation
         {
             TargetGameObject = target;
             Target = target.transform;
+            CurrentNavigationController.TargetChange(Target);
+
         }
         public void SetNavigationMode(string controllerName)
         {

@@ -41,7 +41,7 @@ namespace BrainVR.UnityFramework.Navigation
             if (_player == null) _player = PlayerController.Instance.gameObject;
             //TODO - problematic
             _mapArrowTransform = MapArrow.GetComponent<RectTransform>();
-            _lineRenderer = gameObject.GetComponent<LineRenderer>();
+            _lineRenderer = gameObject.GetComponentInChildren<LineRenderer>();
             _lineRenderer.positionCount = 1;
         }
         void Update()
@@ -105,15 +105,16 @@ namespace BrainVR.UnityFramework.Navigation
             {
                 case MinimapType.Static:
                     MapCamera.cullingMask = LayerMask.GetMask("StaticMap");
+                    _lineRenderer.gameObject.layer = LayerMask.NameToLayer("StaticMap");
                     break;
                 case MinimapType.Schematic:
                     MapCamera.cullingMask = LayerMask.GetMask("SchematicMap");
+                    _lineRenderer.gameObject.layer = LayerMask.NameToLayer("SchematicMap");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("type", type, null);
             }
         }
-
         public void DrawPath(Vector3[] path)
         {
             var positionCount = path.Length + 1; //set the array of positions to the amount of corners
