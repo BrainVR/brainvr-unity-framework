@@ -181,7 +181,7 @@ namespace BrainVR.UnityFramework.Navigation
             }
             _followState = (MapController.FollowPlayer) EditorGUILayout.EnumPopup(_followState);
             map.ChangeFollowState(_followState);
-            map.MapCamera.orthographicSize = EditorGUILayout.FloatField("Camera size:", map.MapCamera.orthographicSize);
+            map.MapCamera.orthographicSize = EditorGUILayout.FloatField("Map size:", map.MapCamera.orthographicSize);
             if (GUILayout.Button("+")) map.MapCamera.orthographicSize -= 5;
             if (GUILayout.Button("-")) map.MapCamera.orthographicSize += 5;
         }
