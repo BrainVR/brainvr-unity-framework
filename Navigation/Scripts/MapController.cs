@@ -115,8 +115,13 @@ namespace BrainVR.UnityFramework.Navigation
                     throw new ArgumentOutOfRangeException("type", type, null);
             }
         }
+        public void CleanPath()
+        {
+            _lineRenderer.positionCount = 1;
+        }
         public void DrawPath(Vector3[] path)
         {
+            //TODO - Needs afixin
             var positionCount = path.Length + 1; //set the array of positions to the amount of corners
             _lineRenderer.SetPosition(0, PlayerController.Instance.transform.position);
             //we don't redraw this until its needed. - until position count doesn't change we are still looking only for the line to the first "node"
