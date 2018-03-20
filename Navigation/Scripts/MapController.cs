@@ -10,7 +10,7 @@ namespace BrainVR.UnityFramework.Navigation
 {
     public class MapController : Singleton<MapController>
     {
-        public enum FollowPlayer
+        public enum MinimapBehaviour
         {
             FollowRotate,
             FollowRotateArrow,
@@ -32,7 +32,7 @@ namespace BrainVR.UnityFramework.Navigation
         private GameObject _player;
 
         private RectTransform _mapArrowTransform;
-        public FollowPlayer _followingState = FollowPlayer.FollowRotate;
+        public MinimapBehaviour FollowingState = MinimapBehaviour.FollowRotate;
         private LineRenderer _lineRenderer;
 
         #region MonoBehaviour
@@ -46,24 +46,24 @@ namespace BrainVR.UnityFramework.Navigation
         }
         void Update()
         {
-            switch (_followingState)
+            switch (FollowingState)
             {
-                case FollowPlayer.FollowRotate:
+                case MinimapBehaviour.FollowRotate:
                     MapCamera.transform.position = _player.transform.position + Vector3.up * 100;
                     Quaternion rotation = Quaternion.Euler(90, _player.transform.eulerAngles.y,
                         _player.transform.eulerAngles.z);
                     MapCamera.transform.rotation = rotation;
                     break;
-                case FollowPlayer.FollowRotateArrow:
+                case MinimapBehaviour.FollowRotateArrow:
                     MapCamera.transform.position = _player.transform.position + Vector3.up * 100;
                     //the minus in the transform is important
                     //the player rotates around y axis in the world, but the arrow transform is in the Z axis in the canvas
                     _mapArrowTransform.rotation = Quaternion.Euler(0, 0, -_player.transform.eulerAngles.y);
                     break;
-                case FollowPlayer.FollowDontRotate:
+                case MinimapBehaviour.FollowDontRotate:
                     MapCamera.transform.position = _player.transform.position + Vector3.up * 100;
                     break;
-                case FollowPlayer.DontFollowDontRotate:
+                case MinimapBehaviour.DontFollowDontRotate:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -72,9 +72,9 @@ namespace BrainVR.UnityFramework.Navigation
         #endregion
         #region Public API
         //simple public method to change the Arrow/Map Behaviour from outside
-        public void ChangeFollowState(FollowPlayer state)
+        public void SetBehaviour(MinimapBehaviour state)
         {
-            _followingState = state;
+            FollowingState = state;
             Hook();
         }
         public void Show()
@@ -155,20 +155,20 @@ namespace BrainVR.UnityFramework.Navigation
         //so it wouldn't change in each Update
         private void Hook()
         {
-            switch (_followingState)
+            switch (FollowingState)
             {
-                case FollowPlayer.FollowRotate:
+                case MinimapBehaviour.FollowRotate:
                     ShowArrow(true);
                     break;
-                case FollowPlayer.FollowRotateArrow:
+                case MinimapBehaviour.FollowRotateArrow:
                     MapCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
                     ShowArrow(true);
                     break;
-                case FollowPlayer.FollowDontRotate:
+                case MinimapBehaviour.FollowDontRotate:
                     MapCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
                     ShowArrow(false);
                     break;
-                case FollowPlayer.DontFollowDontRotate:
+                case MinimapBehaviour.DontFollowDontRotate:
                     MapCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
                     MapCamera.transform.position = new Vector3(0, 0, 0);
                     MapArrow.GetComponent<Image>().enabled = false;
@@ -184,7 +184,7 @@ namespace BrainVR.UnityFramework.Navigation
     [CustomEditor(typeof(MapController))]
     public class GuiMapEditor : Editor
     {
-        private MapController.FollowPlayer _followState;
+        private MapController.MinimapBehaviour _followState;
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
@@ -201,8 +201,8 @@ namespace BrainVR.UnityFramework.Navigation
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            _followState = (MapController.FollowPlayer) EditorGUILayout.EnumPopup(_followState);
-            map.ChangeFollowState(_followState);
+            _followState = (MapController.MinimapBehaviour) EditorGUILayout.EnumPopup(_followState);
+            map.SetBehaviour(_followState);
             map.MapCamera.orthographicSize = EditorGUILayout.FloatField("Map size:", map.MapCamera.orthographicSize);
             if (GUILayout.Button("+")) map.MapCamera.orthographicSize -= 5;
             if (GUILayout.Button("-")) map.MapCamera.orthographicSize += 5;
