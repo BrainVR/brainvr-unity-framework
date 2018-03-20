@@ -31,10 +31,12 @@ namespace BrainVR.UnityFramework.Experiment
 
         public string SerialiseOut()
         {
-            var serialised = new SerialisedExperiment();
-            serialised.Settings = this;
-            serialised.LevelName = LevelName;
-            serialised.ExperimentName = ExperimentName;
+            var serialised = new SerialisedExperiment
+            {
+                Settings = this,
+                LevelName = LevelName,
+                ExperimentName = ExperimentName
+            };
             return JsonConvert.SerializeObject(serialised, SerialisationConstants.SerialisationSettings());
         }
         #endregion
