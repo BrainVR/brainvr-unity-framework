@@ -20,39 +20,20 @@ namespace BrainVR.UnityFramework.Navigation
             public GameObject go;
             public Color Color;
         }
+
+        public GameObject TerrainObject;
         public TaggedObject[] TaggedObjects;
         public SpecificMapObject[] SpecificObjects;
 
         public Texture StaticImage;
         #region Public API
-        public void ProcessTaggedObjects()
+
+        public void CreateSchematicMap()
         {
-            foreach (var tagName in TaggedObjects)
-            {
-                //find all the objects
-                var material = CreateSchematicMaterial(tagName.Color);
-                var objects = GameObject.FindGameObjectsWithTag(tagName.Tag);
-                //creates parent game objects
-                var go = new GameObject{name = tagName.Tag};
-                go.transform.SetParent(transform.Find(SchematicPath));
-                go.transform.localPosition = default(Vector3);
-                foreach (var obj in objects)
-                    ProcessObject(obj, material, tagName.Tag);
-            }
-            SetSchematicLayer();
-        }
-        public void ProcessSpecificObjects()
-        {
-            const string goName = "Specific";
-            var go = new GameObject { name = goName };
-            go.transform.SetParent(transform.Find(SchematicPath));
-            foreach (var obj in SpecificObjects)
-            {
-                var material = CreateSchematicMaterial(obj.Color);
-                go.transform.SetParent(transform.Find(SchematicPath));
-                go.transform.localPosition = default(Vector3);
-                ProcessObject(obj.go, material, goName);
-            }
+            ClearSchematicMap();
+            ProcessTerrain();
+            ProcessTaggedObjects();
+            ProcessSpecificObjects();
             SetSchematicLayer();
         }
         public void SetStaticTexture()
@@ -75,6 +56,44 @@ namespace BrainVR.UnityFramework.Navigation
         }
         #endregion
         #region Private functions
+        #region Processing objects
+        private void ProcessTerrain()
+        {
+            if (TerrainObject == null) TerrainObject = Terrain.activeTerrain.gameObject;
+            if (TerrainObject == null)
+            {
+                Debug.Log("There is no main terrain object assigned and no terrain in the scene.");
+                return;
+            }
+            var go = Instantiate(TerrainObject);
+            SetSchematicParent(go);
+        }
+        private void ProcessTaggedObjects()
+        {
+            foreach (var tagName in TaggedObjects)
+            {
+                //find all the objects
+                var material = CreateSchematicMaterial(tagName.Color);
+                var objects = GameObject.FindGameObjectsWithTag(tagName.Tag);
+                //creates parent game objects
+                var go = new GameObject { name = tagName.Tag };
+                SetSchematicParent(go);
+                foreach (var obj in objects)
+                    ProcessObject(obj, material, tagName.Tag);
+            }
+        }
+        private void ProcessSpecificObjects()
+        {
+            const string goName = "Specific";
+            var go = new GameObject { name = goName };
+            SetSchematicParent(go);
+            foreach (var obj in SpecificObjects)
+            {
+                var material = CreateSchematicMaterial(obj.Color);
+                go.transform.SetParent(transform.Find(SchematicPath));
+                ProcessObject(obj.go, material, goName);
+            }
+        }
         private void ProcessObject(GameObject obj, Material material, string type)
         {
             var go = Instantiate(obj, obj.transform.position, obj.transform.rotation);
@@ -85,6 +104,13 @@ namespace BrainVR.UnityFramework.Navigation
             go.name = "schematic_" + obj.name;
             foreach (var r in go.GetComponentsInChildren<Renderer>())
                 r.material = material;
+        }
+        #endregion
+        #region helpers
+        private void SetSchematicParent(GameObject go)
+        {
+            go.transform.SetParent(transform.Find(SchematicPath));
+            go.transform.localPosition = default(Vector3);
         }
         private LayerMask GetObjectLayer(string goName)
         {
@@ -110,6 +136,8 @@ namespace BrainVR.UnityFramework.Navigation
             return new Material(Shader.Find("Unlit/Color")) { color = color };
         }
         #endregion
+
+        #endregion
     }
     [CustomEditor(typeof(MapSetup))]
     public class MapGeneratorEditor : Editor
@@ -124,9 +152,7 @@ namespace BrainVR.UnityFramework.Navigation
             DrawDefaultInspector();
             if (GUILayout.Button("Update"))
             {
-                _myScript.ClearSchematicMap();
-                _myScript.ProcessTaggedObjects();
-                _myScript.ProcessSpecificObjects();
+                _myScript.CreateSchematicMap();
             }
             if (GUILayout.Button("Clear"))
             {
