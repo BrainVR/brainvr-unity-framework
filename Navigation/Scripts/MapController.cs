@@ -115,7 +115,7 @@ namespace BrainVR.UnityFramework.Navigation
                     throw new ArgumentOutOfRangeException("type", type, null);
             }
         }
-        public void CleanPath()
+        public void ClearPath()
         {
             _lineRenderer.positionCount = 1;
         }
