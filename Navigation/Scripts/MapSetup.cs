@@ -1,5 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,7 +25,7 @@ namespace BrainVR.UnityFramework.Navigation
         }
 
         public GameObject TerrainObject;
-        public Color TerrainColor;
+        public List<Color> TerrainColors;
 
         public TaggedObject[] TaggedObjects;
         public SpecificMapObject[] SpecificObjects;
@@ -99,9 +101,13 @@ namespace BrainVR.UnityFramework.Navigation
             //sets colors
             terrain.materialType = Terrain.MaterialType.Custom;
             terrain.materialTemplate = new Material(Shader.Find("Unlit/Texture"));
-            var newSplatPrototype = new SplatPrototype {texture = CreateTerrainTexture(TerrainColor)};
-            terrain.terrainData.splatPrototypes = new[] {newSplatPrototype};
-
+            var splats = new List<SplatPrototype>();
+            for (var i = 0; i < terrain.terrainData.alphamapLayers; i++)
+            {
+                var color = TerrainColors.Count >= i + 1 ? TerrainColors[i] : TerrainColors.Last();
+                splats.Add(new SplatPrototype { texture = CreateTerrainTexture(color) });
+            }
+            terrain.terrainData.splatPrototypes = splats.ToArray();
             //SETS heights
             var height = oldTerrainData.heightmapHeight;
             var width = oldTerrainData.heightmapWidth;
