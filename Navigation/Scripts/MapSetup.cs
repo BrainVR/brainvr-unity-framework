@@ -22,6 +22,8 @@ namespace BrainVR.UnityFramework.Navigation
         }
 
         public GameObject TerrainObject;
+        public Color TerrainColor;
+
         public TaggedObject[] TaggedObjects;
         public SpecificMapObject[] SpecificObjects;
 
@@ -65,8 +67,28 @@ namespace BrainVR.UnityFramework.Navigation
                 Debug.Log("There is no main terrain object assigned and no terrain in the scene.");
                 return;
             }
-            var go = Instantiate(TerrainObject);
-            SetSchematicParent(go);
+
+            var go = Instantiate(new GameObject());
+            go.name = "Schematic Terrain";
+            go.transform.SetParent(transform.Find(SchematicPath)); /// needs before assignmnt of position because of hte Y coordinate
+            var position = TerrainObject.transform.position;
+            position.y = TerrainObject.transform.position.y + transform.Find(SchematicPath).position.y - 1; //terrain height works a bit differently
+            go.transform.localPosition = position;
+
+            var terrain = go.AddComponent<Terrain>();
+            var oldTerrainData = Instantiate(TerrainObject.GetComponent<Terrain>().terrainData);
+            terrain.terrainData = oldTerrainData;
+
+            var tc = terrain.gameObject.AddComponent<TerrainCollider>();
+            tc.terrainData = terrain.terrainData;
+
+            //sets colors
+            var newSplatPrototype = new SplatPrototype {texture = CreateTerrainTexture(Color.cyan)};
+            terrain.terrainData.splatPrototypes = new[] {newSplatPrototype};
+            //SETS heights
+            var height = oldTerrainData.heightmapHeight;
+            var width = oldTerrainData.heightmapWidth;
+            terrain.terrainData.SetHeights(0,0, oldTerrainData.GetHeights(0,0, width, height));
         }
         private void ProcessTaggedObjects()
         {
@@ -103,7 +125,21 @@ namespace BrainVR.UnityFramework.Navigation
             go.transform.localPosition = new Vector3(obj.transform.position.x, 0, obj.transform.position.z); //instantiates in the same Y coordinates as schematic map -* flatten the map
             go.name = "schematic_" + obj.name;
             foreach (var r in go.GetComponentsInChildren<Renderer>())
-                r.material = material;
+            {
+                var mats = new Material[r.sharedMaterials.Length];
+                for (var i = 0; i < mats.Length; i++)
+                {
+                    mats[i] = material;
+                }
+                r.sharedMaterials = mats;
+            }
+        }
+
+        private Texture2D CreateTerrainTexture(Color color)
+        {
+            var texture = new Texture2D(1, 1);
+            texture.SetPixel(1, 1, color);
+            return texture;
         }
         #endregion
         #region helpers
