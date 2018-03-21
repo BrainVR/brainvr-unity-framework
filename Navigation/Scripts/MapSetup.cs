@@ -89,7 +89,7 @@ namespace BrainVR.UnityFramework.Navigation
             terrain.terrainData.detailPrototypes = new DetailPrototype[0];
 
             //sets colors
-            var newSplatPrototype = new SplatPrototype {texture = CreateTerrainTexture(Color.cyan)};
+            var newSplatPrototype = new SplatPrototype {texture = CreateTerrainTexture(TerrainColor)};
             terrain.terrainData.splatPrototypes = new[] {newSplatPrototype};
             //SETS heights
             var height = oldTerrainData.heightmapHeight;
