@@ -82,6 +82,12 @@ namespace BrainVR.UnityFramework.Navigation
             var tc = terrain.gameObject.AddComponent<TerrainCollider>();
             tc.terrainData = terrain.terrainData;
 
+            //removes trees and vegetation
+            terrain.terrainData.treeInstances = new TreeInstance[0];
+            terrain.terrainData.detailPrototypes = new DetailPrototype[0];
+            terrain.terrainData.treePrototypes = new TreePrototype[0];
+            terrain.terrainData.detailPrototypes = new DetailPrototype[0];
+
             //sets colors
             var newSplatPrototype = new SplatPrototype {texture = CreateTerrainTexture(Color.cyan)};
             terrain.terrainData.splatPrototypes = new[] {newSplatPrototype};
