@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -68,8 +69,7 @@ namespace BrainVR.UnityFramework.Navigation
                 return;
             }
 
-            var go = Instantiate(new GameObject());
-            go.name = "Schematic Terrain";
+            var go = new GameObject {name = "Schematic Terrain"};
             go.transform.SetParent(transform.Find(SchematicPath)); /// needs before assignmnt of position because of hte Y coordinate
             var position = TerrainObject.transform.position;
             position.y = TerrainObject.transform.position.y + transform.Find(SchematicPath).position.y - 1; //terrain height works a bit differently
@@ -84,13 +84,24 @@ namespace BrainVR.UnityFramework.Navigation
 
             //removes trees and vegetation
             terrain.terrainData.treeInstances = new TreeInstance[0];
-            terrain.terrainData.detailPrototypes = new DetailPrototype[0];
+            var emptyDetail = new int[terrain.terrainData.detailWidth, terrain.terrainData.detailHeight];
+
+            //Removes all details
+            if (terrain.terrainData.detailPrototypes.Length > 0)
+            {
+                for (var iDetail = 0; iDetail < terrain.terrainData.detailPrototypes.Length; iDetail++)
+                    terrain.terrainData.SetDetailLayer(0, 0, iDetail, emptyDetail);
+            }
+
             terrain.terrainData.treePrototypes = new TreePrototype[0];
             terrain.terrainData.detailPrototypes = new DetailPrototype[0];
 
             //sets colors
+            terrain.materialType = Terrain.MaterialType.Custom;
+            terrain.materialTemplate = new Material(Shader.Find("Unlit/Texture"));
             var newSplatPrototype = new SplatPrototype {texture = CreateTerrainTexture(TerrainColor)};
             terrain.terrainData.splatPrototypes = new[] {newSplatPrototype};
+
             //SETS heights
             var height = oldTerrainData.heightmapHeight;
             var width = oldTerrainData.heightmapWidth;
@@ -128,7 +139,7 @@ namespace BrainVR.UnityFramework.Navigation
             RemoveColliders(go);
             var objectPath = SchematicPath + "/" + type;
             go.transform.SetParent(transform.Find(objectPath));
-            go.transform.localPosition = new Vector3(obj.transform.position.x, 0, obj.transform.position.z); //instantiates in the same Y coordinates as schematic map -* flatten the map
+            go.transform.localPosition = new Vector3(obj.transform.position.x, obj.transform.position.y + go.transform.parent.position.y, obj.transform.position.z); //instantiates in the relative y coordinates
             go.name = "schematic_" + obj.name;
             foreach (var r in go.GetComponentsInChildren<Renderer>())
             {
@@ -139,13 +150,6 @@ namespace BrainVR.UnityFramework.Navigation
                 }
                 r.sharedMaterials = mats;
             }
-        }
-
-        private Texture2D CreateTerrainTexture(Color color)
-        {
-            var texture = new Texture2D(1, 1);
-            texture.SetPixel(1, 1, color);
-            return texture;
         }
         #endregion
         #region helpers
@@ -176,6 +180,12 @@ namespace BrainVR.UnityFramework.Navigation
         private static Material CreateSchematicMaterial(Color color)
         {
             return new Material(Shader.Find("Unlit/Color")) { color = color };
+        }
+        private Texture2D CreateTerrainTexture(Color color)
+        {
+            var texture = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+            texture.SetPixel(1, 1, color);
+            return texture;
         }
         #endregion
 
