@@ -36,6 +36,7 @@ namespace BrainVR.UnityFramework.Networking
         public WWWForm PlayerForm(Dictionary<string, string> dict)
         {
             var playerDict = _defaultDictionary.Union(dict).ToDictionary(k => k.Key, v => v.Value);
+            playerDict.Add("type", "player");
             return CreateForm(playerDict);
         }
         private WWWForm CreateForm(Dictionary<string, string> dict)
