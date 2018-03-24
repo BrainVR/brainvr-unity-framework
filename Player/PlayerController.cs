@@ -48,6 +48,8 @@ namespace BrainVR.UnityFramework.Player
         #region Interface implementation
         public abstract string HeaderLine();
         public abstract List<string> PlayerInformation();
+        public abstract Dictionary<string, string> PlayerInformationDictionary();
+
         #endregion
     }
 }
