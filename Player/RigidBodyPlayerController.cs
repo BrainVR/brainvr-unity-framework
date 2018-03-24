@@ -18,11 +18,9 @@ namespace BrainVR.UnityFramework.Player
             _rigidbodyScript = gameObject.GetComponent<RigidbodyFirstPersonController>();
             _rigidbody = gameObject.GetComponent<Rigidbody>();
 
-            if (_rigidbodyScript == null)
-            {
-                Debug.LogError("Rigidbody Player doesn't have a rigid body script attached");
-                Debug.Break();
-            }
+            if (_rigidbodyScript != null) return;
+            Debug.LogError("Rigidbody Player doesn't have a rigid body script attached");
+            Debug.Break();
         }
         #endregion
         #region Public API
@@ -112,6 +110,18 @@ namespace BrainVR.UnityFramework.Player
             };
             return strgs;
         }
+
+        public override Dictionary<string, string> PlayerInformationDictionary()
+        {
+            var strgs = new Dictionary<string, string>
+            {
+                {"Position", Position.ToString("F4")},
+                {"Rotation.x", Rotation.x.ToString("F4")},
+                {"Rotation.y", Rotation.y.ToString("F4")}
+            };
+            return strgs;
+        }
+
         #endregion
     }
 }
