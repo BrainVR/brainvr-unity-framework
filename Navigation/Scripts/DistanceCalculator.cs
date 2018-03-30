@@ -6,15 +6,20 @@ namespace BrainVR.UnityFramework.Navigation
 {
     public class DistanceCalculator : MonoBehaviour
     {
-        public NavMeshAgent Agent;
-        public Transform Goal;
+        public Transform Start;
+        public Transform End;
 
         public float CalculateDistance()
         {
             var path = new NavMeshPath();
-            NavMesh.CalculatePath(Agent.gameObject.transform.position, Goal.position, NavMesh.AllAreas, path);
-            Debug.Log(path);
-            return path.corners.Length;
+            NavMesh.CalculatePath(Start.position, End.position, NavMesh.AllAreas, path);
+            var distance = 0f;
+            for (var i = 1; i < path.corners.Length; i++)
+            {
+                var twoPointDistance = Vector3.Distance(path.corners[i - 1], path.corners[i]);
+                distance += twoPointDistance;
+            }
+            return distance;
         }
     }
 #if UNITY_EDITOR
