@@ -76,7 +76,7 @@ namespace BrainVR.UnityFramework.Networking
         private IEnumerator _playerSender;
 
         #region MonoBehaviours
-        void Start()
+        void Awake()
         {
             _packet = new DataPacket(ExperimentInfo.Instance.Participant.Id, "Test");
         }
@@ -102,7 +102,7 @@ namespace BrainVR.UnityFramework.Networking
             StartCoroutine(_playerSender);
         }
 
-        public void SendSpecificInfo(string type, string key, string info)
+        public void SendCustomInfo(string type, string key, string info)
         {
             var form = _packet.CustomForm(type, key, info);
             StartCoroutine(SendPost(form));
