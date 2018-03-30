@@ -28,9 +28,14 @@ namespace BrainVR.UnityFramework.Networking
 
         public string ParticipantCode { get; private set; }
 
+        public WWWForm CustomForm(string type, string key, string value)
+        {
+            var form = CreateCustomForm(type, key, value);
+            return CreateForm(form);
+        }
         public WWWForm EventForm(string eventName)
         {
-            var eventDict = CreateEventDict(eventName);
+            var eventDict = CreateCustomForm("event", "name", eventName);
             return CreateForm(eventDict);
         }
         public WWWForm PlayerForm(Dictionary<string, string> dict)
@@ -39,7 +44,7 @@ namespace BrainVR.UnityFramework.Networking
             playerDict.Add("type", "player");
             return CreateForm(playerDict);
         }
-        private WWWForm CreateForm(Dictionary<string, string> dict)
+        private static WWWForm CreateForm(Dictionary<string, string> dict)
         {
             var form = new WWWForm();
             foreach (var di in dict)
@@ -49,10 +54,11 @@ namespace BrainVR.UnityFramework.Networking
             return form;
         }
 
-        private Dictionary<string, string> CreateEventDict(string eventName)
+        private Dictionary<string, string> CreateCustomForm(string fieldName, string key, string value)
         {
-            var eventDict = new Dictionary<string, string> {{"type", "event"},{"event", eventName}};
-            return _defaultDictionary.Union(eventDict).ToDictionary(k => k.Key, v => v.Value);
+            var dict = new Dictionary<string, string> { { "type", fieldName }, { key, value } };
+            dict = _defaultDictionary.Union(dict).ToDictionary(k => k.Key, v => v.Value);
+            return dict;
         }
     }
     #endregion
@@ -76,6 +82,13 @@ namespace BrainVR.UnityFramework.Networking
         }
         #endregion
 
+        public void SetEndpoint(string url, int port)
+        {
+            //VALIDATION
+            _url = url;
+            _port = port;
+        }
+
         public void SendEvent(string eventName)
         {
             var form = _packet.EventForm(eventName);
@@ -84,8 +97,15 @@ namespace BrainVR.UnityFramework.Networking
 
         public void StartSendingPlayerInformation()
         {
+            if (_playerSender != null) StopSendingPlayerInformation();
             _playerSender = ContinuousPlayerPost(0.25f);
             StartCoroutine(_playerSender);
+        }
+
+        public void SendSpecificInfo(string type, string key, string info)
+        {
+            var form = _packet.CustomForm(type, key, info);
+            StartCoroutine(SendPost(form));
         }
 
         public void StopSendingPlayerInformation()
