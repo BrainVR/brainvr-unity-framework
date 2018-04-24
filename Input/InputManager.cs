@@ -1,4 +1,5 @@
 ﻿using BrainVR.UnityFramework.Player;
+using BrainVR.UnityLogger;
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.InputControl
@@ -41,6 +42,10 @@ namespace BrainVR.UnityFramework.InputControl
         public static void Canceled()
         {
             if (CancelButtonPressed != null) CancelButtonPressed();
+        }
+        public static void CallButtonPressed(string name)
+        {
+            if (ButtonPressed != null) ButtonPressed(name);
         }
         #endregion
     }

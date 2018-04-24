@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BrainVR.UnityFramework.Helpers;
+using BrainVR.UnityFramework.InputControl;
 using BrainVR.UnityLogger.Interfaces;
 using UnityEngine;
 
@@ -50,7 +51,7 @@ namespace BrainVR.UnityLogger
             }
         }
         #endregion
-        void SetupLog()
+        private void SetupLog()
         {
             if (!Player) Player = GameObject.FindGameObjectWithTag("Player");
             if (!Player)
@@ -77,14 +78,14 @@ namespace BrainVR.UnityLogger
                 return;
             }
             //this is the header line for analysiss software
-            InputManagerBase.ButtonPressed += LogPlayerInput;
+            InputManager.ButtonPressed += LogPlayerInput;
             _lastTimeWrite = SystemTimer.TimeSinceMidnight;
             Logging = true;
         }
         public void StopLogging()
         {
             if (!Logging) return;
-            InputManagerBase.ButtonPressed -= LogPlayerInput;
+            InputManager.ButtonPressed -= LogPlayerInput;
             Logging = false;
         }
         public void LogPlayerInput(string input)
@@ -99,7 +100,6 @@ namespace BrainVR.UnityLogger
             strgs.AddRange(WriteBlank(NEmpty));
             WriteLine(strgs);
         }
-
         protected string HeaderLine()
         {
             var line = "Time;";
