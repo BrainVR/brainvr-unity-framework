@@ -2,7 +2,9 @@
 using System.Linq;
 using BrainVR.UnityFramework.DataHolders;
 using BrainVR.UnityFramework.Scripts.Objects.Goals;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.Objects.Goals

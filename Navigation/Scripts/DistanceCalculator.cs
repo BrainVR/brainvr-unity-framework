@@ -1,6 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,6 +22,7 @@ namespace BrainVR.UnityFramework.Navigation
             var path = CalculatePath();
             return CalculateDistance(path);
         }
+
         public float CalculateDistance(NavMeshPath path)
         {
             if (path == null) return 0;
@@ -36,22 +36,23 @@ namespace BrainVR.UnityFramework.Navigation
         }
 
     }
-#if UNITY_EDITOR
+
     [CustomEditor(typeof(DistanceCalculator), true)]
     public class DistanceCalculatorEditor : Editor
     {
         private DistanceCalculator _distanceCalculator;
         private Vector3[] _path;
+
         void OnEnable()
         {
-            _distanceCalculator = (DistanceCalculator)target;
+            _distanceCalculator = (DistanceCalculator) target;
         }
 
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
 
-            if(GUILayout.Button("calculate distance"))
+            if (GUILayout.Button("calculate distance"))
             {
                 var path = _distanceCalculator.CalculatePath();
                 if (path == null)
@@ -72,9 +73,9 @@ namespace BrainVR.UnityFramework.Navigation
             Handles.color = Color.green;
             for (var i = 1; i < _path.Length; i++)
             {
-                Handles.DrawLine(_path[i-1], _path[i]);
+                Handles.DrawLine(_path[i - 1], _path[i]);
             }
         }
     }
-#endif
 }
+#endif
