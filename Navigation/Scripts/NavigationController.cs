@@ -37,7 +37,6 @@ namespace BrainVR.UnityFramework.Navigation
         {
             _agent = agent;
         }
-
         public void TargetChange(Transform target)
         {
             Target = target;
