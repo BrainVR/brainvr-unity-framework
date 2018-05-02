@@ -159,6 +159,7 @@ namespace BrainVR.UnityFramework.Navigation
             {
                 case MinimapBehaviour.FollowRotate:
                     ShowArrow(true);
+                    _mapArrowTransform.rotation = Quaternion.Euler(0, 0, 0);
                     break;
                 case MinimapBehaviour.FollowRotateArrow:
                     MapCamera.transform.rotation = Quaternion.Euler(90, 0, 0);
