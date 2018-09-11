@@ -15,7 +15,7 @@ namespace BrainVR.UnityFramework.Scripts.Objects.Beeper
             foreach (var beeper in transform.GetComponentsInChildren<BeeperController>())
             {
                 //TODO needs to increment the unknown name in case Unknown is called
-                if (String.IsNullOrEmpty(beeper.BeeperName)) beeper.BeeperName = "Unknown";
+                if (string.IsNullOrEmpty(beeper.BeeperName)) beeper.BeeperName = "Unknown";
                 BeeperControllers.Add(beeper.BeeperName, beeper);
             }
 

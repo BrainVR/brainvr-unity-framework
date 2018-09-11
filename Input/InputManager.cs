@@ -1,5 +1,4 @@
 ﻿using BrainVR.UnityFramework.Player;
-using BrainVR.UnityLogger;
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.InputControl
