@@ -14,6 +14,7 @@ namespace BrainVR.UnityFramework.Player
         public Vector2 Vector2Position
         {
             get { return new Vector2(Position.x, Position.z); }
+            set { Position = new Vector3(value.x, Position.y, value.y);}
         }
         public void MoveToCenter()
         {

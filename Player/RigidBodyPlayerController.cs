@@ -35,23 +35,24 @@ namespace BrainVR.UnityFramework.Player
             get { return new Vector2(transform.eulerAngles.y, Camera.main.transform.eulerAngles.x); }
             set
             {
-                gameObject.transform.eulerAngles = new Vector3(0, value.y, 0);
-                Camera.main.transform.localEulerAngles = new Vector3(value.x, 0, 0);
+                gameObject.transform.eulerAngles = new Vector3(0, value.x, 0);
+                Camera.main.transform.localEulerAngles = new Vector3(value.y, 0, 0);
             }
         }
         public override Vector2 PointingDirection { get { return Rotation; } }
         public override void LookAtPosition(Vector2 point)
         {
-            Vector3 lookingPoint = new Vector3(point.x, Camera.main.transform.position.y, point.y);
+            var lookingPoint = new Vector3(point.x, Camera.main.transform.position.y, point.y);
             LookAtPosition(lookingPoint);
         }
         public override void LookAtPosition(Vector3 point)
         {
-            //calculating actually from the center of the player object, because it shoudl better correspond
+            //calculating actually from the center of the player object and the height of the camera, because it shoudl better correspond
             //to the central aiming dot - games are werid
-            var relativePos = point - gameObject.transform.position;
+            var lookingPosition = new Vector3(gameObject.transform.position.x, Camera.main.transform.position.y, gameObject.transform.position.z);
+            var relativePos = point - lookingPosition;
             var targetAngle = Quaternion.LookRotation(relativePos).eulerAngles;
-            Rotation = targetAngle;
+            Rotation = new Vector2(targetAngle.y, targetAngle.x);
             //rests mouse look
             _rigidbodyScript.mouseLook.Init(transform, Camera.main.transform);
         }
