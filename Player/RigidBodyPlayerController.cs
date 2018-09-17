@@ -33,6 +33,11 @@ namespace BrainVR.UnityFramework.Player
         {
             //in common practice player rotates in Y and camera on X, but this should be reimplemented in VR
             get { return new Vector2(transform.eulerAngles.y, Camera.main.transform.eulerAngles.x); }
+            set
+            {
+                gameObject.transform.eulerAngles = new Vector3(0, value.y, 0);
+                Camera.main.transform.localEulerAngles = new Vector3(value.x, 0, 0);
+            }
         }
         public override Vector2 PointingDirection { get { return Rotation; } }
         public override void LookAtPosition(Vector2 point)
@@ -46,8 +51,7 @@ namespace BrainVR.UnityFramework.Player
             //to the central aiming dot - games are werid
             var relativePos = point - gameObject.transform.position;
             var targetAngle = Quaternion.LookRotation(relativePos).eulerAngles;
-            gameObject.transform.eulerAngles = new Vector3(0, targetAngle.y, 0);
-            Camera.main.transform.localEulerAngles = new Vector3(targetAngle.x, 0, 0);
+            Rotation = targetAngle;
             //rests mouse look
             _rigidbodyScript.mouseLook.Init(transform, Camera.main.transform);
         }
@@ -59,7 +63,6 @@ namespace BrainVR.UnityFramework.Player
         {
             _rigidbodyScript.movementSettings.ForwardSpeed = speed;
         }
-
         public override void EnableMovement(bool bo = true)
         {
             _rigidbodyScript.BlockMovemennt = !bo;
@@ -67,6 +70,10 @@ namespace BrainVR.UnityFramework.Player
         public override void EnableRotation(bool bo = true)
         {
             _rigidbodyScript.BlockRotation = !bo;
+        }
+        public override void EnablePhysics(bool bo = true)
+        {
+            _rigidbody.isKinematic = !bo;
         }
         //this is suboptimal solution, but it works
         public void Stop()
