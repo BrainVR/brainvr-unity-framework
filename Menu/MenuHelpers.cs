@@ -1,5 +1,4 @@
-﻿using BrainVR.UnityFramework.Player;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BrainVR.UnityFramework.Menu
 {
@@ -7,20 +6,20 @@ namespace BrainVR.UnityFramework.Menu
     {
         public static void MenuOn()
         {
+            //redo cursor to a cursoc class - maybe we don't want it confined
             Cursor.visible = true;
             //hack from http://answers.unity3d.com/answers/1119750/view.html
             Cursor.lockState = CursorLockMode.None;
             Cursor.lockState = CursorLockMode.Confined;
-            PlayerController.Instance.EnableMovement(false);
-            PlayerController.Instance.EnableRotation(false);
+            Time.timeScale = 0;
         }
 
         public static void MenuOff()
         {
+            //redo cursor to a cursoc class - maybe we don't want it confined
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            PlayerController.Instance.EnableMovement();
-            PlayerController.Instance.EnableRotation();
+            Time.timeScale = 1;
         }
     }
 }
