@@ -163,10 +163,10 @@ namespace BrainVR.UnityFramework.Experiment
         }
         #endregion
         #region Each trial lifetime - can be overriden in child class to each ones liking
-        public virtual void TrialSetNext()
+        public void NextTrial()
         {
             if (ExperimentState <= ExperimentState.Finished) return;
-            if (TrialState == TrialState.Finished) TrialClose();
+            if (TrialState == TrialState.Finished) CloseTrial();
             //Necessary for quitting - close usually ends the experiment, but the trail of setting new trial continues
             //normal passing of trial - first or last
             if (TrialState != TrialState.Closed)
@@ -175,7 +175,12 @@ namespace BrainVR.UnityFramework.Experiment
                 return;
             }
             TrialNumber++;
-            TrialSetup();
+            SetupTrial();
+        }
+        [Obsolete("TrialSetNext is deprecated, please use NextTrial instead")]
+        public virtual void TrialSetNext()
+        {
+            NextTrial();
         }
         public void ForceNextTrial()
         {
@@ -211,23 +216,33 @@ namespace BrainVR.UnityFramework.Experiment
             TrialClose();
         }
         //called when new trial is prepaired
-        protected void TrialSetup()
+        protected void SetupTrial()
         {
             OnTrialSetup();
             SendTrialStateChanged(TrialState.WaitingToStart);
             TrialState = TrialState.WaitingToStart;
             AfterTrialSetup();
         }
+        [Obsolete("TrialSetup is deprecated, please use SetupTrial instead.")]
+        protected void TrialSetup()
+        {
+            SetupTrial();
+        }
         //called when the trial is actually started
-        protected void TrialStart()
+        protected void StartTrial()
         {
             OnTrialStart();
             SendTrialStateChanged(TrialState.Running);
             TrialState = TrialState.Running;
             AfterTrialStart();
         }
+        [Obsolete("TrialStart is deprecated, please use StartTrial instead.")]
+        protected void TrialStart()
+        {
+            StartTrial();
+        }
         //when the task has been successfully finished
-        protected void TrialFinish()
+        protected void FinishTrial()
         {
             OnTrialFinished();
             SendTrialStateChanged(TrialState.Finished);
@@ -235,13 +250,23 @@ namespace BrainVR.UnityFramework.Experiment
             if (CheckForEnd()) StopingSequence();
             AfterTrialFinished();
         }
+        [Obsolete("TrialFinish is deprecated, please use FinishTrial instead.")]
+        protected void TrialFinish()
+        {
+            FinishTrial();
+        }
         //called before new trial is set up
-        protected void TrialClose()
+        protected void CloseTrial()
         {
             OnTrialClosed();
             SendTrialStateChanged(TrialState.Closed);
             TrialState = TrialState.Closed;
             AfterTrialClosed();
+        }
+        [Obsolete("TrialClose is deprecated, please use CloseTrial instead.")]
+        protected void TrialClose()
+        {
+            CloseTrial();
         }
         #endregion
         #region Forced BaseExperiment API - needs to be impemented
