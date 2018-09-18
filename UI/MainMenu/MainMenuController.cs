@@ -40,7 +40,7 @@ namespace BrainVR.UnityFramework.UI.MainMenu
         {
             if (!CanStart()) return;
             PrepareForStart();
-            DontDestroyOnLoad(GameObject.Find("Settings"));
+            //DontDestroyOnLoad(GameObject.Find("Settings"));
             SceneManager.LoadScene(SettingsHolder.Instance.CurrentExperimentSettings().LevelName); //needs to ad one as dropdown starts at 0 and BVA is 1
         }
         private bool CanStart()
