@@ -21,8 +21,8 @@ namespace BrainVR.UnityFramework.DataHolders
         public void AddExperimentSettings(string path)
         {
             var text = File.ReadAllText(path);
-            object obj = NestedDeserialiser.Deserialize(text);
-            Dictionary<string, object> dict = (Dictionary<string, object>) obj;
+            var obj = NestedDeserialiser.Deserialize(text);
+            var dict = (Dictionary<string, object>) obj;
             var expSettings = ExperimentLoader.PopulateExperimentSettings(dict["ExperimentName"].ToString(), path);
             expSettings.LevelName = dict["LevelName"].ToString();
             expSettings.ExperimentName = dict["ExperimentName"].ToString();

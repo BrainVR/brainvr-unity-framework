@@ -21,27 +21,20 @@ namespace BrainVR.UnityFramework.DataHolders
                 Debug.Log("BaseExperiment of name " + expName + "does not exist");
                 return null;
             }
-            var exp = expGO.AddComponent(experimentClass) as Experiment.BaseExperiment;
-            //exp.Settings
-            if (exp != null)
-            {
-                exp.AddSettings(settings);
-                //this is here so that logs are created properly
-                exp.Name = expName;
-                return exp;
-            }
-            return null;
+            var exp = expGO.AddComponent(experimentClass) as BaseExperiment;
+            if (exp == null) return null;
+            exp.AddSettings(settings);
+            //this is here so that logs are created properly
+            exp.Name = expName;
+            return exp;
         }
         public static ExperimentSettings PopulateExperimentSettings(string expName, string path)
         {
-            ExperimentSettings settings = null;
-
-            Type type = ExperimentSettingsType(expName);
-            if (type != null)
-            {
-                settings = ScriptableObject.CreateInstance(type) as ExperimentSettings;
-                settings.DeserialiseSettings(path);
-            }
+            var type = ExperimentSettingsType(expName);
+            if (type == null) return null;
+            var settings = ScriptableObject.CreateInstance(type) as ExperimentSettings;
+            // ReSharper disable once PossibleNullReferenceException
+            settings.DeserialiseSettings(path);
             return settings;
         }
         #region Helpers
@@ -55,8 +48,8 @@ namespace BrainVR.UnityFramework.DataHolders
         //http://stackoverflow.com/questions/4943817/mapping-object-to-dictionary-and-vice-versa
         public static T PopulateClassDictionary<T>(this IDictionary<string, object> source) where T : class, new()
         {
-            T someObject = new T();
-            Type someObjectType = someObject.GetType();
+            var someObject = new T();
+            var someObjectType = someObject.GetType();
 
             foreach (KeyValuePair<string, object> item in source)
             {
