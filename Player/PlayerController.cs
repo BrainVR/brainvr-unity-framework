@@ -6,6 +6,17 @@ namespace BrainVR.UnityFramework.Player
 {
     public abstract class PlayerController : Singleton<PlayerController>, IPlayerController
     {
+        private List<Vector3> _previousPositions = new List<Vector3>();
+        private Vector3 _lastPosition;
+        private const int POSITIONS_TO_KEEP = 1000;
+        private const int DEFAULT_UNSTUCK = 100;
+
+        #region monobehaviour
+        void Update()
+        {
+            UpdatePreviousPositions();
+        }
+        #endregion
         #region Public API
         #region Moving
         public abstract void EnableMovement(bool bo = true);
@@ -27,7 +38,21 @@ namespace BrainVR.UnityFramework.Player
         }
         public void Unstuck()
         {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, transform.position.y+1, 0), 1);
+            Unstuck(DEFAULT_UNSTUCK);
+        }
+        public void Unstuck(ushort i)
+        {
+            var iPosition = ((_previousPositions.Count - i > 1) ? _previousPositions.Count - i : 1 ) - 1;
+            Position = _previousPositions[iPosition];
+            if (iPosition == 0)
+            {
+                Debug.Log("Can't unstuck further");
+                _previousPositions.Clear();
+            }
+            else
+            {
+                _previousPositions.RemoveRange(iPosition, i);
+            }
             EnableMovement();
         }
         #endregion
@@ -45,7 +70,15 @@ namespace BrainVR.UnityFramework.Player
         public abstract Vector2 PointingDirection { get; }
         #endregion
         #endregion
-        #region PRIVATE FUCNTIONS
+        #region PRIVATE FUNCTIONS
+        private void UpdatePreviousPositions()
+        {
+            if (Position == _lastPosition) return;
+            _lastPosition = Position;
+            _previousPositions.Add(_lastPosition);
+            if (_previousPositions.Count < POSITIONS_TO_KEEP) return;
+            _previousPositions.RemoveAt(0);
+        }
         #endregion
         #region Interface implementation
         public abstract string HeaderLine();
