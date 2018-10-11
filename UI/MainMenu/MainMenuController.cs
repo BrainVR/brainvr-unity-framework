@@ -22,11 +22,9 @@ namespace BrainVR.UnityFramework.UI.MainMenu
             //Checks for instantiated stuff
             _experimentInfo = ExperimentInfo.Instance;
             UpdateSettings();
-            if (_experimentInfo != null)
-            {
-                var ID = GameObject.Find("ParticipantSettings/ID/").GetComponentInChildren<InputField>();
-                ID.text = _experimentInfo.Participant.Id;
-            }
+            if (_experimentInfo == null) return;
+            var ID = GameObject.Find("ParticipantSettings/ID/").GetComponentInChildren<InputField>();
+            ID.text = _experimentInfo.Participant.Id;
         }
         public void UpdateSettings()
         {

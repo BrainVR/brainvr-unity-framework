@@ -185,7 +185,7 @@ namespace BrainVR.UnityFramework.Experiment
         public void ForceNextTrial()
         {
             ForceFinishTrial();
-            TrialSetNext();
+            NextTrial();
         }
         public void ForceSetTrial(int i)
         {
@@ -196,7 +196,7 @@ namespace BrainVR.UnityFramework.Experiment
                 return;
             }
             //weird setup, but it has to be done without long refactoring
-            TrialNumber = i;
+            TrialNumber = i - 1; // checks for end not for this particular trial because we check for end at the end of this trial
             if (CheckForEnd())
             {
                 Debug.Log("Cannot set to trial which would end the expeirment.");
@@ -206,7 +206,7 @@ namespace BrainVR.UnityFramework.Experiment
             TrialNumber = currentTrial;
             ForceFinishTrial();
             TrialNumber = i;
-            TrialSetup();
+            SetupTrial();
         }
         public void ForceFinishTrial()
         {
