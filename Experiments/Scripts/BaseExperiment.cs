@@ -212,8 +212,7 @@ namespace BrainVR.UnityFramework.Experiment
         {
             if (TrialState > TrialState.Finished) return;
             SendTrialEvent("ForceFinished");
-            FinishTrial();
-            CloseTrial();
+            OnTrialForceFinished();
         }
         //called when new trial is prepaired
         protected void SetupTrial()
@@ -284,6 +283,10 @@ namespace BrainVR.UnityFramework.Experiment
         protected virtual void OnTrialStart() { }
         protected virtual void AfterTrialStart() { }
         protected virtual void OnTrialFinished() { }
+        protected virtual void OnTrialForceFinished()
+        {
+            FinishTrial();
+        }
         protected virtual void AfterTrialFinished() { }
         protected virtual void OnTrialClosed() { }
         protected virtual void AfterTrialClosed() { }
@@ -292,6 +295,7 @@ namespace BrainVR.UnityFramework.Experiment
         protected virtual void AfterExperimentFinished() { }
         protected virtual void OnExperimentClosed() { }
         protected virtual void AfterExperimentClosed() { }
+
         #endregion
         #region Some logging helpers
         /// <summary>
