@@ -13,7 +13,8 @@ namespace BrainVR.UnityFramework.Navigation
 
         public bool IsNavigating;
         public GameObject TargetGameObject;
-        public Transform Target;
+        public Transform[] Targets;
+        public Transform Target { get {return Targets[0];} set {Targets = new[]{value}; }}
 
         private int _selectedNav;
         public string SelectedNavigation
@@ -60,7 +61,14 @@ namespace BrainVR.UnityFramework.Navigation
             TargetGameObject = target;
             Target = target.transform;
             CurrentNavigationController.TargetChange(Target);
-
+        }
+        public void SetTargets(GameObject[] targets)
+        {
+            Targets = new Transform[targets.Length];
+            for(var i = 0; i < targets.Length; i++)
+            {
+                Targets[i] = targets[i].transform;
+            }
         }
         public void SetNavigationMode(string controllerName)
         {
