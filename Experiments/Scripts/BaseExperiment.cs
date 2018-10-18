@@ -143,7 +143,7 @@ namespace BrainVR.UnityFramework.Experiment
             SendExperimentStateChanged(ExperimentState.Started);
             ExperimentState = ExperimentState.Running;
             AfterExperimentStart();
-            TrialSetup();
+            SetupTrial();
         }
         private void ExperimentFinish()
         {
@@ -184,7 +184,7 @@ namespace BrainVR.UnityFramework.Experiment
         }
         public void ForceNextTrial()
         {
-            ForceFinishTrial();
+            ForceFinishTrial(); //if force finish starts a nbew trial, next does nothing, becuase it only works on Closed trials
             NextTrial();
         }
         public void ForceSetTrial(int i)
@@ -204,7 +204,8 @@ namespace BrainVR.UnityFramework.Experiment
                 return;
             }
             TrialNumber = currentTrial;
-            ForceFinishTrial();
+            SendTrialEvent("ForceFinished");
+            CloseTrial(); //probably don't want to finish, because that has usually next trial inside
             TrialNumber = i;
             SetupTrial();
         }
