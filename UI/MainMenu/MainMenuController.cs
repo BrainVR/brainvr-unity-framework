@@ -73,7 +73,8 @@ namespace BrainVR.UnityFramework.UI.MainMenu
                 }
                 _buttons[i].SettingsActive(settings.CurrentExperiment == i);
             }
-            ExperimentName.text = settings.CurrentExperimentSettings().ExperimentName;
+            var currentSettings = settings.CurrentExperimentSettings();
+            if (currentSettings != null) ExperimentName.text = currentSettings.ExperimentName;
         }
         private void PrepareForStart()
         {
