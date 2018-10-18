@@ -29,6 +29,11 @@ namespace BrainVR.UnityLogger
         [DataMember] public ParticipantInfo Participant;
         [DataMember] public CameraInfo CameraInfo;
         [DataMember] public ScreenInfo ScreenInfo;
+        [DataMember] public string ProductName;
+        [DataMember] public string VersionNumber;
+        [DataMember] public string UnityVersion;
+        [DataMember] public string BuildGUID;
+        [DataMember] public string Platform;
         [DataMember] public string LevelName;
 
         public void OnEnable()
@@ -36,7 +41,7 @@ namespace BrainVR.UnityLogger
             Participant = new ParticipantInfo();
             CameraInfo = new CameraInfo();
             ScreenInfo = new ScreenInfo();
-            LevelName = "BVA";
+            LevelName = "NOT SPECIFIED";
             PopulateInfo();
         }
         public void PopulateInfo()

@@ -24,8 +24,8 @@ namespace BrainVR.UnityFramework.UI.MainMenu
             _experimentInfo = ExperimentInfo.Instance;
             UpdateSettings();
             if (_experimentInfo == null) return;
-            var ID = GameObject.Find("ParticipantSettings/ID/").GetComponentInChildren<InputField>();
-            ID.text = _experimentInfo.Participant.Id;
+            var id = GameObject.Find("ParticipantSettings/ID/").GetComponentInChildren<InputField>();
+            id.text = _experimentInfo.Participant.Id;
         }
         public void UpdateSettings()
         {
@@ -82,6 +82,12 @@ namespace BrainVR.UnityFramework.UI.MainMenu
         private void PopulateExperimentInfo()
         {
             PopulateId();
+            _experimentInfo.LevelName = SettingsHolder.Instance.CurrentExperimentSettings().LevelName;
+            _experimentInfo.ProductName = Application.productName;
+            _experimentInfo.UnityVersion = Application.unityVersion;
+            _experimentInfo.VersionNumber = Application.version;
+            _experimentInfo.Platform = Application.platform.ToString();
+            _experimentInfo.BuildGUID = Application.buildGUID;
         }
         #endregion
         #region settings helpers
@@ -90,7 +96,7 @@ namespace BrainVR.UnityFramework.UI.MainMenu
             var participantMenu = GameObject.Find("ParticipantSettings");
             if (participantMenu == null) return;
             var idGameObject = participantMenu.transform.Find("ID");
-            InputField field = idGameObject.GetComponentInChildren<InputField>();
+            var field = idGameObject.GetComponentInChildren<InputField>();
             _experimentInfo.Participant.Id = field.text;
         }
         #endregion

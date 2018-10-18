@@ -21,7 +21,7 @@ namespace BrainVR.UnityLogger
         private void WriteExperimentData()
         {
             _log.WriteLine("***EXPERIMENT INFO***");
-            ExperimentInfo info = ExperimentInfo.Instance;
+            var info = ExperimentInfo.Instance;
             info.PopulateInfo();
             var s = JsonConvert.SerializeObject(info, Formatting.Indented);
             _log.WriteLine(s);
