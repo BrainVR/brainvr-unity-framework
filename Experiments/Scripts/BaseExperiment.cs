@@ -212,8 +212,8 @@ namespace BrainVR.UnityFramework.Experiment
         {
             if (TrialState > TrialState.Finished) return;
             SendTrialEvent("ForceFinished");
-            TrialFinish();
-            TrialClose();
+            FinishTrial();
+            CloseTrial();
         }
         //called when new trial is prepaired
         protected void SetupTrial()
