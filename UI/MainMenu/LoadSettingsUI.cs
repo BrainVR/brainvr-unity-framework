@@ -10,7 +10,7 @@ namespace BrainVR.UnityFramework.UI.MainMenu
     public class LoadSettingsUI : MonoBehaviour
     {
         public Dropdown SettingsFileToLoadPath;
-        public GameObject DataLoadedGameObject;
+        public Text DataLoaded;
         public string SettingsDirectory;
 
         private string _settingsPath;
@@ -28,8 +28,8 @@ namespace BrainVR.UnityFramework.UI.MainMenu
             try
             {
                 SettingsHolder.Instance.AddExperimentSettings(_settingsPath);
-                DataLoadedGameObject.GetComponent<Text>().text = "Settings sucessfully loaded";
-                DataLoadedGameObject.GetComponent<Text>().color = Color.green;
+                DataLoaded.text = "Settings sucessfully loaded";
+                DataLoaded.color = Color.green;
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace BrainVR.UnityFramework.UI.MainMenu
                 SettingsFileToLoadPath.options.Add(new Dropdown.OptionData() { text = qp.Name });
             }
         }
-        bool IsValidFileTypeJson(string fileName)
+        private static bool IsValidFileTypeJson(string fileName)
         {
             return ".json" == (Path.GetExtension(fileName));
         }

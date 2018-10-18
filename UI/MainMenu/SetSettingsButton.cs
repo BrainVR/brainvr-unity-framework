@@ -16,9 +16,9 @@ namespace BrainVR.UnityFramework.UI.MainMenu
             Text = Text ?? gameObject.GetComponentInChildren<Text>();
         }
 
-        public void Initialise(string experimentName, int i)
+        public void Initialise(string filename, int i)
         {
-            Text.text = experimentName;
+            Text.text = filename;
             SettingsActive(false);
             Subscribe(i);
         }

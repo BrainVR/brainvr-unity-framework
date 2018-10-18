@@ -10,7 +10,7 @@ namespace BrainVR.UnityFramework.DataHolders
 {
     public static class ExperimentLoader
     {
-        public static Experiment.BaseExperiment CreateExperimentGO(string expName, ExperimentSettings settings = null)
+        public static BaseExperiment CreateExperimentGO(string expName, ExperimentSettings settings = null)
         {
             var expGO = new GameObject();
             expGO.transform.name = expName;
@@ -53,6 +53,7 @@ namespace BrainVR.UnityFramework.DataHolders
 
             foreach (KeyValuePair<string, object> item in source)
             {
+                // ReSharper disable once PossibleNullReferenceException
                 someObjectType.GetProperty(item.Key).SetValue(someObject, item.Value, null);
             }
 
@@ -62,10 +63,7 @@ namespace BrainVR.UnityFramework.DataHolders
         private static object MagicallyCreateInstance(string className)
         {
             var assembly = Assembly.GetExecutingAssembly();
-
-            var type = assembly.GetTypes()
-                .First(t => t.Name == className);
-
+            var type = assembly.GetTypes().First(t => t.Name == className);
             return Activator.CreateInstance(type);
         }
 #endregion

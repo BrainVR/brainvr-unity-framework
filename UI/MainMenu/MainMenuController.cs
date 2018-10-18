@@ -12,6 +12,7 @@ namespace BrainVR.UnityFramework.UI.MainMenu
         public Text LevelSelection;     
         public GameObject SetSettingsButtonGO;
         public GameObject LoadedSettingsGroup;
+        public Text ExperimentName;
 
         private ExperimentInfo _experimentInfo;
         private List<SetSettingsButton> _buttons = new List<SetSettingsButton>();
@@ -43,8 +44,7 @@ namespace BrainVR.UnityFramework.UI.MainMenu
         }
         private bool CanStart()
         {
-            if (SettingsHolder.Instance.CurrentExperimentSettings() == null) return false;
-            return true;
+            return SettingsHolder.Instance.CurrentExperimentSettings() != null;
         }
         public void QuitExperiment()
         {
@@ -68,11 +68,12 @@ namespace BrainVR.UnityFramework.UI.MainMenu
                     var go = Instantiate(SetSettingsButtonGO);
                     go.transform.SetParent(LoadedSettingsGroup.transform);
                     var setSettigns = go.GetComponent<SetSettingsButton>();
-                    setSettigns.Initialise(settings.ExperimentSettings[i].ExperimentName, i);
+                    setSettigns.Initialise(settings.ExperimentSettingsFilenames[i], i);
                     _buttons.Add(setSettigns);
                 }
                 _buttons[i].SettingsActive(settings.CurrentExperiment == i);
             }
+            ExperimentName.text = settings.CurrentExperimentSettings().ExperimentName;
         }
         private void PrepareForStart()
         {
