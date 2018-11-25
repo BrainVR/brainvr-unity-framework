@@ -10,6 +10,7 @@ namespace BrainVR.UnityFramework.Scripts.Experiments.DemoExperiment
     public class DemoExperimentSettings : ExperimentSettings
     {
         int WhichBlock = 0;
+        public int[] GoalOrder = {0, 1, 2};
 
 #if UNITY_EDITOR
         [MenuItem("Assets/BaseExperiment/DemoExperimentSettings")]

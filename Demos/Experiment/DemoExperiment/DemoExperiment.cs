@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using BrainVR.UnityFramework.Objects.Goals;
 using BrainVR.UnityFramework.Scripts.Experiments.DemoExperiment;
 using BrainVR.UnityFramework.Scripts.Objects.Beeper;
+using BrainVR.UnityFramework.Scripts.Objects.Goals;
 using BrainVR.UnityFramework.UI.InGame;
 using UnityEngine;
 
@@ -16,7 +19,8 @@ namespace BrainVR.UnityFramework.Experiment.Demo
         protected float TrialStartTime;
         protected float TrialEndTime;
         protected List<float> TrialTimes = new List<float>();
-        public new DemoExperimentSettings Settings;    
+        public new DemoExperimentSettings Settings;
+        private GoalController _currentGoal;
         #region Forced API
         public override void AddSettings(ExperimentSettings settings)
         {
@@ -24,56 +28,55 @@ namespace BrainVR.UnityFramework.Experiment.Demo
         }
         #endregion
         #region BaseExperiment Logic
-
         protected override void OnExperimentInitialise()
         {
             _canvas = ExperimentCanvasManager.Instance;
-        }
-        protected override void AfterExperimentInitialise() { }
-        protected override void OnExperimentUpdate()
-        {
-            if(Input.GetButtonDown("Confirm")) TrialFinish();            
+            //this is due tot he general process of serialisation
         }
         protected override void OnExperimentSetup()
         {
             BeepManager = BeeperManager.Instance;
             _canvas.Show();
+            GoalManager.Instance.HideAll();
         }
-        protected override void AfterExperimentSetup() { }
-        protected override void OnExperimentStart() { }
-        protected override void AfterExperimentStart() { }
-        protected override void OnTrialSetup() { }
+        protected override void AfterTrialSetup()
+        {
+            StartTrial();
+        }
         protected override void OnTrialStart()
         {
             TrialStartTime = Time.realtimeSinceStartup;
+            _currentGoal = GoalManager.Instance.GetGoal(TrialNumber);
+            _currentGoal.Show();
+            _currentGoal.OnEnter += GoalEntered;
+            _currentGoal.SetColor(Color.green);
+        }
+        private void GoalEntered(GoalController sender, EventArgs e)
+        {
+            sender.OnEnter -= GoalEntered;
+            sender.Hide();
+            FinishTrial();
         }
         protected override void OnTrialFinished()
         {
             TrialEndTime = Time.realtimeSinceStartup;
             TrialTimes.Add(TrialEndTime - TrialStartTime);
         }
-        protected override void OnTrialClosed() { }
-        protected override void OnExperimentFinished() { }
-        protected override void AfterExperimentFinished() { }
+        protected override void AfterTrialFinished()
+        {
+            NextTrial();
+        }
         protected override void OnExperimentClosed()
         {
             _canvas.Show(false);
         }
-        protected override void AfterExperimentClosed() { }
         public override string ExperimentHeaderLog()
         {
             return "";
         }
-        protected override void AfterTrialSetup() { }
-        protected override void AfterTrialStart() { }
-        protected override void AfterTrialFinished()
-        {
-            TrialSetNext();
-        }
-        protected override void AfterTrialClosed() { }
         protected override bool CheckForEnd()
         {
-            return TrialNumber > 3;
+            return TrialNumber >= Settings.GoalOrder.Length-1;
         }
         #endregion
         #region Helpers
