@@ -14,11 +14,13 @@ namespace BrainVR.UnityFramework.Menu
 
         public delegate void MenuStateHandler(MenuState toState);
         public static event MenuStateHandler MenuStateChanged;
-
+        #region MonoBehaviour
         void OnEnable()
         {
             SubscribeButtons();
         }
+        #endregion
+        #region Public API
         public void SwitchMenu()
         {
             (MenuToggle.isOn ? (Action)TurnMenuOff : TurnMenuOn)();
@@ -64,5 +66,7 @@ namespace BrainVR.UnityFramework.Menu
         {
             InputManager.MenuButtonPressed -= SwitchMenu;
         }
+        #endregion
+
     }
 }
