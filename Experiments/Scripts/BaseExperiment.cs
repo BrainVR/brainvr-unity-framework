@@ -24,11 +24,11 @@ namespace BrainVR.UnityFramework.Experiment
     }
     public enum TrialState
     {
-        Paused,
-        WaitingToStart,
-        Running,
+        Inactive,
+        Closed, 
         Finished,
-        Closed
+        Running,
+        WaitingToStart
     }
     public enum TrialEvent
     {
@@ -109,7 +109,7 @@ namespace BrainVR.UnityFramework.Experiment
         }
         protected void StopingSequence()
         {
-            if (TrialState < TrialState.Finished) ForceFinishTrial();
+            if (TrialState > TrialState.Finished) ForceFinishTrial();
             if (TrialState == TrialState.Finished) TrialClose();
             ExperimentFinish();
             ExperimentClose();
@@ -169,7 +169,7 @@ namespace BrainVR.UnityFramework.Experiment
             if (TrialState == TrialState.Finished) CloseTrial();
             //Necessary for quitting - close usually ends the experiment, but the trail of setting new trial continues
             //normal passing of trial - first or last
-            if (TrialState != TrialState.Closed)
+            if (TrialState > TrialState.Closed)
             {
                 Debug.Log("Cannot setup next, trial not closed");
                 return;
@@ -211,13 +211,24 @@ namespace BrainVR.UnityFramework.Experiment
         }
         public void ForceFinishTrial()
         {
-            if (TrialState > TrialState.Finished) return;
+            if (TrialState <= TrialState.Finished)
+            {
+                Debug.LogWarning("Trial already finished or closed, can't finish again", this);
+                return;
+            }
             SendTrialEvent("ForceFinished");
             OnTrialForceFinished();
         }
         //called when new trial is prepaired
         protected void SetupTrial()
         {
+            //Should be checking if no trial is being run
+            //check if it is not finishing again!
+            if (TrialState > TrialState.Closed)
+            {
+                Debug.LogWarning("Trial not in closed state, can't setup", this);
+                return;
+            }
             OnTrialSetup();
             SendTrialStateChanged(TrialState.WaitingToStart);
             TrialState = TrialState.WaitingToStart;
@@ -231,6 +242,13 @@ namespace BrainVR.UnityFramework.Experiment
         //called when the trial is actually started
         protected void StartTrial()
         {
+            //Should be checking if no trial is being run
+            //check if it is not finishing again!
+            if (TrialState != TrialState.WaitingToStart)
+            {
+                Debug.LogWarning("Trial not in waiting to start state, can't start", this);
+                return;
+            }
             OnTrialStart();
             SendTrialStateChanged(TrialState.Running);
             TrialState = TrialState.Running;
@@ -244,6 +262,12 @@ namespace BrainVR.UnityFramework.Experiment
         //when the task has been successfully finished
         protected void FinishTrial()
         {
+            //check if it is not finishing again!
+            if (TrialState < TrialState.Finished)
+            {
+                Debug.LogWarning("Trial already finished or closed", this);
+                return;
+            }
             OnTrialFinished();
             SendTrialStateChanged(TrialState.Finished);
             TrialState = TrialState.Finished;
