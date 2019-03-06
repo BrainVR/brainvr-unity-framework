@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using BrainVR.UnityFramework.Logger.Interfaces;
 using UnityEngine;
-using BrainVR.UnityLogger.Interfaces;
 
-namespace BrainVR.UnityLogger
+namespace BrainVR.UnityFramework.Logger
 {
     public class TestLog : MonoLog
     {

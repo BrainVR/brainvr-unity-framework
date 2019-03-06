@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using BrainVR.UnityFramework.Helpers;
 using BrainVR.UnityFramework.InputControl;
-using BrainVR.UnityLogger.Interfaces;
+using BrainVR.UnityFramework.Logger.Interfaces;
 using UnityEngine;
 
 //REquires an objsect with a player tag to be present
 
-namespace BrainVR.UnityLogger
+namespace BrainVR.UnityFramework.Logger
 {
     public class PlayerLog : MonoLog
     {

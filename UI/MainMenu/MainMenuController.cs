@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using BrainVR.UnityFramework.DataHolders;
-using BrainVR.UnityLogger;
+using BrainVR.UnityFramework.Logger;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

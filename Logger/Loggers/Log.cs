@@ -7,7 +7,7 @@ using System;
 //important namespace
 //for the write function
 
-namespace BrainVR.UnityLogger
+namespace BrainVR.UnityFramework.Logger
 {
     public class Header
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BrainVR.UnityLogger
+namespace BrainVR.UnityFramework.Logger
 {
     public class MasterLog : Singleton<MasterLog>
     {

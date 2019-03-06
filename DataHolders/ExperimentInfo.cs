@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace BrainVR.UnityLogger
+namespace BrainVR.UnityFramework.Logger
 {
     [System.Serializable]
     public class ParticipantInfo

@@ -1,4 +1,4 @@
-﻿namespace BrainVR.UnityLogger.Interfaces
+﻿namespace BrainVR.UnityFramework.Logger.Interfaces
 {
     public abstract class InputManagerBase
     {

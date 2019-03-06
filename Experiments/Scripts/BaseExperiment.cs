@@ -1,6 +1,6 @@
 ﻿using System;
-using BrainVR.UnityLogger;
-using BrainVR.UnityLogger.Interfaces;
+using BrainVR.UnityFramework.Logger;
+using BrainVR.UnityFramework.Logger.Interfaces;
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.Experiment

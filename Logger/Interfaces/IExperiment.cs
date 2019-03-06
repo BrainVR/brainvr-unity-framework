@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BrainVR.UnityLogger.Interfaces
+namespace BrainVR.UnityFramework.Logger.Interfaces
 {
     public class ExperimentStateArgs : EventArgs
     {

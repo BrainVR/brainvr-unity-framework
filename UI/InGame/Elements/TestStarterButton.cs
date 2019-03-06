@@ -1,7 +1,7 @@
 ﻿using System;
 using BrainVR.UnityFramework.Experiment;
 using BrainVR.UnityFramework.Menu;
-using BrainVR.UnityLogger.Interfaces;
+using BrainVR.UnityFramework.Logger.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 

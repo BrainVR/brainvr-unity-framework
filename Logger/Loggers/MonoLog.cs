@@ -4,7 +4,7 @@ using BrainVR.UnityFramework.Helpers;
 using UnityEngine;
 //important namespaces
 
-namespace BrainVR.UnityLogger
+namespace BrainVR.UnityFramework.Logger
 {
     /// <summary>
     /// This class is to include some of the basic functionality and properties for the other log functions

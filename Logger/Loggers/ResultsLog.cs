@@ -5,7 +5,7 @@ using System.Linq;
 using BrainVR.UnityFramework.Experiment.Helpers;
 using Newtonsoft.Json;
 
-namespace BrainVR.UnityLogger
+namespace BrainVR.UnityFramework.Logger
 {
     public class ResultData : Attribute { }
     public class TestData : Attribute { }

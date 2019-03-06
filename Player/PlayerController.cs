@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BrainVR.UnityLogger.Interfaces;
+using BrainVR.UnityFramework.Logger.Interfaces;
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.Player

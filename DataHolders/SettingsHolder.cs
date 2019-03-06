@@ -2,7 +2,7 @@
 using System.IO;
 using Assets.GeneralScripts.Serialisation;
 using BrainVR.UnityFramework.Experiment;
-using BrainVR.UnityLogger;
+using BrainVR.UnityFramework.Logger;
 
 namespace BrainVR.UnityFramework.DataHolders
 {

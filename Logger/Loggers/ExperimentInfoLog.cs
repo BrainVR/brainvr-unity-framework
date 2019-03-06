@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BrainVR.UnityLogger
+namespace BrainVR.UnityFramework.Logger
 {
     public class ExperimentInfoLog : MonoLog
     {
