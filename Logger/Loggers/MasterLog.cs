@@ -5,7 +5,6 @@ namespace BrainVR.UnityFramework.Logger
     public class MasterLog : Singleton<MasterLog>
     {
         public bool ShouldLog = true;
-
         private ExperimentInfoLog _experimentInfoLog;
         private PlayerLog _playerLog;
 
@@ -13,32 +12,11 @@ namespace BrainVR.UnityFramework.Logger
 
         //should work as a master log script
         //should be only one running at all times
+        #region public API
         public void Instantiate(string participantId = null)
         {
             if (participantId == null) participantId = ExperimentInfo.Instance.Participant.Id;
             InstantiateLoggers(participantId);
-        }
-        //RETURNS if logs already exist, otherwise reinstantiates them
-        void InstantiateLoggers(string participantId)
-        {
-            if (_playerLog && _experimentInfoLog) return;
-            //to get one timestapm in order to synchronize loading of log files
-            CreationTimestamp = DateTime.Now.ToString("HH-mm-ss-dd-MM-yyy");
-            
-            //instantiates the log
-            _playerLog = gameObject.AddComponent<PlayerLog>();
-            _experimentInfoLog = gameObject.AddComponent<ExperimentInfoLog>();
-            //var experimentInfo = SettingsHolder.Instance.ExperimentInfo;
-            if (participantId != null)    //if we have an ParticipantId
-            {
-                _playerLog.Instantiate(CreationTimestamp, participantId);
-                _experimentInfoLog.Instantiate(CreationTimestamp, participantId);
-            }
-            else //the defaults
-            {
-                _playerLog.Instantiate(CreationTimestamp);
-                _experimentInfoLog.Instantiate(CreationTimestamp);
-            }
         }
         public void StartLogging()
         {
@@ -54,16 +32,28 @@ namespace BrainVR.UnityFramework.Logger
             if (_experimentInfoLog)
             {
                 _experimentInfoLog.Close();
-                
                 Destroy(_experimentInfoLog);
                 _experimentInfoLog = null; //because of timing issues when closing and opening in one method
             }
-            if (_playerLog)
-            {
-                _playerLog.Close();
-                Destroy(_playerLog);
-                _playerLog = null;
-            }
+            if (!_playerLog) return;
+            _playerLog.Close();
+            Destroy(_playerLog);
+            _playerLog = null;
         }
+        #endregion
+        #region private helpers
+        //RETURNS if logs already exist, otherwise reinstantiates them
+        private void InstantiateLoggers(string participantId)
+        {
+            if (_playerLog && _experimentInfoLog) return;
+            //to get one timestapm in order to synchronize loading of log files
+            CreationTimestamp = DateTime.Now.ToString("HH-mm-ss-dd-MM-yyy");
+            _playerLog = gameObject.AddComponent<PlayerLog>();
+            _experimentInfoLog = gameObject.AddComponent<ExperimentInfoLog>();
+            if (participantId != null) participantId = "NEO";
+            _playerLog.Setup(CreationTimestamp, participantId);
+            _experimentInfoLog.Setup(CreationTimestamp, participantId);
+        }
+        #endregion
     }
 }

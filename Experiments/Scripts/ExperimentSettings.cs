@@ -60,7 +60,7 @@ namespace BrainVR.UnityFramework.Experiment
         public ExperimentSettings Settings;
     }
 #if UNITY_EDITOR
-    [CustomEditor(typeof(ExperimentSettings),true)]
+    [CustomEditor(typeof(ExperimentSettings), true)]
     public class SettingsEditor : Editor
     {
         string serialisedSettings = "Settings have not been serialised yet";

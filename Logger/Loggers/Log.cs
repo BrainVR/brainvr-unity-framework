@@ -24,42 +24,29 @@ namespace BrainVR.UnityFramework.Logger
     public class Log
     {
         readonly StreamWriter _logFile;
-
         public string FilePath;
-
         public string DateString;
-
-        const string RELATIVE_PATH = "/../logs/";
-
+        const string RelativePath = "/../logs/";
         /// <summary>
         /// polymorph for init with timepstmp provided by master log 
         /// </summary>
         /// <param name="id">ParticipantId of the participant</param>
         /// <param name="logName">name of the log file, e.g. Player/experiment etc.</param>
-        /// <param name="Timestamp">timestamp provided by master log</param>
-        public Log(string id, string logName, string timeStamp = null)
+        /// <param name="timestamp">timestamp provided by master log</param>
+        public Log(string id, string logName, string timestamp = null)
         {
-            if (timeStamp == null)
-            {
-                DateTime dateTime = DateTime.Now;
-                timeStamp = dateTime.ToString("HH-mm-ss-dd-MM-yyy");
-            }
-            DateString = timeStamp;
-            // path + id/day-month-year
-            string folderName = id + "_" + DateTime.Now.ToString("dd-MM-yyy") + "/";
-
-            FilePath = Application.dataPath + RELATIVE_PATH + folderName;
-            //creates a folder for the patient, if it doesnt exist
+            if (timestamp == null) timestamp = DateTime.Now.ToString("HH-mm-ss-dd-MM-yyy");
+            DateString = timestamp;
+            var folderName = id + "_" + DateTime.Now.ToString("dd-MM-yyy") + "/";
+            FilePath = Application.dataPath + RelativePath + folderName;
             Directory.CreateDirectory(FilePath);
-            //vytvoři logfile - poslední parametr určuje, zda v případě existejnce souboru bude pokračovat v zápisu (true), či jej smaže (false);
-            _logFile = new StreamWriter(FilePath + id + "_" + logName + "_" + DateString + ".txt", true) {AutoFlush = true};
-            //because we can restart etc. many times during a day, the file continues but always writes a new header
+            _logFile = new StreamWriter(FilePath + id + "_" + logName + "_" + timestamp + ".txt", true) {AutoFlush = true};
             WriteHeader(id);
         }
         //simple header file for each new star of the experiment
         private void WriteHeader(string id)
         {
-            Header header = new Header(id, DateString);
+            var header = new Header(id, DateString);
             _logFile.WriteLine("***SESSION HEADER***");
             _logFile.WriteLine(JsonConvert.SerializeObject(header, Formatting.Indented));
             _logFile.WriteLine("---SESSION HEADER---");
@@ -67,7 +54,6 @@ namespace BrainVR.UnityFramework.Logger
         //takes a string and writes it down
         public void WriteLine(string str)
         {
-            //this is the header line for analysiss software
             _logFile.WriteLine(str);
         }
         public void Close() 
@@ -78,11 +64,11 @@ namespace BrainVR.UnityFramework.Logger
         public void WriteList(List<string> data)
         {
             //basically LINQ foreach
-            string line = data.Aggregate("", (current, text) => current + (text + ";"));
+            var line = data.Aggregate("", (current, text) => current + (text + ";"));
             _logFile.WriteLine(line);
         }
         #region Helpers
-        public static string NewLine { get { return Environment.NewLine; } }
+        public static string NewLine => Environment.NewLine;
         #endregion
     }
 }

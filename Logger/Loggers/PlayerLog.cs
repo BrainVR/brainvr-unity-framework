@@ -11,30 +11,19 @@ namespace BrainVR.UnityFramework.Logger
     public class PlayerLog : MonoLog
     {
         public GameObject Player;
-
-        private IPlayerController _playerController;
         //HOW OFTEN DO YOU WANNA LOG
         //applies only to children that can log continuously (Plyer Log), not to those that log based on certain events (Quest log, BaseExperiment log)
         public float LoggingFrequency = 0.005F;
 
-        float _deltaTime;
-        private double _lastTimeWrite;
+        protected override string LogName => "player";
 
+        private float _deltaTime;
+        private double _lastTimeWrite;
+        private IPlayerController _playerController;
         //this is for filling in custom number of fields that follow after common fields
         // for example, we need one column for input, but it is not always used, so we need to
         // create empty single column
         private const int NEmpty = 1;
-
-        public override void Instantiate(string timeStamp)
-        {
-            Log = new Log("NEO", "player", timeStamp);
-            SetupLog();
-        }
-        public void Instantiate(string timeStamp, string id)
-        {
-            Log = new Log(id, "player", timeStamp);
-            SetupLog();
-        }
         #region MonoBehaviour
         void Update()
         {
@@ -43,7 +32,7 @@ namespace BrainVR.UnityFramework.Logger
         }
         void FixedUpdate()
         {
-            if (!Logging) return;
+            if (!IsLogging) return;
             if (_lastTimeWrite + LoggingFrequency < SystemTimer.TimeSinceMidnight)
             {
                 LogPlayerUpdate();
@@ -51,7 +40,9 @@ namespace BrainVR.UnityFramework.Logger
             }
         }
         #endregion
-        private void SetupLog()
+
+        #region Monolog variables
+        protected override void AfterLogSetup()
         {
             if (!Player) Player = GameObject.FindGameObjectWithTag("Player");
             if (!Player)
@@ -69,9 +60,12 @@ namespace BrainVR.UnityFramework.Logger
             }
             Log.WriteLine(HeaderLine());
         }
+        #endregion
+
+        #region Public API
         public void StartLogging()
         {
-            if (Logging) return;
+            if (IsLogging) return;
             if (!Player)
             {
                 Debug.Log("There is no player Game object. Cannot start player log.");
@@ -80,13 +74,13 @@ namespace BrainVR.UnityFramework.Logger
             //this is the header line for analysiss software
             InputManager.ButtonPressed += LogPlayerInput;
             _lastTimeWrite = SystemTimer.TimeSinceMidnight;
-            Logging = true;
+            IsLogging = true;
         }
         public void StopLogging()
         {
-            if (!Logging) return;
+            if (!IsLogging) return;
             InputManager.ButtonPressed -= LogPlayerInput;
-            Logging = false;
+            IsLogging = false;
         }
         public void LogPlayerInput(string input)
         {
@@ -100,14 +94,17 @@ namespace BrainVR.UnityFramework.Logger
             strgs.AddRange(WriteBlank(NEmpty));
             WriteLine(strgs);
         }
-        protected string HeaderLine()
+        #endregion
+
+        #region private function
+        private string HeaderLine()
         {
             var line = "Time;";
             line += _playerController.HeaderLine();
             line += "FPS; Input;";
             return line;
         }
-        protected List<string> CollectData()
+        private List<string> CollectData()
         {
             //TestData to Write is a parent method that adds some information to the beginning of the player info
             var strgs = _playerController.PlayerInformation();
@@ -117,5 +114,6 @@ namespace BrainVR.UnityFramework.Logger
             //needs an empty column for possible input information
             return strgs;
         }
+        #endregion
     }
 }
