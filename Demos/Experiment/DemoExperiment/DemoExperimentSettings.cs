@@ -7,27 +7,11 @@ using UnityEngine;
 
 namespace BrainVR.UnityFramework.Scripts.Experiments.DemoExperiment
 {
+    [CreateAssetMenu(menuName = "BrainVR/Experiment Settings/Demo Settings")]
     public class DemoExperimentSettings : ExperimentSettings
     {
         int WhichBlock = 0;
         public int[] GoalOrder = {0, 1, 2};
 
-#if UNITY_EDITOR
-        [MenuItem("Assets/BaseExperiment/DemoExperimentSettings")]
-        public static void CreateDialogueLine()
-        {
-            ScriptableObjectUtility.CreateAsset<DemoExperimentSettings>();
-        }
-        [CustomEditor(typeof(DemoExperimentSettings))]
-        public class SettingsEditor : Editor
-        {
-            public override void OnInspectorGUI()
-            {
-                DrawDefaultInspector();
-                DemoExperimentSettings myScript = (DemoExperimentSettings)target;
-                if (GUILayout.Button("Serialise settings")) Debug.Log(myScript.SerialiseOut());
-            }
-        }
-#endif
     }
 }

@@ -13,7 +13,6 @@ namespace BrainVR.UnityFramework.Helpers
         public static void CreateAsset<T>() where T : ScriptableObject
         {
             T asset = ScriptableObject.CreateInstance<T>();
-
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
             if (path == "")
             {
@@ -25,9 +24,7 @@ namespace BrainVR.UnityFramework.Helpers
             }
 
             string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/New " + typeof(T).ToString() + ".asset");
-
             AssetDatabase.CreateAsset(asset, assetPathAndName);
-
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             EditorUtility.FocusProjectWindow();
