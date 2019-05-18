@@ -1,9 +1,11 @@
-﻿using BrainVR.UnityFramework.Player;
+﻿using System;
+using BrainVR.UnityFramework.Logger.Interfaces;
+using BrainVR.UnityFramework.Player;
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.InputControl
 {
-    public class InputManager : MonoBehaviour
+    public class InputManager : Singleton<InputManager>, IInput
     {
         public delegate void ButtonPressedHandler(string name);
         public static event ButtonPressedHandler ButtonPressed;
@@ -47,5 +49,11 @@ namespace BrainVR.UnityFramework.InputControl
             if (ButtonPressed != null) ButtonPressed(name);
         }
         #endregion
+
+        event EventHandler<ButtonPressedArgs> IInput.ButtonPressed
+        {
+            add { throw new NotImplementedException(); }
+            remove { throw new NotImplementedException(); }
+        }
     }
 }
