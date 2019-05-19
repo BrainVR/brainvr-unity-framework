@@ -2,6 +2,7 @@
 using Assets.GeneralScripts.Serialisation;
 using BrainVR.UnityFramework.Experiment.Helpers;
 using Newtonsoft.Json;
+using UnityEditor;
 using UnityEngine;
 
 namespace BrainVR.UnityFramework.Experiment
@@ -58,4 +59,18 @@ namespace BrainVR.UnityFramework.Experiment
         public string LevelName;
         public ExperimentSettings Settings;
     }
+#if UNITY_EDITOR
+    [CustomEditor(typeof(ExperimentSettings), true)]
+    public class SettingsEditor : Editor
+    {
+        string serialisedSettings = "Settings have not been serialised yet";
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+            var myScript = target as ExperimentSettings;
+            serialisedSettings = myScript.SerialiseOut();
+            GUILayout.TextArea(serialisedSettings);
+        }
+    }
+#endif
 }

@@ -8,26 +8,24 @@ namespace BrainVR.UnityFramework.Logger
     {
         private IExperiment _experiment;
 
-        public override void Instantiate(string str)
-        {
-            throw new System.NotImplementedException();
-        }
+        protected override string LogName => "test_" + _experiment.Name;
+
         public static TestLog StartNewTest(IExperiment experiment)
         {
             //instantiates empty game objects
             var experimentInfo = ExperimentInfo.Instance;
             var id = experimentInfo == null ? "NEO" : experimentInfo.Participant.Id;
-            GameObject go = new GameObject();
+            var go = new GameObject();
             var testLog = go.AddComponent<TestLog>();
             testLog._experiment = experiment;
             go.transform.name = testLog._experiment.Name + "_test_log";
-            return testLog.PrepareLogging(go, testLog._experiment, id);
+            return testLog.PrepareLogging(go, id);
         }
-        private TestLog PrepareLogging(GameObject go, IExperiment experiment, string id)
+        private TestLog PrepareLogging(GameObject go, string id)
         {
-            //parents itself under Logging thing - under master
+            //parents itself under IsLogging thing - under master
             go.transform.SetParent(MasterLog.Instance.transform);
-            Log = new Log(id, "test_" + experiment.Name);
+            Log = new Log(id, LogName);
             return this;
         }
         public void StartLogging()
@@ -38,9 +36,7 @@ namespace BrainVR.UnityFramework.Logger
         }
         private void WriteTestHeader()
         {
-            Log.WriteLine("***TEST HEADER***");
-            Log.WriteLine(_experiment.ExperimentHeaderLog());
-            Log.WriteLine("---TEST HEADER---");
+            Log.WriteBlock("TEST HEADER", _experiment.ExperimentHeaderLog());
             Log.WriteLine(TestLogHeaderLine());
         }
         private string TestLogHeaderLine()
@@ -70,27 +66,27 @@ namespace BrainVR.UnityFramework.Logger
         }
         private void LogCustomExperimentMessage(object obj, ExperimentMessageArgs args)
         {
-            List<string> toWrite = new List<string> {args.Message};
+            var toWrite = new List<string> {args.Message};
             WriteEvent(toWrite);
         }
         private void LogTrialStateChanged(object obj, TrialStateArgs args)
         {
-            List<string> toWrite = new List<string> {"Trial", args.Experiment.TrialNumber.ToString(), args.ToState };
+            var toWrite = new List<string> {"Trial", args.Experiment.TrialNumber.ToString(), args.ToState };
             WriteEvent(toWrite);
         }
         private void LogTrialEvent(object obj, TrialEventArgs args)
         {
-            List<string> toWrite = new List<string> { "Trial", args.Experiment.TrialNumber.ToString(), args.Event};
+            var toWrite = new List<string> { "Trial", args.Experiment.TrialNumber.ToString(), args.Event};
             WriteEvent(toWrite);
         }
         private void LogExperimentStateChanged(object obj, ExperimentStateArgs args)
         {
-            List<string> toWrite = new List<string> {"Experiment", args.Experiment.ExperimentNumber.ToString(), args.ToState};
+            var toWrite = new List<string> {"Experiment", args.Experiment.ExperimentNumber.ToString(), args.ToState};
             WriteEvent(toWrite);
         }
         private void LogExperimentEvent(object obj, ExperimentEventArgs args)
         {
-            List<string> toWrite = new List<string> { "Experiment", args.Experiment.ExperimentNumber.ToString(), args.Event };
+            var toWrite = new List<string> { "Experiment", args.Experiment.ExperimentNumber.ToString(), args.Event };
             WriteEvent(toWrite);
         }
         public void StopLogging(IExperiment experiment)

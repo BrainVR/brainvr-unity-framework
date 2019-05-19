@@ -46,15 +46,9 @@ namespace BrainVR.UnityFramework.Logger
         public void Save()
         {
             var log = new Log(ParticipantId, "results_" + ExperimentName, MasterLog.Instance.CreationTimestamp);
-            log.WriteLine("***RESULTS***");
-            log.WriteLine(SerialiseResults());
-            log.WriteLine("---RESULTS---");
-            log.WriteLine("***CUSTOM***");
-            log.WriteLine(FormatData());
-            log.WriteLine("---CUSTOM---");
-            log.WriteLine("***DATA***");
-            log.WriteLine(SerialiseData());
-            log.WriteLine("---DATA---");
+            log.WriteBlock("RESULTS", SerialiseResults());
+            log.WriteBlock("CUSTOM", FormatData());
+            log.WriteBlock("DATA", SerialiseData());
             log.Close();
         }
         protected virtual string FormatData()

@@ -110,7 +110,7 @@ namespace BrainVR.UnityFramework.Experiment
         protected void StopingSequence()
         {
             if (TrialState > TrialState.Finished) ForceFinishTrial();
-            if (TrialState == TrialState.Finished) TrialClose();
+            if (TrialState == TrialState.Finished) CloseTrial();
             ExperimentFinish();
             ExperimentClose();
         }

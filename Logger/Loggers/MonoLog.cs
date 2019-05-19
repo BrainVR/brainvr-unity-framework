@@ -15,20 +15,26 @@ namespace BrainVR.UnityFramework.Logger
     {
         //class that takes care of System logging, not derived from the monobehaviour
         protected Log Log;
-
-        public bool Logging;
-
+        protected abstract string LogName { get; }
+        public bool IsLogging;
         #region MonoBehaviour 
         void OnApplicationQuit()
         {
             Close();
         }
         #endregion
-        public abstract void Instantiate(string str);
+        public void Setup(string timestamp = null, string id = "NEO")
+        {
+            OnLogSetup();
+            Log = new Log(id, LogName, timestamp);
+            AfterLogSetup();
+        }
+        protected virtual void OnLogSetup() { }
+        protected virtual void AfterLogSetup() { }
         public virtual void Close()
         {
-            if (Log != null) Log.Close();
-            Logging = false;
+            Log?.Close();
+            IsLogging = false;
         }
         protected virtual void WriteLine(List<string> strgs)
         {
@@ -55,10 +61,10 @@ namespace BrainVR.UnityFramework.Logger
         }
         //helper to fill blank spaces in logs so that each line has the same number of separators
         //takes int as an input and creates a blank list of that many empty spaces
-        protected List<String> WriteBlank(int num)
+        protected List<string> WriteBlank(int num)
         {
-            List<String> ls = new List<String>();
-            for (int i = 0; i < num; i++) ls.Add("");
+            var ls = new List<string>();
+            for (var i = 0; i < num; i++) ls.Add("");
             return ls;
         }
         #endregion
