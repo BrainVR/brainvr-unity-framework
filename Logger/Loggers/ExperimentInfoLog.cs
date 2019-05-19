@@ -12,12 +12,10 @@ namespace BrainVR.UnityFramework.Logger
         }
         private void WriteExperimentData()
         {
-            Log.WriteLine("***EXPERIMENT INFO***");
             var info = ExperimentInfo.Instance;
             info.PopulateInfo();
             var s = JsonConvert.SerializeObject(info, Formatting.Indented);
-            Log.WriteLine(s);
-            Log.WriteLine("---EXPERIMENT INFO---");
+            Log.WriteBlock("EXPERIMENT INFO", s);
         }
     }
 }

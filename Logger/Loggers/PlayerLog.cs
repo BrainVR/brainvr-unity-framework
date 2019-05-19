@@ -95,7 +95,6 @@ namespace BrainVR.UnityFramework.Logger
             WriteLine(strgs);
         }
         #endregion
-
         #region private function
         private string HeaderLine()
         {

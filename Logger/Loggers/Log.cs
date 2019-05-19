@@ -47,9 +47,14 @@ namespace BrainVR.UnityFramework.Logger
         private void WriteHeader(string id)
         {
             var header = new Header(id, DateString);
-            _logFile.WriteLine("***SESSION HEADER***");
-            _logFile.WriteLine(JsonConvert.SerializeObject(header, Formatting.Indented));
-            _logFile.WriteLine("---SESSION HEADER---");
+            WriteBlock("SESSION HEADER", JsonConvert.SerializeObject(header, Formatting.Indented));
+        }
+
+        public void WriteBlock(string blockName, string blockContents)
+        {
+            _logFile.WriteLine("***" + blockName + "***");
+            _logFile.WriteLine(blockContents);
+            _logFile.WriteLine("---" + blockName + "---");
         }
         //takes a string and writes it down
         public void WriteLine(string str)

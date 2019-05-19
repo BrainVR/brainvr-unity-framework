@@ -36,9 +36,7 @@ namespace BrainVR.UnityFramework.Logger
         }
         private void WriteTestHeader()
         {
-            Log.WriteLine("***TEST HEADER***");
-            Log.WriteLine(_experiment.ExperimentHeaderLog());
-            Log.WriteLine("---TEST HEADER---");
+            Log.WriteBlock("TEST HEADER", _experiment.ExperimentHeaderLog());
             Log.WriteLine(TestLogHeaderLine());
         }
         private string TestLogHeaderLine()
